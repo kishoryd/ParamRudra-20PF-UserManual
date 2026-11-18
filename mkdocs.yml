@@ -123,6 +123,15 @@ nav:
       - Machine Learning / DL: machine-learning.md
       - GPU Containers: enroot.md
 
+  - Bhaskera:
+      - Overview: bhaskera/index.md
+      - Installation: bhaskera/installation.md
+      - Fine-tuning Workflow: bhaskera/workflow.md
+      - Monitoring: bhaskera/monitoring.md
+      - Parallelism Strategies: bhaskera/parallelism.md
+      - Benchmarks on PARAM Rudra: bhaskera/benchmarks.md
+      - Troubleshooting & Reference: bhaskera/troubleshooting.md
+
   - Applications:
       - Overview: applications/index.md
       - GROMACS: applications/gromacs.md
