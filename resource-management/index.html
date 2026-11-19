@@ -1,0 +1,3510 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Official-style user guide for the C-DAC PARAM Rudra 20 PetaFlop HPC System (National Supercomputing Mission) — access, environment, Spack, SLURM batch system, GPU computing, applications and data management.">
+      
+      
+        <meta name="author" content="C-DAC HPC Technologies · PARAM Rudra (20 PF) · National Supercomputing Mission">
+      
+      
+        <link rel="canonical" href="https://cdacindia.github.io/ParamRudra-20PF-UserManual/resource-management/">
+      
+      
+        <link rel="prev" href="../environment/">
+      
+      
+        <link rel="next" href="../batch/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Resource Management - C-DAC PARAM Rudra - 20 PetaFlop HPC System</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#slurm-partitions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="C-DAC PARAM Rudra - 20 PetaFlop HPC System" class="md-header__button md-logo" aria-label="C-DAC PARAM Rudra - 20 PetaFlop HPC System" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            C-DAC PARAM Rudra - 20 PetaFlop HPC System
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Resource Management
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/CDACIndia/ParamRudra-20PF-UserManual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    C-DAC PARAM Rudra · 20 PF
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../access/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Resource Management
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../bhaskera/" class="md-tabs__link">
+          
+  
+  
+  LLM Fine-tuning
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../modules/" class="md-tabs__link">
+          
+  
+  
+  Software
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../gpu/" class="md-tabs__link">
+          
+  
+  
+  GPU & AI
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../applications/" class="md-tabs__link">
+          
+  
+  
+  Applications
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../best-practices/" class="md-tabs__link">
+          
+  
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="C-DAC PARAM Rudra - 20 PetaFlop HPC System" class="md-nav__button md-logo" aria-label="C-DAC PARAM Rudra - 20 PetaFlop HPC System" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    C-DAC PARAM Rudra - 20 PetaFlop HPC System
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/CDACIndia/ParamRudra-20PF-UserManual" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    C-DAC PARAM Rudra · 20 PF
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Access
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ondemand/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use Open OnDemand Web Portal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Management
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Resource Management
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Management
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#slurm-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SLURM Partitions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SLURM Partitions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#qos-job-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        QoS Job policy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scheduling-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scheduling Type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#job-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Job Submission
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-slurm-batch-script-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Slurm Batch Script Options
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Slurm Batch Script Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listing-partition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listing Partition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring jobs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deleting-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deleting jobs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#holding-a-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Holding a job
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#releasing-a-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Releasing a job
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-node-and-partition-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Node and Partition details
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Node and Partition details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accounting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accounting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#investigating-a-job-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Investigating a job failure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-am-familiar-with-pbs-torque-how-do-i-migrate-to-slurm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I am familiar with PBS/ TORQUE. How do I migrate to SLURM?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="I am familiar with PBS/ TORQUE. How do I migrate to SLURM?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#addressing-basic-security-concerns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addressing Basic Security Concerns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../batch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Batch System (SLURM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Job Script Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM Fine-tuning
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    LLM Fine-tuning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bhaskera/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.33 12.91c.09 1.55-.62 3.04-1.89 3.95l.77 1.49c.23.45.26.98.06 1.45-.19.47-.58.84-1.06 1l-.79.25a1.687 1.687 0 0 1-1.86-.55L14.44 18c-.89-.15-1.73-.53-2.44-1.1-.5.15-1 .23-1.5.23-.88 0-1.76-.27-2.5-.79-.53.16-1.07.23-1.62.22-.79.01-1.57-.15-2.3-.45a4.1 4.1 0 0 1-2.43-3.61c-.08-.72.04-1.45.35-2.11-.29-.75-.32-1.57-.07-2.33C2.3 7.11 3 6.32 3.87 5.82c.58-1.69 2.21-2.82 4-2.7 1.6-1.5 4.05-1.66 5.83-.37.42-.11.86-.17 1.3-.17 1.36-.03 2.65.57 3.5 1.64 2.04.53 3.5 2.35 3.58 4.47.05 1.11-.25 2.2-.86 3.13.07.36.11.72.11 1.09m-5-1.41c.57.07 1.02.5 1.02 1.07a1 1 0 0 1-1 1h-.63c-.32.9-.88 1.69-1.62 2.29.25.09.51.14.77.21 5.13-.07 4.53-3.2 4.53-3.25a2.59 2.59 0 0 0-2.69-2.49 1 1 0 0 1-1-1 1 1 0 0 1 1-1c1.23.03 2.41.49 3.33 1.3.05-.29.08-.59.08-.89-.06-1.24-.62-2.32-2.87-2.53-1.25-2.96-4.4-1.32-4.4-.4-.03.23.21.72.25.75a1 1 0 0 1 1 1c0 .55-.45 1-1 1-.53-.02-1.03-.22-1.43-.56-.48.31-1.03.5-1.6.56-.57.05-1.04-.35-1.07-.9a.97.97 0 0 1 .88-1.1c.16-.02.94-.14.94-.77 0-.66.25-1.29.68-1.79-.92-.25-1.91.08-2.91 1.29C6.75 5 6 5.25 5.45 7.2 4.5 7.67 4 8 3.78 9c1.08-.22 2.19-.13 3.22.25.5.19.78.75.59 1.29-.19.52-.77.78-1.29.59-.73-.32-1.55-.34-2.3-.06-.32.27-.32.83-.32 1.27 0 .74.37 1.43 1 1.83.53.27 1.12.41 1.71.4q-.225-.39-.39-.81a1.038 1.038 0 0 1 1.96-.68c.4 1.14 1.42 1.92 2.62 2.05 1.37-.07 2.59-.88 3.19-2.13.23-1.38 1.34-1.5 2.56-1.5m2 7.47-.62-1.3-.71.16 1 1.25zm-4.65-8.61a1 1 0 0 0-.91-1.03c-.71-.04-1.4.2-1.93.67-.57.58-.87 1.38-.84 2.19a1 1 0 0 0 1 1c.57 0 1-.45 1-1 0-.27.07-.54.23-.76.12-.1.27-.15.43-.15.55.03 1.02-.38 1.02-.92"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bhaskera/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bhaskera/workflow/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 16.5v-9l6 4.5M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    End-to-end Example
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bhaskera/recipes/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.5 1.5c-1.77 0-3.33 1.17-3.83 2.87C8.14 4.13 7.58 4 7 4a4 4 0 0 0-4 4 4.01 4.01 0 0 0 3 3.87V19h13v-7.13c1.76-.46 3-2.05 3-3.87a4 4 0 0 0-4-4c-.58 0-1.14.13-1.67.37-.5-1.7-2.06-2.87-3.83-2.87m-.5 9h1v7h-1zm-3 2h1v5H9zm6 0h1v5h-1zM6 20v1a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-1z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bhaskera/monitoring/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 16V4H3v12zm0-14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-7v2h2v2H8v-2h2v-2H3a2 2 0 0 1-2-2V4c0-1.11.89-2 2-2zM5 6h9v5H5zm10 0h4v2h-4zm4 3v5h-4V9zM5 12h4v2H5zm5 0h4v2h-4z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bhaskera/parallelism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parallelism Strategies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bhaskera/benchmarks/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 16a3 3 0 0 1-3-3c0-1.12.61-2.1 1.5-2.61l9.71-5.62-5.53 9.58c-.5.98-1.51 1.65-2.68 1.65m0-13c1.81 0 3.5.5 4.97 1.32l-2.1 1.21C14 5.19 13 5 12 5a8 8 0 0 0-8 8c0 2.21.89 4.21 2.34 5.65h.01c.39.39.39 1.02 0 1.41s-1.03.39-1.42.01A9.97 9.97 0 0 1 2 13 10 10 0 0 1 12 3m10 10c0 2.76-1.12 5.26-2.93 7.07-.39.38-1.02.38-1.41-.01a.996.996 0 0 1 0-1.41A7.95 7.95 0 0 0 20 13c0-1-.19-2-.54-2.9L20.67 8C21.5 9.5 22 11.18 22 13"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmarks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bhaskera/troubleshooting/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.79 15.41c.95-2.17.95-4.66 0-6.82l-2.74 1.24c.6 1.38.6 2.95.01 4.34zm-4.37-11.2a8.54 8.54 0 0 0-6.83 0l1.24 2.73c1.39-.59 2.96-.59 4.35.01zM4.21 8.58a8.56 8.56 0 0 0 0 6.84l2.74-1.25c-.6-1.38-.6-2.96 0-4.35zm4.38 11.21a8.5 8.5 0 0 0 6.83-.01l-1.24-2.73a5.5 5.5 0 0 1-4.34.01zM12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2m0 6a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting & Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Software
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules & Conda
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spack Packages
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apptainer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HPC Containers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../apptainer_slurmscript/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HPC Apptainer Scripts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../building/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Building Software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_6" id="__nav_5_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../knit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Knit.sh
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sycl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SYCL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GPU & AI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    GPU & AI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gpu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GPU Computing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../machine-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Machine Learning / DL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../enroot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GPU Containers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Applications
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Applications
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/gromacs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GROMACS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/lammps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LAMMPS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/namd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NAMD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/openfoam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenFOAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/wrf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WRF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/nwchem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nwchem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/cp2k/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cp2k
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/quantum-chemistry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quantum Chemistry & Others
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applications/vasp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VASP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../best-practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Best Practices & Performance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../important-facts.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Important Facts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debugging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Debugging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../largefiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handling Large Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../policies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../acknowledgement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accounts & Acknowledgement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ & Support
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nsmforum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NSM Forum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 3a3 3 0 0 1 3 3c0 1.31-.83 2.42-2 2.83v6.34c1.17.41 2 1.52 2 2.83a3 3 0 0 1-3 3 3 3 0 0 1-3-3c0-1.31.83-2.42 2-2.83V8.83A2.99 2.99 0 0 1 3 6a3 3 0 0 1 3-3m0 2a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m0 12a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1m15 1a3 3 0 0 1-3 3 3 3 0 0 1-3-3c0-1.31.83-2.42 2-2.83V7h-2v3.25L10.75 6 15 1.75V5h2a2 2 0 0 1 2 2v8.17c1.17.41 2 1.52 2 2.83m-3-1a1 1 0 0 0-1 1 1 1 0 0 0 1 1 1 1 0 0 0 1-1 1 1 0 0 0-1-1"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#slurm-partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SLURM Partitions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SLURM Partitions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#qos-job-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        QoS Job policy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scheduling-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scheduling Type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#job-submission" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Job Submission
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-slurm-batch-script-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Slurm Batch Script Options
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Slurm Batch Script Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listing-partition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listing Partition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring jobs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deleting-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deleting jobs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#holding-a-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Holding a job
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#releasing-a-job" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Releasing a job
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-node-and-partition-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Node and Partition details
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Getting Node and Partition details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#accounting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accounting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#investigating-a-job-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Investigating a job failure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-am-familiar-with-pbs-torque-how-do-i-migrate-to-slurm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I am familiar with PBS/ TORQUE. How do I migrate to SLURM?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="I am familiar with PBS/ TORQUE. How do I migrate to SLURM?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#addressing-basic-security-concerns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addressing Basic Security Concerns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+  <div class="rudra-cobrand">
+    <a href="https://www.cdac.in" title="Centre for Development of Advanced Computing (C-DAC)" target="_blank" rel="noopener">
+      <img src="../assets/logo-cdac.png" alt="C-DAC">
+    </a>
+    <a href="https://nsmindia.in" title="National Supercomputing Mission (NSM)" target="_blank" rel="noopener">
+      <img src="../assets/logo-nsm.png" alt="National Supercomputing Mission">
+    </a>
+  </div>
+  
+                  
+
+
+  
+    <a href="https://github.com/CDACIndia/ParamRudra-20PF-UserManual/edit/main/docs/resource-management.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/CDACIndia/ParamRudra-20PF-UserManual/raw/main/docs/resource-management.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"/></svg>
+    </a>
+  
+
+
+  <h1>Resource Management</h1>
+
+<div class="admonition tip">
+<p class="admonition-title">Fine-tuning large language models on the GPU nodes</p>
+<p>Ready job scripts and tested recipes for LoRA / QLoRA fine-tuning of 14 B–235 B models on 8–128
+GPU nodes, with measured speed for every configuration: see <a href="../bhaskera/">LLM Fine-tuning</a>.</p>
+</div>
+<p>This section explains how you interact with the resource manager. It covers information about the resource manager, the definition of nodes within partitions, job policies, scheduler information, the process of submitting jobs to the system, monitoring active jobs and getting useful information about resource usage.</p>
+<p>A system is a group of computers that work together to solve complex computational tasks and presents itself to the user as a single system. For the resources of a system (e.g. CPUs, GPUs, memory) to be used efficiently, a resource manager (also called workload manager or batch-queuing system) is important. While there are many different resource managers available, the resource manager at PARAM Rudra is SLURM. After submitting a job to the system, SLURM will try to fulfill the job’s resource request by allocating resources to the job. If the requested resources are already available, the job can start immediately. Otherwise, the start of the job is delayed (pending) until enough resources are available. SLURM allows you to monitor active (pending, running) jobs and to retrieve statistics about finished jobs. </p>
+<p>SLURM, which is an open-source workload manager, efficiently allocates computing resources such as CPUs, GPUs, and memory to users' jobs, ensuring optimal resource utilization and job scheduling. SLURM provides features for job submission, monitoring, and management, allowing users to specify job requirements and dependencies. Slurm is a widely used batch scheduler in the top500 HPC list.</p>
+<h2 id="slurm-partitions">SLURM Partitions<a class="headerlink" href="#slurm-partitions" title="Permanent link">&para;</a></h2>
+<p>Partition is a logical grouping of nodes that share similar characteristics or resources. Partitions are helpful to manage and allocate resources efficiently based on the specific requirements of jobs or users. PARAM Rudra consists of three types of computational nodes: i.e. CPU only nodes, High memory (with 768 GB memory) nodes and GPU-enabled GPU nodes.</p>
+<p>The following partitions/queues have been defined to meet user requirements:</p>
+<table>
+<thead>
+<tr>
+<th>Partition</th>
+<th style="text-align: right;">Priority</th>
+<th style="text-align: right;">Min Core / GPU</th>
+<th style="text-align: right;">Max Core / GPU</th>
+<th>Max Walltime</th>
+<th style="text-align: right;">Max Queued / User</th>
+<th style="text-align: right;">Max Running / User</th>
+<th style="text-align: right;">Overall Running</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>debug</strong></td>
+<td style="text-align: right;"><strong>4800</strong></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><strong>432</strong> (9 nodes)</td>
+<td>01:00:00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr>
+<td><strong>terai</strong></td>
+<td style="text-align: right;"><strong>3400</strong></td>
+<td style="text-align: right;"><strong>480</strong> (10 nodes)</td>
+<td style="text-align: right;"><strong>2400</strong> (50 nodes)</td>
+<td>24:00:00</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">140</td>
+</tr>
+<tr>
+<td><strong>shiwalik</strong></td>
+<td style="text-align: right;"><strong>3700</strong></td>
+<td style="text-align: right;"><strong>2448</strong> (51 nodes)</td>
+<td style="text-align: right;"><strong>12288</strong> (256 nodes)</td>
+<td>24:00:00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr>
+<td><strong>himachal</strong></td>
+<td style="text-align: right;"><strong>4000</strong></td>
+<td style="text-align: right;"><strong>12336</strong> (257 nodes)</td>
+<td style="text-align: right;"><strong>24576</strong> (512 nodes)</td>
+<td>12:00:00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr>
+<td><strong>himadri</strong></td>
+<td style="text-align: right;"><strong>6000</strong></td>
+<td style="text-align: right;"><strong>24624</strong> (513 nodes)</td>
+<td style="text-align: right;"><strong>72000</strong> (1500 nodes)</td>
+<td>06:00:00</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><strong>gpu-debug</strong></td>
+<td style="text-align: right;"><strong>4800</strong></td>
+<td style="text-align: right;"><strong>1</strong> GPU card</td>
+<td style="text-align: right;"><strong>8</strong> GPU Cards(4 nodes)</td>
+<td>01:00:00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr>
+<td><strong>gpu-small</strong></td>
+<td style="text-align: right;"><strong>3400</strong></td>
+<td style="text-align: right;"><strong>10</strong> (5 nodes)</td>
+<td style="text-align: right;"><strong>50</strong> (25 nodes)</td>
+<td>24:00:00</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr>
+<td><strong>gpu-large</strong></td>
+<td style="text-align: right;"><strong>4000</strong></td>
+<td style="text-align: right;"><strong>52</strong> (26 nodes)</td>
+<td style="text-align: right;"><strong>200</strong> (100 nodes)</td>
+<td>12:00:00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr>
+<td><strong>gpu-massive</strong></td>
+<td style="text-align: right;"><strong>5000</strong></td>
+<td style="text-align: right;"><strong>202</strong> (101 nodes)</td>
+<td style="text-align: right;"><strong>400</strong> (200 nodes)</td>
+<td>06:00:00</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td><strong>hm-small</strong></td>
+<td style="text-align: right;"><strong>3700</strong></td>
+<td style="text-align: right;"><strong>480</strong> (10 nodes)</td>
+<td style="text-align: right;"><strong>2400</strong> (50 nodes)</td>
+<td>12:00:00</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td><strong>hm-large</strong></td>
+<td style="text-align: right;"><strong>4000</strong></td>
+<td style="text-align: right;"><strong>2448</strong> (51 nodes)</td>
+<td style="text-align: right;"><strong>4800</strong> (100 nodes)</td>
+<td>24:00:00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition source">
+<p class="admonition-title">Source</p>
+<p>PARAM Rudra Queue &amp; Partition Policy · figures shown per compute-node core count, GPU partitions counted in GPU units</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each node has 48 cores. Please utilize the maximum available cores when submitting jobs to the partition.</p>
+</div>
+<h3 id="qos-job-policy">QoS Job policy<a class="headerlink" href="#qos-job-policy" title="Permanent link">&para;</a></h3>
+<p>Users have the flexibility to run up to 10 simultaneous jobs. They can run an 8-node job for 4 days, a 16-node job for 2 days, or a 32-node job for 1 day. The default policy of the system allows for a maximum wall time of 4 days per job. However, this policy can be tailored to individual user needs or adjusted for all users in the future, depending on system usage. Users will be informed about any changes made to the SLURM policy.</p>
+<p><strong>Walltime :</strong> 
+The walltime parameter defines the maximum amount of time for which a job is allowed to run under a particular QoS. The maximum walltime is determined by the selected QoS. Users are requested to explicitly specify the required walltime in their SLURM job script using the --time parameter. For example:</p>
+<p><strong>#SBATCH --time=02:00:00</strong></p>
+<p>The maximum walltime depends on the selected QoS. For example, debug and gpu-debug jobs are limited to 1 hour, while terai, shiwalik, and hm-small jobs can run for up to 24 hours. himachal, gpu-large, and hm-large jobs are limited to 12 hours, whereas himadri and gpu-massive jobs are limited to 6 hours. If a job exceeds the walltime specified in the SLURM script, the job will be terminated by SLURM. Therefore, users should provide a realistic walltime based on their expected execution time</p>
+<h3 id="scheduling-type">Scheduling Type<a class="headerlink" href="#scheduling-type" title="Permanent link">&para;</a></h3>
+<p>PARAM Rudra has been configured with Slurm’s backfill scheduling policy. It is good for ensuring higher system utilization; it will start lower priority jobs if doing so does not delay the expected start time of any higher priority jobs. Since the expected start time of pending jobs depends upon the expected completion time of running jobs, reasonably accurate time limits are important for backfill scheduling to work well.</p>
+<p><strong>Job Priority :</strong></p>
+<p>The job's priority at any given time will be a weighted sum of all the factors that have been enabled in the slurm.conf file. Job priority can be expressed as:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nv">Job_priority</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span>site_factor<span class="w"> </span>+
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="o">(</span>PriorityWeightAge<span class="o">)</span><span class="w"> </span>*<span class="w"> </span><span class="o">(</span>age_factor<span class="o">)</span><span class="w"> </span>+
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="o">(</span>PriorityWeightAssoc<span class="o">)</span><span class="w"> </span>*<span class="w"> </span><span class="o">(</span>assoc_factor<span class="o">)</span><span class="w"> </span>+
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="o">(</span>PriorityWeightFairshare<span class="o">)</span><span class="w"> </span>*<span class="w"> </span><span class="o">(</span>fair-share_factor<span class="o">)</span><span class="w"> </span>+
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="o">(</span>PriorityWeightJobSize<span class="o">)</span><span class="w"> </span>*<span class="w"> </span><span class="o">(</span>job_size_factor<span class="o">)</span><span class="w"> </span>+
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="o">(</span>PriorityWeightPartition<span class="o">)</span><span class="w"> </span>*<span class="w"> </span><span class="o">(</span>priority_job_factor<span class="o">)</span><span class="w"> </span>+
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="o">(</span>PriorityWeightQOS<span class="o">)</span><span class="w"> </span>*<span class="w"> </span><span class="o">(</span>QOS_factor<span class="o">)</span><span class="w"> </span>+
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span>SUM<span class="o">(</span>TRES_weight_cpu<span class="w"> </span>*<span class="w"> </span>TRES_factor_cpu,
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">        </span>TRES_weight_&lt;type&gt;<span class="w"> </span>*<span class="w"> </span>TRES_factor_&lt;type&gt;,
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">        </span>...<span class="o">)</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span>-<span class="w"> </span>nice_factor
+</code></pre></div>
+<p>All of the factors in this formula are floating point numbers that range from 0.0 to 1.0. The weights are unsigned, 32-bit integers. The larger the number, the higher the job will be positioned in the queue, and the sooner the job will be scheduled. A job's priority, and hence its order in the queue, can vary over time. For example, the longer a job sits in the queue, the higher its priority will grow when the age weight is non-zero.</p>
+<p><strong>Age Factor:</strong> The age factor represents the length of time a job has been sitting in the queue and eligible to run. </p>
+<p><strong>Association Factor:</strong> Each association can be assigned an integer priority. The larger the number, the greater the job priority will be for jobs that request this association. This priority value is normalized to the highest priority of all the associations to become the association factor.</p>
+<p><strong>Job Size Factor:</strong> The job size factor correlates to the number of nodes or CPUs the job has requested. </p>
+<p><strong>Nice Factor:</strong> Users can adjust the priority of their own jobs by setting the nice value on their jobs. Like the system nice, positive values negatively impact a job's priority and negative values increase a job's priority. Only privileged users can specify a negative value.</p>
+<p><strong>Partition Factor:</strong> Each node partition can be assigned an integer priority. The larger the number, the greater the job priority will be for jobs that request to run in this partition.</p>
+<p><strong>Quality of Service (QOS) Factor:</strong> Each QOS can be assigned an integer priority. The larger the number, the greater the job priority will be for jobs that request this QOS. </p>
+<p><strong>Fair-share Factor:</strong> The fair-share component to a job's priority influences the order in which a user's queued jobs are scheduled to run based on the portion of the computing resources they have been allocated and the resources their jobs have already consumed. </p>
+<h3 id="job-submission">Job Submission<a class="headerlink" href="#job-submission" title="Permanent link">&para;</a></h3>
+<p>We can submit jobs either through a Slurm script or by using the interactive method. Creating a Slurm script is the optimal way to submit a job to the system.</p>
+<p><strong>Submitting Batch Scripts Jobs</strong></p>
+<p>Here is the example of sample slurm script:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">#SBATCH -N 1            // number of nodes</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">#SBATCH --ntasks-per-node=1     // number of cores per node</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#SBATCH --error=job.%J.err  //  name of error file</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">#SBATCH --output=job.%J.out     // name of output file</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">#SBATCH --time=01:00:00     // time required to execute the program</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">#SBATCH --partition=debug </span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1">#SBATCH --mem=180G</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1">#// To load the package //</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nb">source</span><span class="w"> </span>/home/apps/spack/share/spack/setup-env.sh
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>spack<span class="w"> </span>load<span class="w"> </span>intel-oneapi-compilers<span class="w"> </span>/nizifpn
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="nb">cd</span><span class="w">  </span>&lt;Path<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>executable&gt;
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>a.out<span class="w">  </span><span class="o">(</span>Name<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>executable<span class="o">)</span>
+</code></pre></div>
+<p>We can consider four cases of submitting a job here:</p>
+<p>1.1 <strong>Submitting a simple standalone job:</strong></p>
+<p>This is a simple submit script which is to be submitted</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>sbatch<span class="w"> </span>slurm-job.sh
+</code></pre></div>
+<p><code>Submitted batch job 106</code></p>
+<p>1.2 <strong>Submit a job that's dependent on a prerequisite job being completed:</strong></p>
+<p>Consider a requirement of pre-processing a job before proceeding to actual processing. Pre-processing is generally done on a single core. In this scenario, the actual processing script is dependent on the outcome of the pre-processing script.</p>
+<p>Here’s a simple job script. </p>
+<p>Note that the Slurm -J option is used to give the job a name.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1">#SBATCH -p debug</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1">#SBATCH -J simple</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1">#SBATCH --mem=180G</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>sleep<span class="w"> </span><span class="m">60</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>Submit<span class="w"> </span>the<span class="w"> </span>job:<span class="w">  </span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>$<span class="w"> </span>sbatch<span class="w"> </span>simple.sh
+</code></pre></div>
+<p><code>Submitted batch job 149</code></p>
+<p>Now we'll submit another job that's dependent on the previous job. There are many ways to specify the dependency conditions, but the "singleton" method is the simplest. The Slurm -d singleton argument tells Slurm not to dispatch this job until all previous jobs with the same name have completed.</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span>sbatch<span class="w"> </span>-d<span class="w"> </span>singleton<span class="w"> </span>simple.sh<span class="w"> </span>//may<span class="w"> </span>be<span class="w"> </span>used<span class="w"> </span><span class="k">for</span><span class="w"> </span>first<span class="w"> </span>pre-processing<span class="w"> </span>on<span class="w"> </span>a<span class="w"> </span>core<span class="w"> </span>and<span class="w"> </span><span class="k">then</span><span class="w"> </span>submitting
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Submitted<span class="w"> </span>batch<span class="w"> </span>job<span class="w"> </span><span class="m">150</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>$<span class="w"> </span>squeue
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span>JOBID<span class="w"> </span>PARTITION<span class="w"> </span>NAME<span class="w"> </span>USER<span class="w"> </span>ST<span class="w"> </span>TIME<span class="w"> </span>NODES<span class="w"> </span>NODELIST<span class="o">(</span>REASON<span class="o">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="m">150</span><span class="w"> </span>debug<span class="w">   </span>simple<span class="w"> </span>user1<span class="w">  </span>PD<span class="w">  </span><span class="m">0</span>:00<span class="w">  </span><span class="m">1</span><span class="w"> </span><span class="o">(</span>Dependency<span class="o">)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="m">149</span><span class="w"> </span>debug<span class="w">   </span>simple<span class="w">  </span>user1<span class="w">   </span>R<span class="w">   </span><span class="m">0</span>:17<span class="w">  </span><span class="m">1</span><span class="w"> </span>rpcn001
+</code></pre></div>
+Once the prerequisite job finishes the dependent job is dispatched.</p>
+<div class="admonition success">
+<p class="admonition-title">To check submited Job</p>
+<p>$ squeue</p>
+<div class="highlight"><pre><span></span><code>JOBID  PARTITION   NAME  USER   ST  TIME NODES NODELIST(REASON)
+
+ 150  debug   simple user1   R   0:31  1  rpcn001
+</code></pre></div>
+</div>
+<p>1.3 <strong>Submit a job with a reservation allocated</strong></p>
+<p>Slurm has the ability to reserve resources for jobs being executed by select users and/or select bank accounts. A resource reservation identifies the resources in that reservation and a time period during which the reservation is available. The resources which can be reserved include cores, nodes.</p>
+<p>Use the command given below to check the reservation name allocated to your user account</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>scontrol<span class="w"> </span>show<span class="w"> </span>reservation
+</code></pre></div>
+<p>If your ‘user account’ is associated with any reservation the above command will show you the same. For e.g. The given reservation name is user_11. Use the command given below to make use of this reservation</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$<span class="w"> </span>sbatch<span class="w"> </span>--reservation<span class="o">=</span>user_11<span class="w"> </span>simple.sh
+</code></pre></div>
+<p>1.4 <strong>Submitting multiple jobs with minor or no changes (array jobs)</strong></p>
+<p>A SLURM job array is a collection of jobs that differs from each other by only a single index parameter. Job arrays can be used to submit and manage a large number of jobs with similar settings.</p>
+<p><img alt="SLURM job array" loading="lazy" src="../assets/img/Resource1.png" /></p>
+<p>Figure: Snapshot depicting the usage of “Job Array” </p>
+<p>N1 is specifying the number of nodes you want to use for your job. </p>
+<p>example: N1 -one node, N4 - four nodes. Instead of tmp here you can use the below example script.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1">#SBATCH -N 1</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1">#SBATCH --ntasks-per-node=48</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1">#SBATCH --error=job.%A_%a.err</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1">#SBATCH --output=job.%A_%a.out</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1">#SBATCH --time=01:00:00</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1">#SBATCH --partition=debug</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c1">#SBATCH --mem=180G</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="nb">source</span><span class="w"> </span>/home/apps/spack/share/spack/setup-env.sh
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>spack<span class="w"> </span>load<span class="w"> </span>intel-oneapi-compilers<span class="w"> </span>/nizifpn
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/testuser01<span class="w"> </span><span class="c1">#change to your required directory</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="si">${</span><span class="nv">SLURM_ARRAY_TASK_ID</span><span class="si">}</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="nv">$HOME</span>/testuser01/md_omp
+</code></pre></div>
+<p><span style="color:#4DA6FF;">Running Interactive Jobs</span></p>
+<p>Another way to run your job is interactively. You can run an interactive job as follows:</p>
+<p>The following command asks for a single core in one hour with the default amount of memory. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$<span class="w"> </span>srun<span class="w"> </span>--nodes<span class="o">=</span><span class="m">1</span><span class="w"> </span>--ntasks-per-node<span class="o">=</span><span class="m">1</span><span class="w"> </span>--time<span class="o">=</span><span class="m">01</span>:00:00<span class="w"> </span>--pty<span class="w"> </span>/bin/bash<span class="w"> </span>-i
+</code></pre></div>
+<p>The command prompt of the allocated compute node will appear as soon as the job starts.</p>
+<p>Exit the bash shell to end the job. </p>
+<p>If the job is waiting for the resources, then this is how it will look :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>$<span class="w"> </span>job<span class="w"> </span><span class="m">1040</span><span class="w"> </span>queued<span class="w"> </span>and<span class="w"> </span>waiting<span class="w"> </span><span class="k">for</span><span class="w"> </span>resources
+</code></pre></div>
+<p>If after a while, it will allocate resources, then it will look like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>$<span class="w"> </span>job<span class="w"> </span><span class="m">1040</span><span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>allocated<span class="w"> </span>resources
+</code></pre></div>
+<p>If you exceed the time or memory limit the job will also abort.</p>
+<p>Please note that PARAM Rudra is NOT meant for executing interactive jobs. However, it can be utilized to quickly verify the successful execution of a job before submitting a larger batch job with a high iteration count. It can also be used for running small jobs. However, it's important to consider that other users may also be utilizing this node, so it's advisable not to inconvenience them by running large jobs. </p>
+<p>There are various use cases for requesting interactive resources, such as debugging (launching a job, adjusting setup parameters like compile options, relaunching the job, and making further adjustments) and interactive interfaces (inspecting a node, etc.).</p>
+<p><span style="color:#4DA6FF;">Parameters used in SLURM job script</span></p>
+<p>The job flags are used with the SBATCH command.  The syntax for the SLURM directive in a script is "#SBATCH <flag>".  Some of the flags are used with the srun and salloc commands.</p>
+<h2 id="common-slurm-batch-script-options">Common Slurm Batch Script Options<a class="headerlink" href="#common-slurm-batch-script-options" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th><strong>Option</strong></th>
+<th><strong>Syntax</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Partition</strong></td>
+<td><code>--partition=&lt;partition_name&gt;</code></td>
+<td>Specifies the partition (queue) where the job will be submitted.</td>
+</tr>
+<tr>
+<td><strong>Time Limit</strong></td>
+<td><code>--time=01:00:00</code></td>
+<td>Sets the maximum wall-clock time for the job.</td>
+</tr>
+<tr>
+<td><strong>Nodes</strong></td>
+<td><code>--nodes=2</code></td>
+<td>Requests the number of compute nodes required.</td>
+</tr>
+<tr>
+<td><strong>CPUs/Cores</strong></td>
+<td><code>--ntasks-per-node=8</code></td>
+<td>Specifies the number of tasks (CPU cores) to run on each node.</td>
+</tr>
+<tr>
+<td><strong>GPU Resources</strong></td>
+<td><code>--gres=gpu:2</code></td>
+<td>Requests two GPUs on GPU-enabled compute nodes.</td>
+</tr>
+<tr>
+<td><strong>Account</strong></td>
+<td><code>--account=&lt;group-slurm-account&gt;</code></td>
+<td>Specifies the Slurm account to be charged for the job.</td>
+</tr>
+<tr>
+<td><strong>Job Name</strong></td>
+<td><code>--job-name="lammps"</code></td>
+<td>Assigns a name to the job.</td>
+</tr>
+<tr>
+<td><strong>Error File</strong></td>
+<td><code>--error=&lt;filename_pattern&gt;</code></td>
+<td>Writes the standard error stream to the specified file.</td>
+</tr>
+<tr>
+<td><strong>Output File</strong></td>
+<td><code>--output=&lt;filename_pattern&gt;</code></td>
+<td>Writes the standard output stream to the specified file.</td>
+</tr>
+<tr>
+<td><strong>Node List</strong></td>
+<td><code>-w</code>, <code>--nodelist=&lt;node_list&gt;</code></td>
+<td>Requests that the job run on specific compute nodes.</td>
+</tr>
+<tr>
+<td><strong>Mail Type</strong></td>
+<td><code>--mail-type=&lt;type&gt;</code></td>
+<td>Sends email notifications for events such as <code>BEGIN</code>, <code>END</code>, <code>FAIL</code>, <code>TIME_LIMIT</code>, or <code>ALL</code>. Multiple values can be separated by commas.</td>
+</tr>
+<tr>
+<td><strong>Mail User</strong></td>
+<td><code>--mail-user=&lt;email_address&gt;</code></td>
+<td>Email address that receives notifications specified by <code>--mail-type</code>.</td>
+</tr>
+<tr>
+<td><strong>Reservation</strong></td>
+<td><code>--reservation=&lt;reservation_name&gt;</code></td>
+<td>Allocates resources from a named reservation.</td>
+</tr>
+<tr>
+<td><strong>Validate Script</strong></td>
+<td><code>--test-only</code></td>
+<td>Validates the batch script and estimates the expected start time without submitting the job.</td>
+</tr>
+<tr>
+<td><strong>Exclusive Access</strong></td>
+<td><code>--exclusive</code></td>
+<td>Allocates entire compute nodes exclusively for the job. No other jobs will share the allocated nodes.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sample SLURM Scripts for reference</strong></p>
+<p>Script for a Sequential Job</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1">#SBATCH -N 1   // number of nodes</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="c1">#SBATCH --ntasks-per-node=1 // number of cores per node</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1">#SBATCH --error=job.%J.err // name of error file </span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1">#SBATCH --output=job.%J.out // name of output file</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="c1">#SBATCH --time=01:00:00    // time required to execute the program</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1">#SBATCH --partition=debug </span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="c1">#SBATCH --mem=180G</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="c1">#// To load the package //</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="nb">source</span><span class="w"> </span>/home/apps/spack/share/spack/setup-env.sh
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>spack<span class="w"> </span>load<span class="w"> </span>intel-oneapi-compilers<span class="w"> </span>/nizifpn
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="nb">cd</span><span class="w">  </span>&lt;Path<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>executable&gt;
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>a.out<span class="w">  </span><span class="o">(</span>Name<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>executable<span class="o">)</span>
+</code></pre></div>
+<p>Script for a Parallel OpenMP Job</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1">#SBATCH -N 1                  // Number of nodes</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1">#SBATCH --ntasks-per-node=48  // Number of core per node</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1">#SBATCH --error=job.%J.err    //  Name of error file</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="c1">#SBATCH --output=job.%J.out   // Name of output file</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="c1">#SBATCH --time=01:00:00       // Time take to execute the program </span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1">#SBATCH --partition=debug   </span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="c1">#SBATCH --mem=180G</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="nb">source</span><span class="w"> </span>/home/apps/spack/share/spack/setup-env.sh
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>spack<span class="w"> </span>load<span class="w"> </span>intel-oneapi-compilers<span class="w"> </span>//nizifpn<span class="w">  </span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="nb">cd</span><span class="w">  </span>&lt;path<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>executable&gt;
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="c1">#or </span>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="nb">cd</span><span class="w">  </span><span class="nv">$SLURM_SUBMIT_DIR</span><span class="w"> </span>//To<span class="w"> </span>run<span class="w"> </span>job<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>directory<span class="w"> </span>from<span class="w"> </span>where<span class="w"> </span>it<span class="w"> </span>is<span class="w"> </span>submitted
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">48</span><span class="w"> </span><span class="c1">#//Depending upon your requirement you can change the number of threads. If total number of threads per node is more than 48, multiple threads will share core(s) and performance may degrade)</span>
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>
+<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>/home/cdac/a.out<span class="w">       </span><span class="c1">#//Name of the executable</span>
+</code></pre></div>
+<p>Script for Parallel Job – MPI (Message Passing Interface)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="ch">#!/bin/sh</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1">#SBATCH -N 16                           // Number of nodes</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="c1">#SBATCH --ntasks-per-node=48            // Number of cores per node</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="c1">#SBATCH --time=06:50:20                 // Time required to execute the program</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="c1">#SBATCH --job-name=lammps               // Name of application</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="c1">#SBATCH --error=job.%J.err_16_node_48     // Name of the error file</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="c1">#SBATCH --output=job.%J.out_16_node_48    //   Name of the output file</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="c1">#SBATCH --partition=debug     </span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="nb">source</span><span class="w"> </span>/home/apps/spack/share/spack/setup-env.sh<span class="w">        </span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>spack<span class="w"> </span>load<span class="w"> </span>intel-oneapi-compilers<span class="w">   </span>/nizifpn<span class="w">    </span><span class="c1">#// To load the package</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="c1">#// Below are Intel MPI specific settings //</span>
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="nb">export</span><span class="w"> </span><span class="nv">I_MPI_FALLBACK</span><span class="o">=</span>disable
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="nb">export</span><span class="w"> </span><span class="nv">I_MPI_FABRICS</span><span class="o">=</span>shm:dapl<span class="w">  </span>
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="nb">export</span><span class="w"> </span><span class="nv">I_MPI_DEBUG</span><span class="o">=</span><span class="m">9</span><span class="w">                </span><span class="c1">#// Level of MPI verbosity</span>
+<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>
+<a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>
+<a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a><span class="nb">cd</span><span class="w"> </span><span class="nv">$SLURM_SUBMIT_DIR</span><span class="w">    </span><span class="c1">#//change to required path where command needs to be executed</span>
+<a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>or<span class="w"> </span>
+<a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a><span class="nb">cd</span><span class="w"> </span>/home/manjuv/LAMMPS_2018COMPILER/lammps-22Aug18/bench
+<a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a>
+<a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a>
+<a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a><span class="c1">#// Example Command to run the lammps in Parallel // </span>
+<a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a>
+<a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a>
+<a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a><span class="nb">time</span><span class="w"> </span>mpiexec.hydra<span class="w"> </span>-n<span class="w"> </span><span class="nv">$SLURM_NTASKS</span><span class="w"> </span>-genv<span class="w"> </span>OMP_NUM_THREADS<span class="w"> </span><span class="m">1</span><span class="w"> </span>/home/manjuv/LAMMPS_2018COMPILER/lammps-22Aug18/src/lmp_intel_cpu_intelmpi<span class="w"> </span>-in<span class="w"> </span><span class="k">in</span>.lj
+</code></pre></div>
+<p>Script for Hybrid Parallel Job – (MPI + OpenMP)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="ch">#!/bin/bash</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="c1">#SBATCH --nodes=16</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1">#SBATCH --ntasks-per-node=48</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="c1">#SBATCH --time=06:50:20</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1">#SBATCH --job-name=lammps</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="c1">#SBATCH --error=job.%J.err_16_node_48</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="c1">#SBATCH --output=job.%J.out_16_node_48</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="c1">#SBATCH --partition=debug</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="c1">#SBATCH --mem=180G</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="c1"># Load required package</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="nb">source</span><span class="w"> </span>/home/apps/spack/share/spack/setup-env.sh
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>spack<span class="w"> </span>load<span class="w"> </span>intel-oneapi-compilers<span class="w"> </span>/nizifpn
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="c1"># Change to the job submission directory</span>
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="nb">cd</span><span class="w"> </span><span class="s2">"</span><span class="nv">$SLURM_SUBMIT_DIR</span><span class="s2">"</span>
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a>
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="c1"># Intel MPI settings</span>
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a><span class="nb">export</span><span class="w"> </span><span class="nv">I_MPI_FALLBACK</span><span class="o">=</span>disable
+<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a><span class="nb">export</span><span class="w"> </span><span class="nv">I_MPI_FABRICS</span><span class="o">=</span>shm:dapl
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a><span class="nb">export</span><span class="w"> </span><span class="nv">I_MPI_DEBUG</span><span class="o">=</span><span class="m">9</span>
+<a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a>
+<a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a><span class="c1"># OpenMP settings</span>
+<a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">24</span>
+<a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a>
+<a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a><span class="c1"># Run the LAMMPS application</span>
+<a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a><span class="nb">time</span><span class="w"> </span>mpiexec.hydra<span class="w"> </span>-n<span class="w"> </span><span class="m">32</span><span class="w"> </span>lammps.exe<span class="w"> </span>-in<span class="w"> </span><span class="k">in</span>.lj
+</code></pre></div>
+<h3 id="listing-partition">Listing Partition<a class="headerlink" href="#listing-partition" title="Permanent link">&para;</a></h3>
+<p><span style="color:#4DA6FF;">sinfo</span> displays information about nodes and partitions allowing users to view available nodes in the partition within the system.</p>
+<h3 id="monitoring-jobs">Monitoring jobs<a class="headerlink" href="#monitoring-jobs" title="Permanent link">&para;</a></h3>
+<p>Monitoring jobs on SLURM can be done using the command squeue.  The command squeue provides high-level information about jobs in the Slurm scheduling queue (state information, allocated resources, runtime, etc </p>
+<div class="admonition success">
+<p class="admonition-title">To monitor job</p>
+<p>$ squeue</p>
+<div class="highlight"><pre><span></span><code> JOBID  PARTITION   NAME      USER    ST  TIME  NODES  NODELIST(REASON)
+
+  106  debug    slurm-jo   user1   R   0:04    1     cbcn0001
+</code></pre></div>
+</div>
+<p>The command <code>scontrol</code> provides even more detailed information about jobs and job steps.</p>
+<p>It will report more detailed information about nodes, partitions, jobs, job steps, and configuration.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>$<span class="w"> </span>scontrol<span class="w"> </span>show<span class="w"> </span>job<span class="w"> </span>&lt;jobid&gt;
+</code></pre></div>
+<p><img alt="&quot;scontrol command&quot;" loading="lazy" src="../assets/img/Resource2.png" /></p>
+<p>Figure: scontrol show job displays specific job information</p>
+<p><code>scontrol update job &lt;jobid&gt;- set &lt;new attribute value&gt;</code></p>
+<p>The above command change attributes of submitted job. Like time limit, nodelist, number of nodes, etc. For example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>scontrol<span class="w"> </span>update<span class="w"> </span><span class="nv">jobid</span><span class="o">=</span><span class="m">106</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nv">TimeLimit</span><span class="o">=</span><span class="m">4</span>-00:00:00
+</code></pre></div>
+<h3 id="deleting-jobs">Deleting jobs<a class="headerlink" href="#deleting-jobs" title="Permanent link">&para;</a></h3>
+<p>Use the scancel command to delete active jobs. Users can cancel their own jobs only.</p>
+<p><code>$ scancel &lt;jobid&gt;</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>$<span class="w"> </span>scancel<span class="w"> </span><span class="m">135</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>$<span class="w"> </span>squeue<span class="w"> </span>--me
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span>JOBID<span class="w"> </span>PARTITION<span class="w"> </span>NAME<span class="w"> </span>USER<span class="w"> </span>ST<span class="w"> </span>TIME<span class="w"> </span>NODES<span class="w"> </span>NODELIST<span class="o">(</span>REASON<span class="o">)</span>
+</code></pre></div>
+<h3 id="holding-a-job">Holding a job<a class="headerlink" href="#holding-a-job" title="Permanent link">&para;</a></h3>
+<p>Use the scontrol command to hold the job.</p>
+<p><code>$scontrol hold &lt;jobid&gt;</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>$ squeue
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>  JOBID PARTITION  NAME    USER   ST      TIME  NODES NODELIST(REASON)
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>    139 debug   simple  user1  PD      0:00      1 (Dependency)
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>    138 debug   simple  user1   R      0:16      1  rpcn001
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>$ scontrol hold 139
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>$ squeue
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>  JOBID PARTITION  NAME    USER   ST     TIME  NODES NODELIST(REASON)
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>    139 debug   simple  user1  PD     0:00      1 (JobHeldUser)
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>    138 debug   simple  user1   R     0:32      1 rpcn001
+</code></pre></div>
+<h3 id="releasing-a-job">Releasing a job<a class="headerlink" href="#releasing-a-job" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>$<span class="w"> </span>scontrol<span class="w"> </span>release<span class="w"> </span><span class="m">139</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>$<span class="w"> </span>squeue
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span>JOBID<span class="w"> </span>PARTITION<span class="w">  </span>NAME<span class="w">     </span>USER<span class="w">  </span>ST<span class="w">       </span>TIME<span class="w">  </span>NODES<span class="w"> </span>NODELIST<span class="o">(</span>REASON<span class="o">)</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">    </span><span class="m">139</span><span class="w"> </span>debug<span class="w">   </span>simple<span class="w">  </span>user1<span class="w">  </span>PD<span class="w">       </span><span class="m">0</span>:00<span class="w">      </span><span class="m">1</span><span class="w"> </span><span class="o">(</span>Dependency<span class="o">)</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">    </span><span class="m">138</span><span class="w"> </span>debug<span class="w">   </span>simple<span class="w">  </span>user1<span class="w">   </span>R<span class="w">       </span><span class="m">0</span>:46<span class="w">      </span><span class="m">1</span><span class="w"> </span>rpcn001
+</code></pre></div>
+<h2 id="getting-node-and-partition-details">Getting Node and Partition details<a class="headerlink" href="#getting-node-and-partition-details" title="Permanent link">&para;</a></h2>
+<p><code>scontrol show node &lt;node name&gt;</code> - shows detailed information about compute nodes.</p>
+<p><code>scontrol show partition &lt;partition name&gt;</code>- shows detailed information about a specific partition</p>
+<p><img alt="&quot;scontrol partition command" loading="lazy" src="../assets/img/par1.png" /></p>
+<p>Figure: scontrol show partition displays specific partition details</p>
+<h3 id="accounting">Accounting<a class="headerlink" href="#accounting" title="Permanent link">&para;</a></h3>
+<p>Accounting system tracks and manages HPC resource usage. As jobs are completed or resources are utilized, accounts are charged and resource usage is recorded. Accounting policy is like a Banking System, where each department can be allocated with some predefined budget on a quarterly basis for CPU usage. As and when the resources are utilized, the amount will be deducted. The allocation will be reset half yearly. Depending upon the policy, users will be informed when their account is created about how much CPU hours have been allocated to them.</p>
+<p><strong>sacct</strong></p>
+<p>This command can report resource usage for running or terminated jobs including individual tasks, which can be useful to detect load imbalance between the tasks. </p>
+<p><code>$ sacct -j &lt;jobid&gt;</code></p>
+<h3 id="investigating-a-job-failure">Investigating a job failure<a class="headerlink" href="#investigating-a-job-failure" title="Permanent link">&para;</a></h3>
+<p>Job executions aren't always successful. There are various reasons for a job to stop or crash. The most common causes are:</p>
+<ul>
+<li>Exceeding resource limits</li>
+<li>Software-specific errors</li>
+</ul>
+<p>This section discusses methods to gather information and find ways to avoid common issues.</p>
+<p>It is important to collect error and output messages by either writing this information to the default location or specifying specific locations using the --error/--output option.  Redirecting the error/output stream to /dev/null should be avoided unless you fully understand its implications, as error and output messages serve as the initial point for investigating job failures.</p>
+<p><strong>Exceeding Resource Limits</strong></p>
+<p>Each partition defines default and maximum time limits of the job runtime and memory usage. Within the job script, the current limits can be defined within the ranges. For better scheduling, the job requirements should be estimated and the limits should be adapted to the needs. Lower limits enable SLURM to find suitable scheduling opportunities more effectively. Additionally, specifying minimal resource overhead minimizes resource wastage.</p>
+<p>If a job exceeds the runtime or memory limit, it will get killed by SLURM.</p>
+<p><strong>Software Errors</strong></p>
+<p>The exit code of a job is captured by Slurm and saved as part of the job record. For sbatch jobs the exit code of the batch script is captured. For srun, the exit code will be the return value of the executed command. Any non-zero exit code is considered a job failure, and results in job state of FAILED. When a signal was responsible for a job/step termination, the signal number will also be captured, and displayed after the exit code (separated by a colon).</p>
+<h2 id="i-am-familiar-with-pbs-torque-how-do-i-migrate-to-slurm">I am familiar with PBS/ TORQUE. How do I migrate to SLURM?<a class="headerlink" href="#i-am-familiar-with-pbs-torque-how-do-i-migrate-to-slurm" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th><strong>Environment Variables / PBS/Torque / SLURM</strong></th>
+<th><strong>PBS/Torque</strong></th>
+<th><strong>SLURM</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Job ID</td>
+<td><code>$PBS_JOBID</code></td>
+<td><code>$SLURM_JOBID</code></td>
+</tr>
+<tr>
+<td>Submit Directory</td>
+<td><code>$PBS_O_WORKDIR</code></td>
+<td><code>$SLURM_SUBMIT_DIR</code></td>
+</tr>
+<tr>
+<td>Node List</td>
+<td><code>$PBS_NODEFILE</code></td>
+<td><code>$SLURM_JOB_NODELIST</code></td>
+</tr>
+<tr>
+<td>Job Specification</td>
+<td>PBS/Torque</td>
+<td>SLURM</td>
+</tr>
+<tr>
+<td>Script Directive</td>
+<td><code>#PBS</code></td>
+<td><code>#SBATCH</code></td>
+</tr>
+<tr>
+<td>Job Name</td>
+<td><code>-N [name]</code></td>
+<td><code>--job-name=[name]</code> or <code>-J [name]</code></td>
+</tr>
+<tr>
+<td>Node Count</td>
+<td><code>-l nodes=[count]</code></td>
+<td><code>--nodes=[min[-max]]</code> or <code>-N [min[-max]]</code></td>
+</tr>
+<tr>
+<td>CPU Count</td>
+<td><code>-l nodes=[count]:ppn=[count]</code></td>
+<td><code>--ntasks-per-node=[count]</code></td>
+</tr>
+<tr>
+<td>CPUs Per Task</td>
+<td>—</td>
+<td><code>--cpus-per-task=[count]</code></td>
+</tr>
+<tr>
+<td>Memory Size</td>
+<td><code>-l mem=[MB]</code></td>
+<td><code>--mem=[MB]</code> or <code>--mem-per-cpu=[MB]</code></td>
+</tr>
+<tr>
+<td>Wall Clock Limit</td>
+<td><code>-l walltime=[hh:mm:ss]</code></td>
+<td><code>--time=[min]</code></td>
+</tr>
+<tr>
+<td>Node Properties</td>
+<td><code>-l nodes=4:ppn=8:[property]</code></td>
+<td><code>--constraint=[list]</code></td>
+</tr>
+<tr>
+<td>Standard Output File</td>
+<td><code>-o [file_name]</code></td>
+<td><code>--output=[file_name]</code> or <code>-o [file_name]</code></td>
+</tr>
+<tr>
+<td>Standard Error File</td>
+<td><code>-e [file_name]</code></td>
+<td><code>--error=[file_name]</code> or <code>-e [file_name]</code></td>
+</tr>
+<tr>
+<td>Combine stdout/stderr</td>
+<td><code>-j oe</code> (both to stdout)</td>
+<td>Default if <code>--error</code> is not specified</td>
+</tr>
+<tr>
+<td>Job Arrays</td>
+<td><code>-t [array_spec]</code></td>
+<td><code>--array=[array_spec]</code> or <code>-a [array_spec]</code></td>
+</tr>
+<tr>
+<td>Delay Job Start</td>
+<td><code>-a [time]</code></td>
+<td><code>--begin=[time]</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="addressing-basic-security-concerns">Addressing Basic Security Concerns<a class="headerlink" href="#addressing-basic-security-concerns" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>Your account on PARAM Rudra is ‘private to you’. You are responsible for any actions emanating from your account. It is suggested that you should never share the password with anyone.</p>
+</li>
+<li>
+<p>Do not grant permission of your home directory to any other user, as it may expose your personal files to unauthorized access.</p>
+</li>
+</ul>
+<p><strong>Per user</strong></p>
+<ul>
+<li>
+<p>Every user will have a quota of 1TiB of soft limit in the HOME file system ($HOME) and 1 TiB of soft limit in the SCRATCH($SCRATCH) file system.</p>
+</li>
+<li>
+<p>Users are recommended to copy their execution environment and input files to scratch file system ($SCRATCH) during job running and copy output data back to HOME area</p>
+</li>
+<li>
+<p>File retention policy has been implemented on Lustre storage for the "$SCRATCH" file system. After the jobs are completed, you need to store the data in $HOME. Users are requested to regularly back up their data from the $SCRATCH directory. As per the policy, files stored in $SCRATCH will be retained for only one week, after which they will be permanently deleted.</p>
+</li>
+</ul>
+<p><strong>It is important to note:</strong></p>
+<ul>
+<li>Compilations are performed on the login node. Only the execution is scheduled via SLURM on the compute nodes.</li>
+<li>It is important to collect error/output messages, either by writing such information to the default location or by specifying specific locations using the --error or --output option. Error and output messages serve as the starting point for investigating a job failure. If not specified, the Job Id is also appended to the output and error filenames.</li>
+<li>Submitting a series of jobs (a collection of similar jobs) as array jobs instead of one by one is crucial for improving backfilling performance and thus job throughput, instead of submitting the same job repeatedly.</li>
+<li>User has to specify #SBATCH --gres=gpu:1/2 in their job script if user wants to use 1 or 2 GPU cards on GPU nodes</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../environment/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Environment">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Environment
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../batch/" class="md-footer__link md-footer__link--next" aria-label="Next: Batch System (SLURM)">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Batch System (SLURM)
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      C-DAC PARAM Rudra — 20 PetaFlop HPC System · National Supercomputing Mission. Community-maintained user guide; verify site-specific values with the C-DAC support desk (rudrasupport@cdac.in).
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/CDACIndia/ParamRudra-20PF-UserManual" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit", "content.action.view", "content.code.annotate", "content.tabs.link"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

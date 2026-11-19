@@ -1,0 +1,68 @@
+/* PARAM Rudra manual — small visual tweaks */
+
+:root {
+  --md-primary-fg-color: #1f3a93;
+  --md-accent-fg-color: #2453ff;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--md-primary-fg-color);
+  color: #fff;
+}
+
+/* Tighten spacing of stat cards on the home page */
+.grid.cards > ul > li {
+  border-radius: 0.4rem;
+}
+
+.md-typeset .admonition,
+.md-typeset details {
+  font-size: 0.72rem;
+}
+
+/* Co-branding logos (C-DAC / NSM) — injected on every page via overrides/main.html.
+   C-DAC pinned to the top-left corner, NSM to the top-right corner. */
+.rudra-cobrand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 0 0.9rem;
+  padding: 0.2rem 0 0.7rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+.rudra-cobrand img {
+  height: 34px;                 /* inner pages: smaller */
+  width: auto;
+  display: block;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.rudra-cobrand a:hover img {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.22));
+}
+/* Home page: larger logos */
+.rudra-cobrand--home img {
+  height: 60px;
+}
+
+/* Dark mode: keep the navy C-DAC / dark artwork legible on a light chip */
+[data-md-color-scheme="slate"] .rudra-cobrand img {
+  background: #ffffff;
+  padding: 5px 9px;
+  border-radius: 6px;
+}
+
+/* Legacy in-content strip caption (still used on the home page) */
+.cobrand-caption {
+  width: 100%;
+  text-align: center;
+  font-size: 0.66rem;
+  color: var(--md-default-fg-color--light);
+  margin: 0.2rem 0 0.6rem;
+}
+
+/* Keep the per-page banner out of the generated PDF (cover already brands it) */
+@media print {
+  .rudra-cobrand { display: none; }
+}
