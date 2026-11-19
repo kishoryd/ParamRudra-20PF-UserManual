@@ -1,192 +1,237 @@
-# Fine-tuning Workflow
+---
+icon: material/play-circle
+---
 
-This page walks through a complete fine-tuning run on PARAM Rudra, from raw data to a running
-multi-node job. It assumes Bhaskera is available ([Installation](installation.md)).
+# End-to-end Example
 
-## Step 1: Get the Model and Data
+## Introduction
 
-Compute nodes have no internet access, so download on a **login node** into `/scratch`:
+This page takes one model, **Qwen3-14B**, from raw data to a trained LoRA adapter, using the
+`qwen3-14b-qlora.yaml` recipe. Every other recipe works the same way; only the model and the node
+count change (see [Recipes](recipes.md)).
+
+The run has four steps, all started from a login node:
+
+- Download the model and prepare the data
+- Tokenise the data (one CPU job, once per model and dataset)
+- Run a 10-step smoke test
+- Run the full training job
+
+## Input
+
+### Run folder
 
 ```bash
-module load bhaskera/2.2.0
-huggingface-cli download Qwen/Qwen3-14B --local-dir /scratch/<project>/<username>/models/Qwen3-14B
+$ module load bhaskera/2.2.0
+$ cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs
+$ cd /scratch/<project>/<username>/bhaskera-runs
+$ export SLURM_ACCOUNT=<your_account>
 ```
 
-Your training data goes in JSONL files, one example per line. The three built-in formats:
+### Model
 
-=== "chatml"
+Compute nodes have no internet access, so download the model on a **login node**:
 
-    ```json
-    {"messages": [{"role": "user", "content": "What is HPC?"}, {"role": "assistant", "content": "High-performance computing is ..."}]}
-    ```
-
-=== "alpaca"
-
-    ```json
-    {"instruction": "Summarise the text.", "input": "PARAM Rudra is ...", "output": "A 20 PF system ..."}
-    ```
-
-=== "sharegpt"
-
-    ```json
-    {"conversations": [{"from": "human", "value": "What is HPC?"}, {"from": "gpt", "value": "High-performance computing is ..."}]}
-    ```
-
-Keep a separate validation file (a few hundred to a few thousand examples) for evaluation.
-
-## Step 2: Tokenise the Data
-
-Tokenising turns text into the token IDs the model reads. Bhaskera does it **once** and saves
-the result (a Parquet cache); every training run then reads the cache.
-
-Start from the example config (copied in the step above) and set your model, files and
-sequence length in `configs/my_tokenize.yaml`:
-
-```yaml
-model:
-  name: /scratch/<project>/<username>/models/Qwen3-14B
-data:
-  name: local
-  format: chatml                 # or alpaca / sharegpt
-  train_path: /scratch/<project>/<username>/data/train.jsonl
-  val_path:   /scratch/<project>/<username>/data/val.jsonl
-  seq_len: 4096
-  cache_dir: /scratch/<project>/<username>/cache
+```bash
+$ huggingface-cli download Qwen/Qwen3-14B --local-dir /scratch/<project>/<username>/models/Qwen3-14B
 ```
 
-Run it as a small job on `gpu-debug`:
+!!! note
+    Llama and Mistral models are gated: accept the licence on the model's Hugging Face page, then run
+    `huggingface-cli login --token <your_token>` once before downloading.
+
+### Training data
+
+One conversation per line in a JSONL file, in ChatML form:
+
+```json
+{"messages": [{"role": "user", "content": "What is HPC?"}, {"role": "assistant", "content": "High-performance computing is ..."}]}
+```
+
+Put a separate validation file next to it (a few hundred to a few thousand conversations):
+
+```text
+/scratch/<project>/<username>/data/train.jsonl
+/scratch/<project>/<username>/data/val.jsonl
+```
+
+`alpaca` (`instruction`, `input`, `output`) and `sharegpt` (`conversations` with `from` / `value`) files
+also work: set `data.format` in the tokenize recipe.
+
+## Step 1: Tokenise
+
+Tokenising turns text into the numbers the model reads. It is done once; every training run reuses
+the result. In `recipes/tokenize-chatml.yaml`, replace `<project>/<username>` and set `model.name` to the
+model you will train, then submit:
+
+```bash
+$ ./submit.sh tokenize recipes/tokenize-chatml.yaml
+```
+
+### Sample SLURM script
+
+`submit.sh` runs `tokenize.sbatch` on one CPU node of the `debug` partition:
 
 ```bash
 #!/bin/bash
 #SBATCH --job-name=bhaskera-tokenize
-#SBATCH --account=<your_account>
-#SBATCH --partition=gpu-debug
+#SBATCH --partition=debug
 #SBATCH --nodes=1
-#SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=48
-#SBATCH --time=00:30:00
-#SBATCH --output=%x-%j.out
+#SBATCH --exclusive
+#SBATCH --mem=0
+#SBATCH --time=01:00:00
+#SBATCH --output=logs/%x_%j.out
 
-module load bhaskera/2.2.0        # Option B: source <your clone>/bhaskera-activate.sh
-cd /scratch/<project>/<username>/bhaskera-runs
-bhaskera-tokenize --config configs/my_tokenize.yaml --split both
+set -uo pipefail
+CONFIG="${1:?usage: sbatch tokenize.sbatch <tokenize-config.yaml>}"
+: "${BHASKERA_DIR:?export BHASKERA_DIR=/scratch/<project>/<username>/Bhaskera before submitting}"
+export HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1
+source "$BHASKERA_DIR/bhaskera-activate.sh"
+export RAY_TMPDIR="/tmp/ray_${SLURM_JOB_ID}"
+
+python -m bhaskera.launcher.tokenize --config "$CONFIG" --split both
+echo "=== tokenize exit code: $? ==="
 ```
 
-At the end it prints the lines to paste into your training config:
+### Expected Output
+
+The end of `logs/bhaskera-tokenize_<jobid>.out` (3,000 conversations took under 4 minutes):
 
 ```text
-data:
-  tokenized_path: "cache/local_train_<hash>"
-  val_tokenized_path: "cache/local_val_<hash>"
+║   [train] /scratch/<project>/<username>/cache/local_train_d9cc22aaa7a4fdb4
+║   [val] /scratch/<project>/<username>/cache/local_val_eb6d6d3703815f3c
+║
+║ Paste this into your training config:
+║
+║ data:
+║   name: "local"
+║   seq_len: 4096
+║   format: "chatml"
+║   tokenized_path: "/scratch/<project>/<username>/cache/local_train_d9cc22aaa7a4fdb4"
+║   val_tokenized_path: "/scratch/<project>/<username>/cache/local_val_eb6d6d3703815f3c"
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+=== tokenize exit code: 0 ===
 ```
 
-!!! warning "Do not tokenise on a login node"
-    Tokenising uses Ray and many CPU cores. On a busy shared login node it can stall; run it
-    as a job as shown above. In testing, 20,000 conversations tokenised in under 2 minutes on one node.
+## Step 2: Edit the Recipe
 
-## Step 3: Choose and Edit a Training Config
-
-`$BHASKERA_HOME/configs/release/` holds the 15 configurations tested on PARAM Rudra. Pick the
-one closest to your model and strategy, copy it and edit the paths:
-
-```bash
-cp $BHASKERA_HOME/configs/release/rel-ddp-qwen14b.yaml configs/my_run.yaml
-```
-
-The fields you usually change:
+Open `recipes/qwen3-14b-qlora.yaml`, replace `<project>/<username>`, and paste the two paths:
 
 ```yaml
 model:
   name: /scratch/<project>/<username>/models/Qwen3-14B
-  quantization: none             # "qlora" for 4-bit QLoRA
 data:
-  tokenized_path: /scratch/<project>/<username>/cache/local_train_<hash>
-  val_tokenized_path: /scratch/<project>/<username>/cache/local_val_<hash>
-  runtime_packing: true          # recommended: no compute wasted on padding
-  num_workers: 16                # 2 x number of nodes
-training:
-  batch_size: 1                  # rows per GPU per step
-  max_steps: 2000                # the release configs use 10 (they are tests)
-  eval_steps: 200                # evaluate every N steps
-  eval_max_rows: 1000            # cap rows per evaluation
-  distributed:
-    strategy: ddp                # ddp | fsdp | pipeline
-checkpoint:
-  enabled: true                  # the release configs switch this off
-  save_dir: ./checkpoints/my_run
-logging:
-  tracker: mlflow
-  run_name: my_run
+  tokenized_path: /scratch/<project>/<username>/cache/local_train_d9cc22aaa7a4fdb4
+  val_tokenized_path: /scratch/<project>/<username>/cache/local_val_eb6d6d3703815f3c
 ```
 
-| Config file | Model | Strategy |
-|---|---|---|
-| `rel-ddp-qwen14b.yaml` | Qwen3-14B | DDP |
-| `rel-fsdp-qwen14b.yaml`, `rel-hsdp-qwen14b.yaml` | Qwen3-14B | FSDP, HSDP |
-| `rel-pp-qwen14b-1f1b-packed-b2.yaml`, `rel-pp-qwen14b-gpipe-ackpt-b2.yaml` | Qwen3-14B | Pipeline (1F1B, GPipe) |
-| `rel-qlora-llama70b.yaml` | Llama-3.3-70B | QLoRA + DDP |
-| `rel-fsdp-llama70b.yaml`, `rel-pp-llama70b-a.yaml` | Llama-3.3-70B | FSDP, Pipeline |
-| `rel-pp-mistral123b.yaml` | Mistral-Large-123B | Pipeline |
-| `rel-pp-moe-qwen30b.yaml`, `rel-fsdp-moe-qwen30b.yaml` | Qwen3-30B-A3B (MoE) | Pipeline, FSDP |
-| `rel-pp-moe-qwen235b.yaml` | Qwen3-235B-A22B (MoE) | Pipeline |
+## Step 3: Smoke Test (10 steps)
 
-## Step 4: Preflight Check
-
-Before queueing, check the run on the login node. It takes seconds and needs no GPU:
+The recipe runs 10 steps. Submit it on 8 nodes with a 1-hour limit:
 
 ```bash
-bhaskera-preflight --config configs/my_run.yaml --num-gpus 16
+$ ./submit.sh recipes/qwen3-14b-qlora.yaml 8 1
 ```
 
+`submit.sh` first checks the recipe on the login node (model files, libraries, data, and whether it fits
+in GPU memory), then picks the partition and submits:
+
 ```text
-[PASS] model weights              8 safetensors file(s) in .../models/Qwen3-14B
+== preflight (login node, a few seconds) ==
+Preflight: recipes/qwen3-14b-qlora.yaml
+[PASS] model weights              8 safetensors file(s) in /scratch/<project>/<username>/models/Qwen3-14B
 [PASS] tokenizer                  Qwen2TokenizerFast, vocab 151669
 [PASS] flash-attn                 2.7.3 imports against this torch
 [PASS] liger-kernel               imports
-[PASS] tokenized_path             11 parquet file(s), seq_len/model match
+[PASS] tokenized_path             1 parquet file(s), seq_len/model match
 [PASS] val_tokenized_path         1 parquet file(s), seq_len/model match
-[PASS] est. per-GPU @ 16 GPUs     35.9 GiB of 80.0 GiB
+[INFO] weights                    9.9 GB in 4-bit NF4 (QLoRA) (40 layers, ~0.17 GB per layer unit)
+[PASS] est. per-GPU @ 16 GPUs     17.6 GiB of 80.0 GiB
 [PASS] min GPUs (DDP)             any count (full replica fits)
 RESULT: OK
+submitted job <jobid>: qwen3-14b-qlora on 8 nodes (16 GPUs), gpu-small, 1 h
+follow it:  tail -f logs/qwen3-14b-qlora_<jobid>.out | grep --line-buffered -E '\[step|eval|exit code'
 ```
 
-Fix every `FAIL` before submitting. Leave out `--num-gpus` to see the memory estimate for every GPU count.
+### Sample SLURM script
 
-## Step 5: Submit the Training Job
-
-`$BHASKERA_HOME/scripts/train.sbatch` is the launcher used for all benchmark runs. It starts a Ray cluster
-across every node of the job over InfiniBand, sets the NCCL and memory settings, and starts one
-training worker per GPU.
+`train.sbatch` starts a Ray cluster across all nodes of the job over InfiniBand and one training worker
+per GPU:
 
 ```bash
-module load bhaskera/2.2.0
-cd /scratch/<project>/<username>/bhaskera-runs
-mkdir -p logs                                   # SLURM does not create it
-sbatch -A <your_account> --nodes=8 --partition=gpu-small --time=08:00:00 \
-       $BHASKERA_HOME/scripts/train.sbatch configs/my_run.yaml
+#!/bin/bash
+#SBATCH --job-name=bhaskera
+#SBATCH --ntasks-per-node=1
+#SBATCH --gres=gpu:2
+#SBATCH --cpus-per-task=48
+#SBATCH --exclusive
+#SBATCH --output=logs/%x_%j.out
+
+set -uo pipefail
+CONFIG="${1:?usage: sbatch train.sbatch <config.yaml>}"
+: "${BHASKERA_DIR:?export BHASKERA_DIR=/scratch/<project>/<username>/Bhaskera before submitting}"
+
+export HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1
+export MLFLOW_ALLOW_FILE_STORE=true
+source "$BHASKERA_DIR/bhaskera-activate.sh"
+
+export NCCL_SOCKET_IFNAME=ib0 NCCL_DEBUG=WARN NCCL_ASYNC_ERROR_HANDLING=1
+export NCCL_TIMEOUT=3600 TORCH_NCCL_BLOCKING_WAIT=1 TORCH_DISTRIBUTED_TIMEOUT=3600
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+if grep -qE '^[[:space:]]*strategy:[[:space:]]*"?ddp' "$CONFIG"; then CDMC=1; else CDMC=32; fi
+export CUDA_DEVICE_MAX_CONNECTIONS=${CUDA_DEVICE_MAX_CONNECTIONS:-$CDMC}
+
+nodes=($(scontrol show hostnames "$SLURM_JOB_NODELIST"))
+head_ip=$(srun --nodes=1 --ntasks=1 -w "${nodes[0]}" ip -4 addr show ib0 | awk '/inet / {print $2}' | cut -d/ -f1)
+if [[ -z "$head_ip" ]]; then
+    echo "=== could not read the ib0 address of ${nodes[0]} (Slurm controller unreachable or ib0 down); resubmit ==="
+    exit 1
+fi
+port=$(( 6379 + SLURM_JOB_ID % 1000 ))
+export RAY_ADDRESS="${head_ip}:${port}" RAY_TMPDIR="/tmp/ray_${SLURM_JOB_ID}" RAY_raylet_start_wait_time_s=300
+GPUS_PER_NODE=2
+WORKERS=$(( SLURM_NNODES * GPUS_PER_NODE ))
+
+srun --nodes="$SLURM_NNODES" --ntasks="$SLURM_NNODES" \
+    ray symmetric-run --address "$RAY_ADDRESS" --min-nodes "$SLURM_NNODES" \
+        --num-cpus="$SLURM_CPUS_PER_TASK" --num-gpus="$GPUS_PER_NODE" \
+        -- \
+        python -m bhaskera.launcher.train --config "$CONFIG" --num-workers "$WORKERS" --no-dashboard
+RC=$?
+echo "=== training exit code: $RC ==="
+exit $RC
 ```
 
-The job inherits the loaded module, so every node uses the same installation.
+### Expected Output
 
-| Nodes | Partition | Example |
-|---|---|---|
-| 1–4 | `gpu-debug` (≤ 1 h) | `sbatch -A <acct> --nodes=2 --partition=gpu-debug --time=00:45:00 $BHASKERA_HOME/scripts/train.sbatch configs/my_run.yaml` |
-| 8–16 | `gpu-small` | `sbatch -A <acct> --nodes=16 --partition=gpu-small --time=12:00:00 ...` |
-| 32–64 | `gpu-large` | `sbatch -A <acct> --nodes=64 --partition=gpu-large --time=12:00:00 ...` |
-| 128 | `gpu-massive` (≤ 6 h) | `sbatch -A <acct> --nodes=128 --partition=gpu-massive --time=06:00:00 ...` |
+The first step appears after Ray start-up and model loading (about 5 minutes for a 14 B model, 10–20
+minutes for 70 B–235 B). The last lines of a Qwen3-14B QLoRA run on 8 nodes:
 
-The job log is `logs/bhaskera_<jobid>.out`. The first training step appears after Ray startup
-and model loading:
+```text
+[epoch 0][step 9] loss=1.1703 lr=1.81e-05 grad_norm=0.2473 tok/s=27711 MFU=35.8% HFU=53.2% pad=0% step_s=4.70 MFU_step=36.0% mem=16.0/16.3GiB
+[epoch 0][step 10] loss=1.0350 lr=2.01e-05 grad_norm=0.2650 tok/s=27620 MFU=35.7% HFU=53.0% pad=0% step_s=4.81 MFU_step=35.2% mem=16.0/16.3GiB
+[epoch 0][step 10] eval_loss=1.5705 eval_acc=0.6557
+=== training exit code: 0 ===
+```
 
-| Model size | Time to first step |
-|---|---|
-| ~14 B | about 5 min |
-| 70 B–123 B | about 10–15 min |
-| 235 B (MoE) | about 15–20 min |
+What each field means is explained in [Monitoring](monitoring.md).
 
-!!! warning "Check the log, not just the job state"
-    A run can fail (for example on a faulty node) while SLURM still shows the job as
-    `COMPLETED`. Confirm that the log contains `[step` lines and ends with
-    `=== training exit code: 0 ===`.
+## Step 4: Full Run
 
-Next: [Monitoring](monitoring.md).
+Work out the number of steps for one pass over your data from the smoke test:
+
+```text
+max_steps = (tokens in your training set) / (tok/s × step_s)
+```
+
+For example, with 1.24 billion tokens and the run above: 1,240,000,000 / (27,620 × 4.81) ≈ 9,300 steps.
+Set `max_steps` in the recipe, check [Choosing Nodes and Hours](recipes.md#choosing-nodes-and-hours),
+and submit:
+
+```bash
+$ ./submit.sh recipes/qwen3-14b-qlora.yaml 8 20
+```
+
+The LoRA adapter is saved in `checkpoint.save_dir` when the run ends.

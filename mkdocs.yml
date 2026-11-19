@@ -30,6 +30,8 @@ theme:
     - search.suggest
     - search.highlight
     - content.code.copy
+    - content.action.edit
+    - content.action.view
     - content.code.annotate
     - content.tabs.link
   palette:
@@ -47,8 +49,10 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
-  icon: 
-   repo: fontawesome/brands/github
+  icon:
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
   logo: assets/logo.svg
   favicon: assets/logo.svg
 
@@ -105,7 +109,16 @@ nav:
       - Resource Management: resource-management.md
       - Batch System (SLURM): batch.md
       - Job Script Examples: examples.md
-      
+
+  - LLM Fine-tuning:
+      - Overview: bhaskera/index.md
+      - Installation: bhaskera/installation.md
+      - End-to-end Example: bhaskera/workflow.md
+      - Recipes: bhaskera/recipes.md
+      - Monitoring: bhaskera/monitoring.md
+      - Parallelism Strategies: bhaskera/parallelism.md
+      - Benchmarks: bhaskera/benchmarks.md
+      - Troubleshooting & Reference: bhaskera/troubleshooting.md
 
   - Software:
       - Modules & Conda: modules.md
@@ -122,15 +135,6 @@ nav:
       - GPU Computing: gpu.md
       - Machine Learning / DL: machine-learning.md
       - GPU Containers: enroot.md
-
-  - Bhaskera:
-      - Overview: bhaskera/index.md
-      - Installation: bhaskera/installation.md
-      - Fine-tuning Workflow: bhaskera/workflow.md
-      - Monitoring: bhaskera/monitoring.md
-      - Parallelism Strategies: bhaskera/parallelism.md
-      - Benchmarks on PARAM Rudra: bhaskera/benchmarks.md
-      - Troubleshooting & Reference: bhaskera/troubleshooting.md
 
   - Applications:
       - Overview: applications/index.md

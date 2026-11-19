@@ -1,66 +1,85 @@
-# Installing and Loading Bhaskera
+# Installation
 
-There are two ways to use Bhaskera. Most users should load the shared module.
+There are two ways to use Bhaskera on PARAM Rudra. Most users should load the module.
 
-=== "Option A: shared module (recommended)"
-
-    Bhaskera is installed centrally in the AIStack. Load it like any other module:
-
-    ```bash
-    module avail bhaskera            # list installed versions
-    module load bhaskera/2.2.0
-    echo $BHASKERA_HOME              # tested configs, the SLURM launcher and the docs
-    which bhaskera-train
-    ```
-
-    | Provided by the module | Location |
-    |---|---|
-    | Commands `bhaskera-tokenize`, `bhaskera-preflight`, `bhaskera-train`, `bhaskera-dashboard`, `bhaskera-infer`, `bhaskera-diag` | on `PATH` |
-    | Tested configurations | `$BHASKERA_HOME/configs/release/` |
-    | SLURM launcher | `$BHASKERA_HOME/scripts/train.sbatch` |
-    | Documentation | `$BHASKERA_HOME/README.md`, `$BHASKERA_HOME/docs/` |
-    | Python environment | PyTorch 2.6.0 + CUDA 12.4, Transformers 4.57, Ray 2.56, PEFT, bitsandbytes, flash-attention 2.7.3, Liger, MLflow |
-
-    Work in your own folder on `/scratch` and copy the configs you need:
-
-    ```bash
-    mkdir -p /scratch/<project>/<username>/bhaskera-runs && cd $_
-    mkdir -p configs logs
-    cp $BHASKERA_HOME/configs/release/rel-ddp-qwen14b.yaml configs/my_run.yaml
-    cp $BHASKERA_HOME/configs/local_data_tokenize_chatml.yaml configs/my_tokenize.yaml
-    ```
-
-    !!! note "Availability"
-        If `module avail bhaskera` shows nothing, the shared install is not on the system yet:
-        use Option B, or contact the C-DAC support desk (rudrasupport@cdac.in).
-
-=== "Option B: your own installation"
-
-    Install once, in your `/scratch` area, from a login node (needed if you want to change
-    Bhaskera's code):
-
-    ```bash
-    ssh -p 4422 <username>@paramrudra.cdacb.in
-    cd /scratch/<project>/<username>
-    git clone https://github.com/CDACIndia/Bhaskera.git
-    cd Bhaskera
-    bash setup.sh
-    source bhaskera-activate.sh      # in every new shell
-    ```
-
-    `setup.sh` detects CUDA (`module load cuda/12.4`), creates a Python 3.11 environment
-    with `uv`, installs PyTorch and Bhaskera with the `wandb`, `mlflow` and `qlora` extras,
-    builds flash-attention (the slowest step; a failed build is not fatal) and writes
-    `bhaskera-activate.sh`, which loads CUDA and activates the environment.
-    `BHASKERA_CUDA=12.4 bash setup.sh` forces a CUDA version; `BHASKERA_VENV=/path bash setup.sh`
-    puts the environment elsewhere.
-
-    In this case, run the commands below from the `Bhaskera` folder and use
-    `scripts/train.sbatch` instead of `$BHASKERA_HOME/scripts/train.sbatch`.
-
-Verify either way:
+## Option A: Module (recommended)
 
 ```bash
-python -c "import bhaskera, torch; print('bhaskera OK, torch', torch.__version__)"
-bhaskera-preflight --help
+$ module avail bhaskera
+$ module load bhaskera/2.2.0
+```
+
+The module provides:
+
+| Item | Where |
+|---|---|
+| Commands `bhaskera-tokenize`, `bhaskera-train`, `bhaskera-dashboard` and the Python environment | on `PATH` |
+| Job scripts (`train.sbatch`, `tokenize.sbatch`, `submit.sh`) and tested recipes | `$BHASKERA_KIT` |
+| Bhaskera source | `$BHASKERA_DIR` |
+
+Copy the job scripts and recipes into your own folder on `/scratch`:
+
+```bash
+$ cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs
+$ cd /scratch/<project>/<username>/bhaskera-runs
+$ ls
+recipes  submit.sh  tokenize.sbatch  train.sbatch
+```
+
+Continue with the [End-to-end Example](workflow.md).
+
+## Option B: Your Own Installation
+
+Install once from a login node into your `/scratch` area (about 5 minutes). Use this if the module is
+not available, or if you want to change Bhaskera's code.
+
+```bash
+$ cd /scratch/<project>/<username>
+$ git clone https://github.com/kishoryd/Bhaskera.git
+$ cd Bhaskera
+$ BHASKERA_CUDA=12.4 bash setup.sh
+$ source .venv/bin/activate
+$ uv pip install "https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.3/flash_attn-2.7.3+cu12torch2.6cxx11abiFALSE-cp311-cp311-linux_x86_64.whl"
+$ uv pip install "ray[train,data,default]==2.56.1" peft==0.20.0 accelerate==1.14.0 liger-kernel==0.8.1 mlflow==3.15.0 pyarrow==25.0.0 bitsandbytes==0.50.2
+```
+
+!!! warning "Why each step is needed"
+    - **`BHASKERA_CUDA=12.4`**: login nodes have no GPU. Without it, `setup.sh` finds no CUDA and
+      installs a CPU-only PyTorch that cannot train.
+    - **Prebuilt flash-attention**: `setup.sh` tries to compile flash-attention, which needs the CUDA
+      compiler (`nvcc`); there is no CUDA 12 compiler module on PARAM Rudra, so that step fails. The
+      prebuilt package needs no compiler. All recipes need flash-attention (sequence packing uses it).
+    - **Pinned versions**: these are the versions used for every benchmark run. Newer Ray versions
+      require an authentication token between nodes and multi-node jobs fail at start-up with
+      `InvalidAuthToken`.
+
+Then tell the job scripts where Bhaskera is, and copy the job scripts and recipes:
+
+```bash
+$ export BHASKERA_DIR=/scratch/<project>/<username>/Bhaskera      # add this line to ~/.bashrc
+$ cp -r $BHASKERA_DIR/slurm /scratch/<project>/<username>/bhaskera-runs
+```
+
+## Verify
+
+```bash
+$ python -c "import torch, flash_attn, bitsandbytes, bhaskera; print('OK', torch.__version__, torch.version.cuda)"
+OK 2.6.0+cu124 12.4
+```
+
+## For Administrators: Central Installation
+
+`install-bhaskera.sh` builds Bhaskera for all users and `bhaskera/2.2.0.lua` is the matching Lmod
+modulefile. Both are in the Bhaskera repository under `slurm/`.
+
+```bash
+$ bash slurm/install-bhaskera.sh                       # installs to /home/apps/bhaskera/2.2.0
+$ cp slurm/modulefiles/bhaskera/2.2.0.lua /home/apps/modulefiles/bhaskera/2.2.0.lua
+```
+
+The installer must be run with the final path (`PREFIX=...` to change it), because a Python
+environment cannot be moved after it is built. It ends by printing the installed versions:
+
+```text
+OK  torch 2.6.0+cu124 (CUDA 12.4)  flash-attn 2.7.3  bitsandbytes 0.50.2  transformers 4.57.6  ray 2.56.1  peft 0.20.0
 ```

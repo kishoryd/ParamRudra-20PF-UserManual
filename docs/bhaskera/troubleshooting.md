@@ -1,61 +1,70 @@
-# Troubleshooting and Reference
+---
+icon: material/lifebuoy
+---
+
+# Troubleshooting & Reference
 
 ## Troubleshooting
 
 | Symptom (in the job log) | Cause | What to do |
 |---|---|---|
-| `CUDA out of memory` / `GPU OOM` | Model or batch too large for the strategy | Use QLoRA or Pipeline; lower `batch_size` and raise `grad_accum` |
-| `node running low on memory` (Ray kills workers) | Host RAM exhausted while loading a very large model | Use more Pipeline stages or a strategy that loads once per node (FSDP) |
-| `invalid device ordinal` | A GPU on one node failed to start | Resubmit with `--exclude=<node>` |
-| `No space left on device` / `Local disk is full` | That node's local `/tmp` is full | Resubmit with `--exclude=<node>` |
-| `DistBackendError` / NCCL timeout | Network fault or a hung rank | Resubmit; if it repeats on one node, exclude it |
-| Job `COMPLETED` but no `[step` lines | Ray or training failed at startup | Read the end of the log and the `.err` output for the first error |
-| `Timed out waiting for other nodes` | Ray could not start on every node | Resubmit; check that `ib0` is up on the nodes |
-| MLflow page shows `404 Not Found` | Another service holds that port on the login node | Start the dashboard on a different `--port` |
-| Steps much slower than usual; `slowest=rN` | A straggler node | Check that node; exclude it next time |
+| `InvalidAuthToken: Authentication token is missing or incorrect`, job ends after ~15 s | Ray newer than 2.56 in your own installation | Install the pinned versions from [Installation](installation.md#option-b-your-own-installation) |
+| `Timed out while waiting for GCS to become available` | Ray could not start on the job's first node | Resubmit; if it repeats on the same node, exclude it (below) |
+| `torch.version.cuda` is `None`, or `CUDA built: None` after `setup.sh` | `setup.sh` ran on a login node without `BHASKERA_CUDA=12.4` | Delete `.venv` and rerun `BHASKERA_CUDA=12.4 bash setup.sh` |
+| `preflight reported FAIL` from `submit.sh` | The run does not fit in GPU memory as configured | Use the QLoRA or Pipeline recipe, more stages, or `batch_size: 1` |
+| `CUDA out of memory` | Model or batch too large for the strategy | As above; lower `batch_size` and raise `grad_accum` |
+| `node running low on memory` (Ray kills workers) | Host RAM (about 187 GB per node) exhausted while loading a very large model | Use the Pipeline recipe for that model |
+| `invalid device ordinal` | A GPU on one node failed to start | Resubmit with that node excluded |
+| `DistBackendError` or an NCCL timeout | Network fault or a hung process | Resubmit; if it repeats on one node, exclude it |
+| `oom_kill` events in a tokenize job | The tokenize job ran with a small default memory | Use the provided `tokenize.sbatch` (`--exclusive --mem=0`) |
 
-Find the node behind a failing rank in the log (`ip=172.41.x.y`), then map it to a hostname:
+### Excluding a faulty node
+
+Find the node behind a failing worker from the address in the log (`ip=172.41.x.y`):
 
 ```bash
-grep -w 172.41.x.y /etc/hosts     # -> 172.41.x.y  cbgpuXXXX-ib0 ...
+$ getent hosts 172.41.x.y
+172.41.x.y   cbgpuXXXX-ib0 cbgpuXXXX-ib0.cdacb.in
+```
+
+Then keep your jobs off it. `submit.sh` passes this to `sbatch`:
+
+```bash
+$ export SBATCH_EXCLUDE=cbgpuXXXX            # comma-separated for several nodes
+$ ./submit.sh recipes/<recipe>.yaml 8 12
 ```
 
 ## Known Limitations
 
-- **MoE models are slow outside Pipeline** (0.2–1.7% MFU), because the standard expert code
-  processes experts one at a time. Use the Pipeline strategy for MoE models.
-- **Checkpoint frequency depends on the strategy.** With Pipeline, a checkpoint is saved every
-  `checkpoint.save_interval` steps. With FSDP, HSDP, DDP and QLoRA, it is saved only when an
-  epoch ends, so a long single-epoch run has no mid-run checkpoint. Split long runs, or use
-  Pipeline.
-- **DDP needs the whole model on each GPU**: 70 B and larger do not fit. Use QLoRA or Pipeline.
+- **Checkpoints with QLoRA and DDP are written only when the run ends**, so the run must fit in one job
+  (see [Choosing Nodes and Hours](recipes.md#choosing-nodes-and-hours)). Pipeline recipes checkpoint
+  every 500 steps and resume when resubmitted.
+- **MoE models are slow outside the Pipeline strategy** (0.2–1.7% MFU), because the standard expert code
+  processes experts one at a time. Use the Pipeline recipes for MoE models.
+- **DDP needs the whole model on each GPU**: 70 B and larger need QLoRA or Pipeline.
 - **Qwen3-235B does not fit with QLoRA** (about 118 GB of 4-bit weights per GPU).
-  Mistral-Large-123B with QLoRA fits only at `batch_size: 1` (78 of 80 GB).
-- **gpt-oss-120b is not supported** (its MXFP4 experts cannot run on A100).
-- **Inference serving is not part of this release.** `bhaskera-infer` exists but was not
-  re-validated here.
+- **gpt-oss-120b** is stored in MXFP4, which A100 GPUs cannot compute in; it has not been validated
+  for training.
 
 ## Quick Reference
 
 | Task | Command |
 |---|---|
-| Load | `module load bhaskera/2.2.0` (own install: `source bhaskera-activate.sh`) |
-| Get the tested configs | `cp $BHASKERA_HOME/configs/release/<file>.yaml configs/` |
-| Tokenise | `bhaskera-tokenize --config configs/my_tokenize.yaml --split both` (as a `gpu-debug` job) |
-| Check before submitting | `bhaskera-preflight --config configs/my_run.yaml --num-gpus 16` |
-| Train | `sbatch -A <acct> --nodes=8 --partition=gpu-small --time=08:00:00 $BHASKERA_HOME/scripts/train.sbatch configs/my_run.yaml` |
-| Follow the log | `tail -f logs/bhaskera_<jobid>.out \| grep -E '\[step\|eval'` |
-| MLflow UI | `bhaskera-dashboard start --port 5055` / `stop` / `status` |
-| Ray Dashboard | `ssh -N -L 8265:localhost:8265 <first-node-of-job> &` (from the login node) |
-| NCCL / network check | `bhaskera-diag` |
+| Load Bhaskera | `module load bhaskera/2.2.0` (own installation: `source $BHASKERA_DIR/.venv/bin/activate`) |
+| Get the job scripts and recipes | `cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs` |
+| Set your account | `export SLURM_ACCOUNT=<your_account>` |
+| Download a model (login node) | `huggingface-cli download <org>/<model> --local-dir /scratch/<project>/<username>/models/<model>` |
+| Tokenise | `./submit.sh tokenize recipes/tokenize-chatml.yaml` |
+| Train (recipe, nodes, hours) | `./submit.sh recipes/<recipe>.yaml 8 12` |
+| Follow the log | `tail -f logs/<recipe>_<jobid>.out \| grep -E '\[step\|eval\|exit code'` |
+| Check a recipe without submitting | `python -m bhaskera.launcher.preflight --config recipes/<recipe>.yaml --num-gpus 16` |
+| MLflow dashboard | `bhaskera-dashboard start --port 5055` / `status` / `tunnel` / `stop` |
 
 ## References
 
-- Bhaskera source and documentation: <https://github.com/CDACIndia/Bhaskera>
-  (`README.md`, `ARCHITECTURE.md`, `configs/README.md`, `docs/scale-matrix-results.md`)
+- Bhaskera source: <https://github.com/kishoryd/Bhaskera>
 - [GPU Computing](../gpu.md), [Machine Learning / DL](../machine-learning.md),
-  [Batch System (SLURM)](../batch.md) on this site
-- PyTorch FSDP2: <https://pytorch.org/docs/stable/distributed.fsdp.fully_shard.html>
+  [Resource Management](../resource-management.md) on this site
 - LoRA: Hu et al., *LoRA: Low-Rank Adaptation of Large Language Models* (2021)
 - QLoRA: Dettmers et al., *QLoRA: Efficient Finetuning of Quantized LLMs* (2023)
 - Ray Train: <https://docs.ray.io/en/latest/train/train.html>

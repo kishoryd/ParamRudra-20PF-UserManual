@@ -1,3 +1,7 @@
+---
+icon: material/source-pull
+---
+
 # Contributing
 
 This manual is a **living document** — corrections and additions from users and
