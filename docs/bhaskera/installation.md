@@ -30,7 +30,7 @@ Continue with the [End-to-end Example](workflow.md).
 
 ## Option B: Your Own Installation
 
-Install once from a login node into your `/scratch` area (about 5 minutes). Use this if the module is
+Install once from a login node into your `/scratch` area (5 to 15 minutes, depending on file-system load). Use this if the module is
 not available, or if you want to change Bhaskera's code.
 
 ```bash
