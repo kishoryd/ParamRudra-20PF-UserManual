@@ -62,7 +62,7 @@ Every run is recorded with MLflow under `~/mlflow-runs`, so runs can be charted 
 Start the dashboard on a **login node**:
 
 ```bash
-$ module load bhaskera/1.1.0
+$ module load bhaskera/1.1.1
 $ bhaskera-dashboard start --port 5055      # the port is remembered for next time
 $ bhaskera-dashboard status
 $ bhaskera-dashboard tunnel                 # prints the SSH command for your laptop
@@ -116,16 +116,23 @@ for the job to start: `bhaskera-dashboard ray` finds your job, waits while it is
 first node of the job to a port of your own on the login node.
 
 ```bash
-$ module load bhaskera/1.1.0
+$ module load bhaskera/1.1.1
 $ bhaskera-dashboard ray                  # or: bhaskera-dashboard ray --job <jobid>
 
 From your laptop, this one command logs in and keeps the dashboard link open
 (the command is always the same; it finds your job and its nodes by itself):
 
-    ssh -p 4422 -L 8265:localhost:20029 -L 3000:localhost:30029 <user>@paramrudra.cdacb.in "bash -lc 'module load bhaskera/1.1.0 && bhaskera-dashboard ray'"
+    ssh -p 4422 -L 8265:localhost:20029 -L 3000:localhost:30029 -L 5055:localhost:40029 <user>@paramrudra.cdacb.in "bash -lc 'module load bhaskera/1.1.1 && bhaskera-dashboard ray'"
 ```
 
-Run that command on your laptop, leave it open, and open <http://localhost:8265> in a browser. Run it
+Run that command on your laptop, leave it open, and open these in a browser:
+
+| Address | What it is |
+|---|---|
+| <http://localhost:8265> | Ray Dashboard of the running job |
+| <http://localhost:3000> | Grafana charts of the running job |
+| <http://localhost:5055> | MLflow: training and node curves of every run, also finished and failed ones |
+ Run it
 before or after you submit the job; it waits for the job to get its nodes. The numbers after `-L` are
 ports reserved for your user name on the login node, so they differ from user to user and stay the same
 for you.
@@ -152,7 +159,7 @@ In the dashboard:
   works, only the charts are missing.
 - **Jobs** shows the training job and its workers; **Logs** has the output of each worker, which helps when
   one node fails.
-- The dashboard exists only while the job runs. After it ends, use the MLflow run.
+- The Ray Dashboard and Grafana exist only while the job runs. After it ends, or if it failed, use the MLflow run.
 
 !!! note "Two jobs in the list"
     Ray numbers its jobs itself (`01000000`, `02000000`), so these numbers differ from the SLURM job ID. One
@@ -160,6 +167,12 @@ In the dashboard:
     and has no tasks. The second is the training itself.
 
 If you run several jobs at once, the command follows the newest one; use `--job <jobid>` for another.
+
+!!! note "After the job ends or fails"
+    The command starts MLflow on the login node for you and keeps the connection open when the job ends, so
+    the metrics stay on <http://localhost:5055>. A run that stopped with an error is marked **FAILED** and
+    keeps the curves logged up to that point. A run whose job was killed (time limit, failed node) is marked
+    **KILLED** the next time the command runs. When another job starts, the command links to it by itself.
 
 !!! tip "VS Code"
     If you work through VS Code Remote-SSH, run `bhaskera-dashboard ray` in its terminal, then forward port

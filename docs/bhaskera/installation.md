@@ -6,7 +6,7 @@ There are two ways to use Bhaskera on PARAM Rudra. Most users should load the mo
 
 ```bash
 $ module avail bhaskera
-$ module load bhaskera/1.1.0
+$ module load bhaskera/1.1.1
 ```
 
 The module provides:
@@ -69,17 +69,18 @@ OK 2.6.0+cu124 12.4
 
 ## For Administrators: Central Installation
 
-`install-bhaskera.sh` builds Bhaskera for all users and `bhaskera/1.1.0.lua` is the matching Lmod
+`install-bhaskera.sh` builds Bhaskera for all users and `bhaskera/1.1.1.lua` is the matching Lmod
 modulefile. Both are in the Bhaskera repository under `slurm/`.
 
 ```bash
-$ bash slurm/install-bhaskera.sh                       # installs to /home/apps/bhaskera/1.1.0
-$ cp slurm/modulefiles/bhaskera/1.1.0.lua /home/apps/modulefiles/bhaskera/1.1.0.lua
+$ bash slurm/install-bhaskera.sh                       # installs to /home/apps/bhaskera/1.1.1
+$ mkdir -p /home/apps/AIStack/bhaskera
+$ cp slurm/modulefiles/bhaskera/1.1.1.lua /home/apps/AIStack/bhaskera/1.1.1.lua
 ```
 
 The installer must be run with the final path (`PREFIX=...` to change it), because a Python
 environment cannot be moved after it is built. It also installs Prometheus and Grafana under
-`/home/apps/bhaskera/1.1.0/observability` (for the charts in the Ray Dashboard); this step needs internet
+`/home/apps/bhaskera/1.1.1/observability` (for the charts in the Ray Dashboard); this step needs internet
 access, and `WITH_CHARTS=0` skips it. It ends by printing the installed versions:
 
 ```text
