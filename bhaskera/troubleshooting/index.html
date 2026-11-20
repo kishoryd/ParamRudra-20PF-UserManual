@@ -881,6 +881,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../why/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 9 9l-8 3 8 3 3 8 3-8 8-3-8-3z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Bhaskera
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../installation/" class="md-nav__link">
         
   
@@ -2517,30 +2547,36 @@
 <tr>
 <td><code>oom_kill</code> events in a tokenize job</td>
 <td>The tokenize job ran with a small default memory</td>
-<td>Use the provided <code>tokenize.sbatch</code> (<code>--exclusive --mem=0</code>)</td>
+<td>Use the provided <code>tokenize.sbatch</code> (<code>--exclusive --mem=180G</code>)</td>
 </tr>
 </tbody>
 </table>
 <h3 id="excluding-a-faulty-node">Excluding a faulty node<a class="headerlink" href="#excluding-a-faulty-node" title="Permanent link">&para;</a></h3>
 <p>Find the node behind a failing worker from the address in the log (<code>ip=172.41.x.y</code>):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>getent<span class="w"> </span>hosts<span class="w"> </span><span class="m">172</span>.41.x.y
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="m">172</span>.41.x.y<span class="w">   </span>cbgpuXXXX-ib0<span class="w"> </span>cbgpuXXXX-ib0.cdacb.in
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>grep<span class="w"> </span>-w<span class="w"> </span><span class="m">172</span>.41.x.y<span class="w"> </span>/etc/hosts
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="m">172</span>.41.x.y<span class="w"> </span>cbgpuXXXX-ib0<span class="w"> </span>cbgpuXXXX-ib0.cdacb.in
 </code></pre></div>
-<p>Then keep your jobs off it. <code>submit.sh</code> passes this to <code>sbatch</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">SBATCH_EXCLUDE</span><span class="o">=</span>cbgpuXXXX<span class="w">            </span><span class="c1"># comma-separated for several nodes</span>
+<p>Then keep your jobs off it. <code>submit.sh</code> passes <code>BHASKERA_EXCLUDE</code> to <code>sbatch --exclude</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">BHASKERA_EXCLUDE</span><span class="o">=</span>cbgpuXXXX<span class="w">          </span><span class="c1"># comma-separated for several nodes</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>$<span class="w"> </span>./submit.sh<span class="w"> </span>recipes/&lt;recipe&gt;.yaml<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="m">12</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>SBATCH_EXCLUDE</code> environment variable is not applied on PARAM Rudra; use <code>BHASKERA_EXCLUDE</code>
+(or <code>--exclude=</code> when calling <code>sbatch</code> yourself).</p>
+</div>
 <h2 id="known-limitations">Known Limitations<a class="headerlink" href="#known-limitations" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Checkpoints with QLoRA and DDP are written only when the run ends</strong>, so the run must fit in one job
-  (see <a href="../recipes/#choosing-nodes-and-hours">Choosing Nodes and Hours</a>). Pipeline recipes checkpoint
-  every 500 steps and resume when resubmitted.</li>
+<li><strong>QLoRA, DDP and FSDP recipes write a checkpoint only when the run ends</strong>, so a run longer than the
+  time limit has to be split with <code>max_steps</code> (see
+  <a href="../recipes/#choosing-nodes-and-hours">Choosing Nodes and Hours</a>). Pipeline recipes checkpoint every 500
+  steps. All of them continue from the latest checkpoint when resubmitted, but the data starts again from
+  the beginning of the training set.</li>
 <li><strong>MoE models are slow outside the Pipeline strategy</strong> (0.2–1.7% MFU), because the standard expert code
   processes experts one at a time. Use the Pipeline recipes for MoE models.</li>
 <li><strong>DDP needs the whole model on each GPU</strong>: 70 B and larger need QLoRA or Pipeline.</li>
 <li><strong>Qwen3-235B does not fit with QLoRA</strong> (about 118 GB of 4-bit weights per GPU).</li>
-<li><strong>gpt-oss-120b</strong> is stored in MXFP4, which A100 GPUs cannot compute in; it has not been validated
-  for training.</li>
+<li><strong>gpt-oss-120b</strong> is stored in MXFP4, which A100 GPUs cannot compute in; training it is not supported.</li>
 </ul>
 <h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
 <table>
@@ -2553,7 +2589,7 @@
 <tbody>
 <tr>
 <td>Load Bhaskera</td>
-<td><code>module load bhaskera/2.2.0</code> (own installation: <code>source $BHASKERA_DIR/.venv/bin/activate</code>)</td>
+<td><code>module load bhaskera/1.1.2</code> (own installation: <code>source $BHASKERA_DIR/.venv/bin/activate</code>)</td>
 </tr>
 <tr>
 <td>Get the job scripts and recipes</td>

@@ -881,6 +881,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../why/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 9 9l-8 3 8 3 3 8 3-8 8-3-8-3z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Bhaskera
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../installation/" class="md-nav__link">
         
   
@@ -1007,6 +1037,17 @@
     <span class="md-ellipsis">
       
         Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bharatgen-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BharatGen Models
       
     </span>
   </a>
@@ -2355,6 +2396,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#bharatgen-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BharatGen Models
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#editing-a-recipe" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2431,9 +2483,9 @@
 
 <h1 id="recipes">Recipes<a class="headerlink" href="#recipes" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>A recipe is a ready Bhaskera configuration for one model, using the fastest strategy measured on
-PARAM Rudra. The recipes are in <code>recipes/</code> of your run folder (copied from <code>$BHASKERA_KIT</code>). Each file
-lists its measured speed and memory in its header.</p>
+<p>A recipe is a ready Bhaskera configuration for one model, using the fastest strategy measured on PARAM Rudra.
+The recipes are in the <code>recipes/</code> folder of your run folder (copied from <code>$BHASKERA_KIT</code>). Each file lists its
+speed and memory use in the header.</p>
 <table>
 <thead>
 <tr>
@@ -2477,7 +2529,7 @@ lists its measured speed and memory in its header.</p>
 <tr>
 <td><code>mistral-large-123b-qlora.yaml</code></td>
 <td><code>mistralai/Mistral-Large-Instruct-2411</code></td>
-<td>QLoRA + DDP (batch 1)</td>
+<td>QLoRA + DDP, batch size 1</td>
 <td>any</td>
 </tr>
 <tr>
@@ -2493,45 +2545,101 @@ lists its measured speed and memory in its header.</p>
 <td>multiple of 8</td>
 </tr>
 <tr>
+<td><code>param-1-2.9b-ddp.yaml</code></td>
+<td><code>bharatgenai/Param-1-2.9B-Instruct</code></td>
+<td>DDP, eager attention</td>
+<td>any</td>
+</tr>
+<tr>
+<td><code>param-1-7b-moe-fsdp.yaml</code></td>
+<td><code>bharatgenai/Param-1-7B</code></td>
+<td>FSDP</td>
+<td>any</td>
+</tr>
+<tr>
+<td><code>param2-17b-moe-fsdp.yaml</code></td>
+<td><code>bharatgenai/Param2-17B-A2.4B-Thinking</code></td>
+<td>FSDP</td>
+<td>any</td>
+</tr>
+<tr>
 <td><code>tokenize-chatml.yaml</code></td>
-<td>(the model you train)</td>
+<td>the model you train</td>
 <td>tokenising</td>
 <td>1 CPU node</td>
 </tr>
 </tbody>
 </table>
-<p>A pipeline recipe splits the model into <em>stages</em> on different GPUs, so the number of GPUs (2 per node)
-must be a multiple of the number of stages. <code>submit.sh</code> checks this before submitting.</p>
+<p>A pipeline recipe splits the model into <em>stages</em> on different GPUs, so the number of GPUs (2 per node) must be
+a multiple of the number of stages. <code>submit.sh</code> checks this before it submits.</p>
+<h2 id="bharatgen-models">BharatGen Models<a class="headerlink" href="#bharatgen-models" title="Permanent link">&para;</a></h2>
+<p>The three BharatGen recipes use the models' own code (<code>trust_remote_code: true</code>), so the model folder must
+contain the Python files that come with the download.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Type</th>
+<th>Speed on 5 nodes (10 GPUs)</th>
+<th>Memory per GPU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Param-1-2.9B-Instruct</td>
+<td>dense, 2.9 B</td>
+<td>1.6 s per step, 11% MFU</td>
+<td>24 GiB</td>
+</tr>
+<tr>
+<td>Param-1-7B</td>
+<td>MoE, 6.7 B (64 experts, top 8)</td>
+<td>10.1 s per step, 0.9% MFU</td>
+<td>12 GiB</td>
+</tr>
+<tr>
+<td>Param2-17B-A2.4B-Thinking</td>
+<td>MoE, 17 B (64 experts, top 6)</td>
+<td>9.4 s per step, 1.6% MFU</td>
+<td>17 GiB</td>
+</tr>
+</tbody>
+</table>
+<p>Param-1-2.9B supports neither flash-attention nor PyTorch attention, so its recipe uses <code>attn_impl: eager</code>
+and no sequence packing. The two MoE models run under FSDP, where experts are computed one at a time and MFU
+stays low; Pipeline does not support their custom code.</p>
 <h2 id="editing-a-recipe">Editing a Recipe<a class="headerlink" href="#editing-a-recipe" title="Permanent link">&para;</a></h2>
-<p>Each recipe needs only your paths. Replace every <code>&lt;project&gt;/&lt;username&gt;</code> and set the two cache paths
-printed by the tokenize job:</p>
+<p>A recipe needs only your paths. Replace every <code>&lt;project&gt;/&lt;username&gt;</code> and set the two cache paths printed by
+the tokenize job:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">model</span><span class="p">:</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-14B</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nt">data</span><span class="p">:</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">tokenized_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/scratch/&lt;project&gt;/&lt;username&gt;/cache/local_train_&lt;hash&gt;</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">val_tokenized_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/scratch/&lt;project&gt;/&lt;username&gt;/cache/local_val_&lt;hash&gt;</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nt">training</span><span class="p">:</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nt">max_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w">            </span><span class="c1"># smoke test; see "Full runs" below</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nt">max_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w">            </span><span class="c1"># a short first run; see "Full Runs" below</span>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="nt">eval_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span><span class="w">          </span><span class="c1"># evaluate every 200 steps</span>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="nt">checkpoint</span><span class="p">:</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="nt">save_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs/checkpoints/qwen3-14b-qlora</span>
 </code></pre></div>
-<p>Do not change the <code>training.distributed</code> block, <code>batch_size</code> or <code>grad_accum</code> unless you know why: these
-are the settings that were measured. In particular, <code>mistral-large-123b-qlora.yaml</code> uses
-<code>batch_size: 1</code> because batch 2 does not fit in 80 GB.</p>
+<p>Leave the <code>training.distributed</code> block, <code>batch_size</code> and <code>grad_accum</code> as they are unless you know why you
+are changing them. In particular, <code>mistral-large-123b-qlora.yaml</code> uses <code>batch_size: 1</code> because batch size 2
+does not fit in 80 GB.</p>
 <h2 id="full-runs">Full Runs<a class="headerlink" href="#full-runs" title="Permanent link">&para;</a></h2>
-<p>The recipes run 10 steps so that a first job finishes in minutes and shows the speed. For a full run,
-read <code>tok/s</code> and <code>step_s</code> from a <code>[step ...]</code> line of that smoke test and set:</p>
+<p>The recipes run 10 steps so that a first job finishes in minutes and shows the speed. For a full run, read
+<code>tok/s</code> and <code>step_s</code> from a <code>[step ...]</code> line of that first job and set:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>max_steps = (tokens in your training set) / (tok/s × step_s)
 </code></pre></div>
-<p>The tokens in your training set are printed by the tokenize job.</p>
+<p>The tokenize job prints the number of tokens in your training set.</p>
 <h2 id="choosing-nodes-and-hours">Choosing Nodes and Hours<a class="headerlink" href="#choosing-nodes-and-hours" title="Permanent link">&para;</a></h2>
-<p><strong>Checkpoints differ by strategy.</strong> With <strong>QLoRA + DDP</strong> and <strong>DDP</strong>, a checkpoint is written only when
-the run ends (<code>checkpoint.save_interval</code> counts epochs), so the whole run must fit in one job. With
-<strong>Pipeline</strong>, a checkpoint is written every <code>save_interval</code> steps (500 in the recipes), and a resubmitted
-job continues from it, so a long run can span several jobs.</p>
-<p>Measured time for <strong>one epoch of a 1.24-billion-token dataset</strong> (scale it by your own token count), and
-whether it fits in a single job within the partition's walltime:</p>
+<p><strong>Checkpoints.</strong> A checkpoint holds the trained LoRA weights and the optimizer state. With <strong>QLoRA + DDP</strong>,
+<strong>DDP</strong> and <strong>FSDP</strong> recipes it is written when the run ends, either at <code>max_steps</code> or at the end of an epoch
+(<code>checkpoint.save_interval</code> counts epochs). With <strong>Pipeline</strong> recipes it is written every <code>save_interval</code>
+steps (500 in the recipes). Resubmitting a job with the same <code>checkpoint.save_dir</code> continues from the latest
+checkpoint, and the learning-rate schedule continues with it.</p>
+<p>So a QLoRA, DDP or FSDP run that is longer than the partition's time limit has to be split by hand: set
+<code>max_steps</code> so that each job ends before the limit, and resubmit with a larger <code>max_steps</code> to continue.</p>
+<p>Time for <strong>one epoch of a 1.24-billion-token dataset</strong> (scale it by your own token count):</p>
 <table>
 <thead>
 <tr>
@@ -2546,67 +2654,66 @@ whether it fits in a single job within the partition's walltime:</p>
 <tbody>
 <tr>
 <td>Qwen3-14B QLoRA</td>
-<td>12.5 h ✅</td>
-<td>6.3 h ✅</td>
-<td>3.2 h ✅</td>
-<td>1.8 h ✅</td>
-<td>49 min ✅</td>
+<td>12.5 h</td>
+<td>6.3 h</td>
+<td>3.2 h</td>
+<td>1.8 h</td>
+<td>49 min</td>
 </tr>
 <tr>
 <td>Qwen3-30B-A3B Pipeline</td>
-<td>12.3 h ✅</td>
-<td>6.1 h ✅</td>
-<td>3.1 h ✅</td>
-<td>1.6 h ✅</td>
-<td>53 min ✅</td>
+<td>12.3 h</td>
+<td>6.1 h</td>
+<td>3.1 h</td>
+<td>1.6 h</td>
+<td>53 min</td>
 </tr>
 <tr>
 <td>Llama-3.3-70B QLoRA</td>
-<td>2.2 days ❌</td>
-<td>26.5 h ❌</td>
-<td>13.3 h ❌</td>
-<td>6.6 h ✅</td>
-<td>3.3 h ✅</td>
+<td>2.2 days</td>
+<td>26.5 h</td>
+<td>13.3 h</td>
+<td>6.6 h</td>
+<td>3.3 h</td>
 </tr>
 <tr>
 <td>Llama-3.3-70B Pipeline</td>
-<td>2.8 days ↻</td>
-<td>33.7 h ↻</td>
-<td>16.9 h ↻</td>
-<td>8.4 h ✅</td>
-<td>4.6 h ✅</td>
+<td>2.8 days</td>
+<td>33.7 h</td>
+<td>16.9 h</td>
+<td>8.4 h</td>
+<td>4.6 h</td>
 </tr>
 <tr>
 <td>Mistral-Large-123B QLoRA</td>
-<td>4.1 days ❌</td>
-<td>2.1 days ❌</td>
-<td>24.9 h ❌</td>
-<td>12.4 h ❌</td>
-<td>6.4 h ❌</td>
+<td>4.1 days</td>
+<td>2.1 days</td>
+<td>24.9 h</td>
+<td>12.4 h</td>
+<td>6.4 h</td>
 </tr>
 <tr>
 <td>Mistral-Large-123B Pipeline</td>
-<td>5.2 days ↻</td>
-<td>2.6 days ↻</td>
-<td>31.3 h ↻</td>
-<td>15.5 h ↻</td>
-<td>7.8 h ↻</td>
+<td>5.2 days</td>
+<td>2.6 days</td>
+<td>31.3 h</td>
+<td>15.5 h</td>
+<td>7.8 h</td>
 </tr>
 <tr>
 <td>Qwen3-235B-A22B Pipeline</td>
-<td>2.6 days ↻</td>
-<td>31.0 h ↻</td>
-<td>17.8 h ↻</td>
-<td>7.8 h ✅</td>
-<td>4.3 h ✅</td>
+<td>2.6 days</td>
+<td>31.0 h</td>
+<td>17.8 h</td>
+<td>7.8 h</td>
+<td>4.3 h</td>
 </tr>
 </tbody>
 </table>
-<p>✅ fits in one job · ↻ longer than one job, continues from its checkpoint when resubmitted ·
-❌ longer than one job and cannot resume mid-run: use more nodes, the Pipeline recipe, or a smaller
-<code>max_steps</code>.</p>
-<p>Walltime limits: <code>gpu-small</code> (5–25 nodes) 24 h, <code>gpu-large</code> (26–100 nodes) 12 h, <code>gpu-massive</code>
-(101–200 nodes) 6 h.</p>
+<p>The partition time limits are 24 h on <code>gpu-small</code> (5–25 nodes), 12 h on <code>gpu-large</code> (26–100 nodes) and 6 h on
+<code>gpu-massive</code> (101–200 nodes). An epoch fits in one job for Qwen3-14B QLoRA and Qwen3-30B-A3B Pipeline at
+every node count, for Llama-3.3-70B (QLoRA and Pipeline) and Qwen3-235B-A22B (Pipeline) from 64 nodes, and for
+no node count with Mistral-Large-123B. Everything else takes several jobs.</p>
 
 
 

@@ -881,6 +881,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../why/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 9 9l-8 3 8 3 3 8 3-8 8-3-8-3z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Bhaskera
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../installation/" class="md-nav__link">
         
   
@@ -1084,15 +1114,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-smoke-test-10-steps" class="md-nav__link">
+  <a href="#step-3-first-run-10-steps" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: Smoke Test (10 steps)
+        Step 3: First Run (10 steps)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 3: Smoke Test (10 steps)">
+    <nav class="md-nav" aria-label="Step 3: First Run (10 steps)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2572,15 +2602,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-smoke-test-10-steps" class="md-nav__link">
+  <a href="#step-3-first-run-10-steps" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: Smoke Test (10 steps)
+        Step 3: First Run (10 steps)
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 3: Smoke Test (10 steps)">
+    <nav class="md-nav" aria-label="Step 3: First Run (10 steps)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2672,12 +2702,12 @@ count change (see <a href="../recipes/">Recipes</a>).</p>
 <ul>
 <li>Download the model and prepare the data</li>
 <li>Tokenise the data (one CPU job, once per model and dataset)</li>
-<li>Run a 10-step smoke test</li>
+<li>Run a short first job (10 steps)</li>
 <li>Run the full training job</li>
 </ul>
 <h2 id="input">Input<a class="headerlink" href="#input" title="Permanent link">&para;</a></h2>
 <h3 id="run-folder">Run folder<a class="headerlink" href="#run-folder" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/2.2.0
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/1.1.2
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span>cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$BHASKERA_KIT</span><span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">SLURM_ACCOUNT</span><span class="o">=</span>&lt;your_account&gt;
@@ -2715,7 +2745,7 @@ model you will train, then submit:</p>
 <a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1">#SBATCH --nodes=1</span>
 <a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1">#SBATCH --cpus-per-task=48</span>
 <a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1">#SBATCH --exclusive</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">#SBATCH --mem=0</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">#SBATCH --mem=180G                     # debug partition maximum per node</span>
 <a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c1">#SBATCH --time=01:00:00</span>
 <a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1">#SBATCH --output=logs/%x_%j.out</span>
 <a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
@@ -2754,7 +2784,7 @@ model you will train, then submit:</p>
 <a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">tokenized_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/scratch/&lt;project&gt;/&lt;username&gt;/cache/local_train_d9cc22aaa7a4fdb4</span>
 <a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">val_tokenized_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/scratch/&lt;project&gt;/&lt;username&gt;/cache/local_val_eb6d6d3703815f3c</span>
 </code></pre></div>
-<h2 id="step-3-smoke-test-10-steps">Step 3: Smoke Test (10 steps)<a class="headerlink" href="#step-3-smoke-test-10-steps" title="Permanent link">&para;</a></h2>
+<h2 id="step-3-first-run-10-steps">Step 3: First Run (10 steps)<a class="headerlink" href="#step-3-first-run-10-steps" title="Permanent link">&para;</a></h2>
 <p>The recipe runs 10 steps. Submit it on 8 nodes with a 1-hour limit:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$<span class="w"> </span>./submit.sh<span class="w"> </span>recipes/qwen3-14b-qlora.yaml<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="m">1</span>
 </code></pre></div>
@@ -2784,41 +2814,42 @@ per GPU:</p>
 <a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1">#SBATCH --gres=gpu:2</span>
 <a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1">#SBATCH --cpus-per-task=48</span>
 <a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c1">#SBATCH --exclusive</span>
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1">#SBATCH --output=logs/%x_%j.out</span>
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
-<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="nb">set</span><span class="w"> </span>-uo<span class="w"> </span>pipefail
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="nv">CONFIG</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">1</span><span class="p">:?usage: sbatch train.sbatch &lt;config.yaml&gt;</span><span class="si">}</span><span class="s2">"</span>
-<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>:<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">BHASKERA_DIR</span><span class="p">:?export BHASKERA_DIR=/scratch/&lt;project&gt;/&lt;username&gt;/Bhaskera before submitting</span><span class="si">}</span><span class="s2">"</span>
-<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
-<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="nb">export</span><span class="w"> </span><span class="nv">HF_HUB_OFFLINE</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">HF_DATASETS_OFFLINE</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">TRANSFORMERS_OFFLINE</span><span class="o">=</span><span class="m">1</span>
-<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="nb">export</span><span class="w"> </span><span class="nv">MLFLOW_ALLOW_FILE_STORE</span><span class="o">=</span><span class="nb">true</span>
-<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="nb">source</span><span class="w"> </span><span class="s2">"</span><span class="nv">$BHASKERA_DIR</span><span class="s2">/bhaskera-activate.sh"</span>
-<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>
-<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="nb">export</span><span class="w"> </span><span class="nv">NCCL_SOCKET_IFNAME</span><span class="o">=</span>ib0<span class="w"> </span><span class="nv">NCCL_DEBUG</span><span class="o">=</span>WARN<span class="w"> </span><span class="nv">NCCL_ASYNC_ERROR_HANDLING</span><span class="o">=</span><span class="m">1</span>
-<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="nb">export</span><span class="w"> </span><span class="nv">NCCL_TIMEOUT</span><span class="o">=</span><span class="m">3600</span><span class="w"> </span><span class="nv">TORCH_NCCL_BLOCKING_WAIT</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">TORCH_DISTRIBUTED_TIMEOUT</span><span class="o">=</span><span class="m">3600</span>
-<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PYTORCH_CUDA_ALLOC_CONF</span><span class="o">=</span>expandable_segments:True
-<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="k">if</span><span class="w"> </span>grep<span class="w"> </span>-qE<span class="w"> </span><span class="s1">'^[[:space:]]*strategy:[[:space:]]*"?ddp'</span><span class="w"> </span><span class="s2">"</span><span class="nv">$CONFIG</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nv">CDMC</span><span class="o">=</span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="nv">CDMC</span><span class="o">=</span><span class="m">32</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
-<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CUDA_DEVICE_MAX_CONNECTIONS</span><span class="o">=</span><span class="si">${</span><span class="nv">CUDA_DEVICE_MAX_CONNECTIONS</span><span class="k">:-</span><span class="nv">$CDMC</span><span class="si">}</span>
-<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>
-<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="nv">nodes</span><span class="o">=(</span><span class="k">$(</span>scontrol<span class="w"> </span>show<span class="w"> </span>hostnames<span class="w"> </span><span class="s2">"</span><span class="nv">$SLURM_JOB_NODELIST</span><span class="s2">"</span><span class="k">)</span><span class="o">)</span>
-<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="nv">head_ip</span><span class="o">=</span><span class="k">$(</span>srun<span class="w"> </span>--nodes<span class="o">=</span><span class="m">1</span><span class="w"> </span>--ntasks<span class="o">=</span><span class="m">1</span><span class="w"> </span>-w<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">nodes</span><span class="p">[0]</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>ip<span class="w"> </span>-4<span class="w"> </span>addr<span class="w"> </span>show<span class="w"> </span>ib0<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'/inet / {print $2}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d/<span class="w"> </span>-f1<span class="k">)</span>
-<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">"</span><span class="nv">$head_ip</span><span class="s2">"</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"=== could not read the ib0 address of </span><span class="si">${</span><span class="nv">nodes</span><span class="p">[0]</span><span class="si">}</span><span class="s2"> (Slurm controller unreachable or ib0 down); resubmit ==="</span>
-<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
-<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="k">fi</span>
-<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a><span class="nv">port</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="m">6379</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">SLURM_JOB_ID</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="m">1000</span><span class="w"> </span><span class="k">))</span>
-<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a><span class="nb">export</span><span class="w"> </span><span class="nv">RAY_ADDRESS</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">head_ip</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">port</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="nv">RAY_TMPDIR</span><span class="o">=</span><span class="s2">"/tmp/ray_</span><span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="nv">RAY_raylet_start_wait_time_s</span><span class="o">=</span><span class="m">300</span>
-<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="nv">GPUS_PER_NODE</span><span class="o">=</span><span class="m">2</span>
-<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="nv">WORKERS</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="nv">SLURM_NNODES</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nv">GPUS_PER_NODE</span><span class="w"> </span><span class="k">))</span>
-<a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a>
-<a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a>srun<span class="w"> </span>--nodes<span class="o">=</span><span class="s2">"</span><span class="nv">$SLURM_NNODES</span><span class="s2">"</span><span class="w"> </span>--ntasks<span class="o">=</span><span class="s2">"</span><span class="nv">$SLURM_NNODES</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a><span class="w">    </span>ray<span class="w"> </span>symmetric-run<span class="w"> </span>--address<span class="w"> </span><span class="s2">"</span><span class="nv">$RAY_ADDRESS</span><span class="s2">"</span><span class="w"> </span>--min-nodes<span class="w"> </span><span class="s2">"</span><span class="nv">$SLURM_NNODES</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a><span class="w">        </span>--num-cpus<span class="o">=</span><span class="s2">"</span><span class="nv">$SLURM_CPUS_PER_TASK</span><span class="s2">"</span><span class="w"> </span>--num-gpus<span class="o">=</span><span class="s2">"</span><span class="nv">$GPUS_PER_NODE</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a><span class="w">        </span>--<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a><span class="w">        </span>python<span class="w"> </span>-m<span class="w"> </span>bhaskera.launcher.train<span class="w"> </span>--config<span class="w"> </span><span class="s2">"</span><span class="nv">$CONFIG</span><span class="s2">"</span><span class="w"> </span>--num-workers<span class="w"> </span><span class="s2">"</span><span class="nv">$WORKERS</span><span class="s2">"</span><span class="w"> </span>--no-dashboard
-<a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a><span class="nv">RC</span><span class="o">=</span><span class="nv">$?</span>
-<a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"=== training exit code: </span><span class="nv">$RC</span><span class="s2"> ==="</span>
-<a id="__codelineno-10-41" name="__codelineno-10-41" href="#__codelineno-10-41"></a><span class="nb">exit</span><span class="w"> </span><span class="nv">$RC</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1">#SBATCH --mem=170G                     # host RAM per node; the GPU partitions default to only 20 GB</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="c1">#SBATCH --output=logs/%x_%j.out</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="nb">set</span><span class="w"> </span>-uo<span class="w"> </span>pipefail
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="nv">CONFIG</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">1</span><span class="p">:?usage: sbatch train.sbatch &lt;config.yaml&gt;</span><span class="si">}</span><span class="s2">"</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>:<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">BHASKERA_DIR</span><span class="p">:?export BHASKERA_DIR=/scratch/&lt;project&gt;/&lt;username&gt;/Bhaskera before submitting</span><span class="si">}</span><span class="s2">"</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="nb">export</span><span class="w"> </span><span class="nv">HF_HUB_OFFLINE</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">HF_DATASETS_OFFLINE</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">TRANSFORMERS_OFFLINE</span><span class="o">=</span><span class="m">1</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="nb">export</span><span class="w"> </span><span class="nv">MLFLOW_ALLOW_FILE_STORE</span><span class="o">=</span><span class="nb">true</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="nb">source</span><span class="w"> </span><span class="s2">"</span><span class="nv">$BHASKERA_DIR</span><span class="s2">/bhaskera-activate.sh"</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="nb">export</span><span class="w"> </span><span class="nv">NCCL_SOCKET_IFNAME</span><span class="o">=</span>ib0<span class="w"> </span><span class="nv">NCCL_DEBUG</span><span class="o">=</span>WARN<span class="w"> </span><span class="nv">NCCL_ASYNC_ERROR_HANDLING</span><span class="o">=</span><span class="m">1</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="nb">export</span><span class="w"> </span><span class="nv">NCCL_TIMEOUT</span><span class="o">=</span><span class="m">3600</span><span class="w"> </span><span class="nv">TORCH_NCCL_BLOCKING_WAIT</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">TORCH_DISTRIBUTED_TIMEOUT</span><span class="o">=</span><span class="m">3600</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PYTORCH_CUDA_ALLOC_CONF</span><span class="o">=</span>expandable_segments:True
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="k">if</span><span class="w"> </span>grep<span class="w"> </span>-qE<span class="w"> </span><span class="s1">'^[[:space:]]*strategy:[[:space:]]*"?ddp'</span><span class="w"> </span><span class="s2">"</span><span class="nv">$CONFIG</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nv">CDMC</span><span class="o">=</span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="nv">CDMC</span><span class="o">=</span><span class="m">32</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="nb">export</span><span class="w"> </span><span class="nv">CUDA_DEVICE_MAX_CONNECTIONS</span><span class="o">=</span><span class="si">${</span><span class="nv">CUDA_DEVICE_MAX_CONNECTIONS</span><span class="k">:-</span><span class="nv">$CDMC</span><span class="si">}</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="nv">nodes</span><span class="o">=(</span><span class="k">$(</span>scontrol<span class="w"> </span>show<span class="w"> </span>hostnames<span class="w"> </span><span class="s2">"</span><span class="nv">$SLURM_JOB_NODELIST</span><span class="s2">"</span><span class="k">)</span><span class="o">)</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="nv">head_ip</span><span class="o">=</span><span class="k">$(</span>srun<span class="w"> </span>--nodes<span class="o">=</span><span class="m">1</span><span class="w"> </span>--ntasks<span class="o">=</span><span class="m">1</span><span class="w"> </span>-w<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">nodes</span><span class="p">[0]</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>ip<span class="w"> </span>-4<span class="w"> </span>addr<span class="w"> </span>show<span class="w"> </span>ib0<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'/inet / {print $2}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d/<span class="w"> </span>-f1<span class="k">)</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">"</span><span class="nv">$head_ip</span><span class="s2">"</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"=== could not read the ib0 address of </span><span class="si">${</span><span class="nv">nodes</span><span class="p">[0]</span><span class="si">}</span><span class="s2"> (Slurm controller unreachable or ib0 down); resubmit ==="</span>
+<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a><span class="k">fi</span>
+<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a><span class="nv">port</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="m">6379</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">SLURM_JOB_ID</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="m">1000</span><span class="w"> </span><span class="k">))</span>
+<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="nb">export</span><span class="w"> </span><span class="nv">RAY_ADDRESS</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">head_ip</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">port</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="nv">RAY_TMPDIR</span><span class="o">=</span><span class="s2">"/tmp/ray_</span><span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="nv">RAY_raylet_start_wait_time_s</span><span class="o">=</span><span class="m">300</span>
+<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="nv">GPUS_PER_NODE</span><span class="o">=</span><span class="m">2</span>
+<a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a><span class="nv">WORKERS</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="nv">SLURM_NNODES</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nv">GPUS_PER_NODE</span><span class="w"> </span><span class="k">))</span>
+<a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a>
+<a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a>srun<span class="w"> </span>--nodes<span class="o">=</span><span class="s2">"</span><span class="nv">$SLURM_NNODES</span><span class="s2">"</span><span class="w"> </span>--ntasks<span class="o">=</span><span class="s2">"</span><span class="nv">$SLURM_NNODES</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a><span class="w">    </span>ray<span class="w"> </span>symmetric-run<span class="w"> </span>--address<span class="w"> </span><span class="s2">"</span><span class="nv">$RAY_ADDRESS</span><span class="s2">"</span><span class="w"> </span>--min-nodes<span class="w"> </span><span class="s2">"</span><span class="nv">$SLURM_NNODES</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a><span class="w">        </span>--num-cpus<span class="o">=</span><span class="s2">"</span><span class="nv">$SLURM_CPUS_PER_TASK</span><span class="s2">"</span><span class="w"> </span>--num-gpus<span class="o">=</span><span class="s2">"</span><span class="nv">$GPUS_PER_NODE</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a><span class="w">        </span>--<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a><span class="w">        </span>python<span class="w"> </span>-m<span class="w"> </span>bhaskera.launcher.train<span class="w"> </span>--config<span class="w"> </span><span class="s2">"</span><span class="nv">$CONFIG</span><span class="s2">"</span><span class="w"> </span>--num-workers<span class="w"> </span><span class="s2">"</span><span class="nv">$WORKERS</span><span class="s2">"</span><span class="w"> </span>--no-dashboard
+<a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a><span class="nv">RC</span><span class="o">=</span><span class="nv">$?</span>
+<a id="__codelineno-10-41" name="__codelineno-10-41" href="#__codelineno-10-41"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"=== training exit code: </span><span class="nv">$RC</span><span class="s2"> ==="</span>
+<a id="__codelineno-10-42" name="__codelineno-10-42" href="#__codelineno-10-42"></a><span class="nb">exit</span><span class="w"> </span><span class="nv">$RC</span>
 </code></pre></div>
 <h3 id="expected-output_1">Expected Output<a class="headerlink" href="#expected-output_1" title="Permanent link">&para;</a></h3>
 <p>The first step appears after Ray start-up and model loading (about 5 minutes for a 14 B model, 10–20
@@ -2830,7 +2861,7 @@ minutes for 70 B–235 B). The last lines of a Qwen3-14B QLoRA run on 8 nodes:</
 </code></pre></div>
 <p>What each field means is explained in <a href="../monitoring/">Monitoring</a>.</p>
 <h2 id="step-4-full-run">Step 4: Full Run<a class="headerlink" href="#step-4-full-run" title="Permanent link">&para;</a></h2>
-<p>Work out the number of steps for one pass over your data from the smoke test:</p>
+<p>Work out the number of steps for one pass over your data from the first run:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>max_steps = (tokens in your training set) / (tok/s × step_s)
 </code></pre></div>
 <p>For example, with 1.24 billion tokens and the run above: 1,240,000,000 / (27,620 × 4.81) ≈ 9,300 steps.
@@ -2838,7 +2869,8 @@ Set <code>max_steps</code> in the recipe, check <a href="../recipes/#choosing-no
 and submit:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>$<span class="w"> </span>./submit.sh<span class="w"> </span>recipes/qwen3-14b-qlora.yaml<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="m">20</span>
 </code></pre></div>
-<p>The LoRA adapter is saved in <code>checkpoint.save_dir</code> when the run ends.</p>
+<p>A checkpoint with the trained LoRA weights and the optimizer state is written to <code>checkpoint.save_dir</code> when the
+run ends. Submitting the job again with the same <code>save_dir</code> and a larger <code>max_steps</code> continues from it.</p>
 
 
 

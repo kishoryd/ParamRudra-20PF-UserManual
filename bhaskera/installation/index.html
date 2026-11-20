@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://cdacindia.github.io/ParamRudra-20PF-UserManual/bhaskera/installation/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../why/">
       
       
         <link rel="next" href="../workflow/">
@@ -861,6 +861,36 @@
     
   
     Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 9 9l-8 3 8 3 3 8 3-8 8-3-8-3z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Bhaskera
   
 
     
@@ -2431,7 +2461,7 @@
 <p>There are two ways to use Bhaskera on PARAM Rudra. Most users should load the module.</p>
 <h2 id="option-a-module-recommended">Option A: Module (recommended)<a class="headerlink" href="#option-a-module-recommended" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>module<span class="w"> </span>avail<span class="w"> </span>bhaskera
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/2.2.0
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/1.1.2
 </code></pre></div>
 <p>The module provides:</p>
 <table>
@@ -2464,7 +2494,7 @@
 </code></pre></div>
 <p>Continue with the <a href="../workflow/">End-to-end Example</a>.</p>
 <h2 id="option-b-your-own-installation">Option B: Your Own Installation<a class="headerlink" href="#option-b-your-own-installation" title="Permanent link">&para;</a></h2>
-<p>Install once from a login node into your <code>/scratch</code> area (about 5 minutes). Use this if the module is
+<p>Install once from a login node into your <code>/scratch</code> area (5 to 15 minutes, depending on file-system load). Use this if the module is
 not available, or if you want to change Bhaskera's code.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/kishoryd/Bhaskera.git
@@ -2472,7 +2502,7 @@ not available, or if you want to change Bhaskera's code.</p>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>$<span class="w"> </span><span class="nv">BHASKERA_CUDA</span><span class="o">=</span><span class="m">12</span>.4<span class="w"> </span>bash<span class="w"> </span>setup.sh
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>$<span class="w"> </span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.3/flash_attn-2.7.3+cu12torch2.6cxx11abiFALSE-cp311-cp311-linux_x86_64.whl"</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>$<span class="w"> </span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"ray[train,data,default]==2.56.1"</span><span class="w"> </span><span class="nv">peft</span><span class="o">==</span><span class="m">0</span>.20.0<span class="w"> </span><span class="nv">accelerate</span><span class="o">==</span><span class="m">1</span>.14.0<span class="w"> </span>liger-kernel<span class="o">==</span><span class="m">0</span>.8.1<span class="w"> </span><span class="nv">mlflow</span><span class="o">==</span><span class="m">3</span>.15.0<span class="w"> </span><span class="nv">pyarrow</span><span class="o">==</span><span class="m">25</span>.0.0<span class="w"> </span><span class="nv">bitsandbytes</span><span class="o">==</span><span class="m">0</span>.50.2
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>$<span class="w"> </span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>slurm/requirements-paramrudra.lock
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Why each step is needed</p>
@@ -2482,9 +2512,9 @@ not available, or if you want to change Bhaskera's code.</p>
 <li><strong>Prebuilt flash-attention</strong>: <code>setup.sh</code> tries to compile flash-attention, which needs the CUDA
   compiler (<code>nvcc</code>); there is no CUDA 12 compiler module on PARAM Rudra, so that step fails. The
   prebuilt package needs no compiler. All recipes need flash-attention (sequence packing uses it).</li>
-<li><strong>Pinned versions</strong>: these are the versions used for every benchmark run. Newer Ray versions
-  require an authentication token between nodes and multi-node jobs fail at start-up with
-  <code>InvalidAuthToken</code>.</li>
+<li><strong><code>requirements-paramrudra.lock</code></strong>: the exact package versions used for every benchmark run.
+  With newer Ray and grpcio releases, multi-node jobs fail at start-up (<code>InvalidAuthToken</code>, or the
+  worker nodes time out waiting for the first node).</li>
 </ul>
 </div>
 <p>Then tell the job scripts where Bhaskera is, and copy the job scripts and recipes:</p>
@@ -2496,13 +2526,16 @@ not available, or if you want to change Bhaskera's code.</p>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>OK<span class="w"> </span><span class="m">2</span>.6.0+cu124<span class="w"> </span><span class="m">12</span>.4
 </code></pre></div>
 <h2 id="for-administrators-central-installation">For Administrators: Central Installation<a class="headerlink" href="#for-administrators-central-installation" title="Permanent link">&para;</a></h2>
-<p><code>install-bhaskera.sh</code> builds Bhaskera for all users and <code>bhaskera/2.2.0.lua</code> is the matching Lmod
+<p><code>install-bhaskera.sh</code> builds Bhaskera for all users and <code>bhaskera/1.1.2.lua</code> is the matching Lmod
 modulefile. Both are in the Bhaskera repository under <code>slurm/</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>bash<span class="w"> </span>slurm/install-bhaskera.sh<span class="w">                       </span><span class="c1"># installs to /home/apps/bhaskera/2.2.0</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>$<span class="w"> </span>cp<span class="w"> </span>slurm/modulefiles/bhaskera/2.2.0.lua<span class="w"> </span>/home/apps/modulefiles/bhaskera/2.2.0.lua
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>bash<span class="w"> </span>slurm/install-bhaskera.sh<span class="w">                       </span><span class="c1"># installs to /home/apps/bhaskera/1.1.2</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>$<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/home/apps/AIStack/bhaskera
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>$<span class="w"> </span>cp<span class="w"> </span>slurm/modulefiles/bhaskera/1.1.2.lua<span class="w"> </span>/home/apps/AIStack/bhaskera/1.1.2.lua
 </code></pre></div>
 <p>The installer must be run with the final path (<code>PREFIX=...</code> to change it), because a Python
-environment cannot be moved after it is built. It ends by printing the installed versions:</p>
+environment cannot be moved after it is built. It also installs Prometheus and Grafana under
+<code>/home/apps/bhaskera/1.1.2/observability</code> (for the charts in the Ray Dashboard); this step needs internet
+access, and <code>WITH_CHARTS=0</code> skips it. It ends by printing the installed versions:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>OK  torch 2.6.0+cu124 (CUDA 12.4)  flash-attn 2.7.3  bitsandbytes 0.50.2  transformers 4.57.6  ray 2.56.1  peft 0.20.0
 </code></pre></div>
 
@@ -2543,7 +2576,7 @@ environment cannot be moved after it is built. It ends by printing the installed
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+          <a href="../why/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Why Bhaskera">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -2553,7 +2586,7 @@ environment cannot be moved after it is built. It ends by printing the installed
                 Previous
               </span>
               <div class="md-ellipsis">
-                Overview
+                Why Bhaskera
               </div>
             </div>
           </a>

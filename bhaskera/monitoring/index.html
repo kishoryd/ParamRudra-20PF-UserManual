@@ -881,6 +881,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../why/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1 9 9l-8 3 8 3 3 8 3-8 8-3-8-3z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Bhaskera
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../installation/" class="md-nav__link">
         
   
@@ -1033,6 +1063,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-step-log" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1048,6 +1089,17 @@
     <span class="md-ellipsis">
       
         MLflow Dashboard
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ray-dashboard-charts-and-mlflow-in-one-place" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ray Dashboard, Charts and MLflow in One Place
       
     </span>
   </a>
@@ -2322,6 +2374,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-step-log" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2337,6 +2400,17 @@
     <span class="md-ellipsis">
       
         MLflow Dashboard
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ray-dashboard-charts-and-mlflow-in-one-place" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ray Dashboard, Charts and MLflow in One Place
       
     </span>
   </a>
@@ -2386,6 +2460,34 @@
 
 
 <h1 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>A Bhaskera job can be followed in three places:</p>
+<table>
+<thead>
+<tr>
+<th>Where</th>
+<th>What it shows</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The job log</td>
+<td>One line per step, and a one-line summary of all nodes every 10 steps</td>
+<td>A quick look while the job runs</td>
+</tr>
+<tr>
+<td>MLflow</td>
+<td>Training curves, and GPU and host curves for the whole job and for each node</td>
+<td>Comparing runs, and looking back at a finished run</td>
+</tr>
+<tr>
+<td>Ray Dashboard</td>
+<td>Every node of the running job with its CPU, memory and GPU load, and the logs of each worker</td>
+<td>Looking at the nodes while the job runs, at any number of nodes</td>
+</tr>
+</tbody>
+</table>
 <h2 id="the-step-log">The Step Log<a class="headerlink" href="#the-step-log" title="Permanent link">&para;</a></h2>
 <p>Every training step prints one line to the job log. Follow it while the job runs:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>squeue<span class="w"> </span>-u<span class="w"> </span><span class="nv">$USER</span>
@@ -2434,39 +2536,154 @@
 </tr>
 <tr>
 <td><code>mem</code></td>
-<td>Peak GPU memory on the busiest GPU, allocated / reserved</td>
+<td>Peak GPU memory on the busiest GPU of the job, allocated / reserved</td>
+</tr>
+<tr>
+<td><code>slowest=rN</code></td>
+<td>Shown when one GPU lags: the slowest rank, and its step time against the median</td>
 </tr>
 </tbody>
 </table>
+<p>Every 10 steps a second line summarises all nodes of the job:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>[step 30] nodes=5 gpus=10 gpu_util=94/98/99% (min/mean/max) gpu_mem_max=17.7GiB temp_max=58C
+</code></pre></div>
+<p>A low minimum next to a high mean points at one GPU that is waiting for the others. The interval is
+<code>monitoring.metrics.node_stats_every_n_steps</code> in the recipe (0 turns the summary and the node curves off).</p>
 <div class="admonition note">
 <p class="admonition-title">Check the log, not only the job state</p>
 <p>A job can end as <code>COMPLETED</code> in SLURM even when training failed. A successful run ends with
 <code>=== training exit code: 0 ===</code>.</p>
 </div>
 <h2 id="mlflow-dashboard">MLflow Dashboard<a class="headerlink" href="#mlflow-dashboard" title="Permanent link">&para;</a></h2>
-<p>Every run is also recorded with MLflow under <code>~/mlflow-runs</code>, so runs can be charted and compared in a
-web page. Start the dashboard on a <strong>login node</strong>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/2.2.0
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>start<span class="w"> </span>--port<span class="w"> </span><span class="m">5055</span><span class="w">      </span><span class="c1"># the port is remembered for next time</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>status
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>tunnel<span class="w">                 </span><span class="c1"># prints the SSH command for your laptop</span>
+<p>Every run is recorded with MLflow under <code>~/mlflow-runs</code>, so runs can be charted and compared in a web page.
+The Ray Dashboard command below starts MLflow for you. To run MLflow on its own, start it on a <strong>login node</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/1.1.2
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>start<span class="w"> </span>--port<span class="w"> </span><span class="m">5055</span><span class="w">      </span><span class="c1"># the port is remembered for next time</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>status
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>tunnel<span class="w">                 </span><span class="c1"># prints the SSH command for your laptop</span>
 </code></pre></div>
 <p><code>bhaskera-dashboard tunnel</code> prints the command for the login node you are on, for example:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>  From your laptop:
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    ssh -L 5055:localhost:5055 login02
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    open http://localhost:5055
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>  From your laptop:
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    ssh -L 5055:localhost:5055 login02
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    open http://localhost:5055
 </code></pre></div>
 <p>On your laptop, run that command through your usual connection to PARAM Rudra (see
-<a href="../../access/">Getting Access</a>) so that it ends on the same login node, and open
-<a href="http://localhost:5055">http://localhost:5055</a>, then the experiment <strong>bhaskera</strong>. Useful charts: <code>loss</code>, <code>eval_loss</code>,
-<code>eval_accuracy</code>, <code>throughput/mfu_pct</code>.</p>
-<p>Stop the dashboard when you are done:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>stop
+<a href="../../access/">Getting Access</a>) so that it ends on the same login node, and open <a href="http://localhost:5055">http://localhost:5055</a>, then
+the experiment <strong>bhaskera</strong>. A multi-node job is one run. It has these curves:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>loss</code>, <code>lr</code>, <code>grad_norm</code>, <code>eval_loss</code>, <code>eval_accuracy</code></td>
+<td>The model</td>
+</tr>
+<tr>
+<td><code>throughput_tokens_per_sec</code>, <code>throughput_mfu_pct</code></td>
+<td>Speed of the whole job</td>
+</tr>
+<tr>
+<td><code>time_step_max_s</code>, <code>time_step_median_s</code>, <code>time_slowest_rank</code></td>
+<td>Spread of the step time over all ranks: the straggler signal</td>
+</tr>
+<tr>
+<td><code>cluster_gpu_util_pct_min</code>, <code>_mean</code>, <code>_max</code></td>
+<td>GPU utilisation over every GPU of every node</td>
+</tr>
+<tr>
+<td><code>cluster_gpu_mem_used_gib_max</code>, <code>cluster_gpu_temp_c_max</code>, <code>cluster_gpu_power_w_sum</code></td>
+<td>Memory, temperature and power over every GPU</td>
+</tr>
+<tr>
+<td><code>node_&lt;host&gt;_gpu&lt;i&gt;_util_pct</code>, <code>_mem_used_gib</code>, <code>_temp_c</code>, <code>_power_w</code></td>
+<td>One set of curves per GPU of each node, for example <code>node_cbgpu0241_gpu0_util_pct</code></td>
+</tr>
+<tr>
+<td><code>node_&lt;host&gt;_cpu_pct</code>, <code>_mem_used_pct</code>, <code>_loadavg_1m</code></td>
+<td>CPU and memory of each node</td>
+</tr>
+</tbody>
+</table>
+<p>MLflow shows the <code>/</code> of a metric name as <code>_</code>. Type <code>cluster</code> or a node name in the metric filter to find
+these curves. The older <code>gpu_0_...</code>, <code>gpu_1_...</code> and <code>sys_...</code> curves describe only the node of rank 0.</p>
+<p>The <code>node_&lt;host&gt;_...</code> curves are written while the job has at most 16 nodes
+(<code>monitoring.metrics.node_stats_per_node_max</code>). A larger job would write more than a thousand curves every
+time, so it keeps the <code>cluster_...</code> curves, and the Ray Dashboard shows the individual nodes.</p>
+<p>Stop the MLflow dashboard when you are done:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>stop
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The dashboard runs only on the login node where you started it, so the tunnel must end on that
+<p>The MLflow dashboard runs only on the login node where you started it, so the tunnel must end on that
 login node. If the port is in use, choose another with <code>--port</code>.</p>
+</div>
+<h2 id="ray-dashboard-charts-and-mlflow-in-one-place">Ray Dashboard, Charts and MLflow in One Place<a class="headerlink" href="#ray-dashboard-charts-and-mlflow-in-one-place" title="Permanent link">&para;</a></h2>
+<p>Ray starts a dashboard on the first node of every job, and every job has its own. Each lists all nodes of
+the job with their CPU, memory and GPU load, with charts over time, and works for any number of nodes. These
+dashboards listen on their node only, so they are reached through an SSH tunnel. You do not need to know which
+node a job runs on, or wait for it to start: <code>bhaskera-dashboard ray</code> finds your running jobs, links each of
+them, and puts everything behind one address.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/1.1.2
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>ray<span class="w">                  </span><span class="c1"># or: bhaskera-dashboard ray --job &lt;jobid&gt;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>From<span class="w"> </span>your<span class="w"> </span>laptop,<span class="w"> </span>this<span class="w"> </span>one<span class="w"> </span><span class="nb">command</span><span class="w"> </span>logs<span class="w"> </span><span class="k">in</span><span class="w"> </span>and<span class="w"> </span>keeps<span class="w"> </span>everything<span class="w"> </span>open
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="o">(</span>the<span class="w"> </span><span class="nb">command</span><span class="w"> </span>is<span class="w"> </span>always<span class="w"> </span>the<span class="w"> </span>same<span class="p">;</span><span class="w"> </span>it<span class="w"> </span>finds<span class="w"> </span>your<span class="w"> </span><span class="nb">jobs</span><span class="w"> </span>and<span class="w"> </span>their<span class="w"> </span>nodes<span class="w"> </span>by<span class="w"> </span>itself<span class="o">)</span>:
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span>ssh<span class="w"> </span>-p<span class="w"> </span><span class="m">4422</span><span class="w"> </span>-L<span class="w"> </span><span class="m">8265</span>:localhost:20029<span class="w"> </span>&lt;user&gt;@paramrudra.cdacb.in<span class="w"> </span><span class="s2">"bash -lc 'module load bhaskera/1.1.2 &amp;&amp; bhaskera-dashboard ray'"</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>Then<span class="w"> </span>open<span class="w"> </span>http://localhost:8265<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>browser:<span class="w"> </span>your<span class="w"> </span>running<span class="w"> </span>jobs,<span class="w"> </span>with<span class="w"> </span>their<span class="w"> </span>Ray<span class="w"> </span>Dashboards,
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>charts<span class="w"> </span>and<span class="w"> </span>MLflow,<span class="w"> </span>are<span class="w"> </span>linked<span class="w"> </span>from<span class="w"> </span>that<span class="w"> </span>page.
+</code></pre></div>
+<p>Run that command on your laptop, leave it open, and open <a href="http://localhost:8265">http://localhost:8265</a>. That page lists your running
+jobs, and for each one a link to its <strong>Ray Dashboard</strong> and its <strong>Grafana charts</strong>, and a link to <strong>MLflow</strong>.
+Run the command before or after you submit a job. Jobs that start later appear on the page by themselves, and
+a job that ends is removed. The number after <code>-L</code> on the login-node side is reserved for your user name, so it
+differs from user to user and stays the same for you.</p>
+<p>To avoid typing the command, run <code>bhaskera-dashboard ssh-config</code> on the login node and paste the block it
+prints into <code>~/.ssh/config</code> on your laptop (once). From then on:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>ssh<span class="w"> </span>bhaskera-ray
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Laptops</p>
+<p>The <code>ssh-config</code> entry needs OpenSSH 7.6 or newer, which Mac, Linux and Windows 10 or later have. With
+PuTTY, or if port 8265 is already in use on your laptop, forward the port from VS Code (below). The links on
+the page look like <code>http://job-&lt;id&gt;.localhost:8265</code>; Chrome, Edge and Firefox send such names to your own
+computer without any setup.</p>
+</div>
+<p>In the Ray Dashboard of a job:</p>
+<ul>
+<li><strong>Cluster</strong> lists every node with its CPU, memory and, per GPU, utilisation and memory. A node that is idle
+  or full stands out here.</li>
+<li><strong>Cluster utilization</strong> (on the Overview page) and <strong>Metrics</strong> draw GPU, CPU and memory over time for
+  every node. They are Grafana charts, also reached from the page under <strong>Grafana charts</strong>. They are there when
+  Prometheus and Grafana are installed next to Bhaskera (the module sets <code>BHASKERA_OBSERVABILITY</code>); the
+  job log says <code>charts: Prometheus and Grafana started</code> when they run. Without them the node list still
+  works, only the charts are missing.</li>
+<li><strong>Jobs</strong> shows the training job and its workers; <strong>Logs</strong> has the output of each worker, which helps when
+  one node fails.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Two entries for one job</p>
+<p>Ray numbers its jobs itself (<code>01000000</code>, <code>02000000</code>), so these numbers differ from the SLURM job ID. One
+SLURM job shows two entries. The first is <code>ray symmetric-run</code>, which starts the cluster on every node
+and has no tasks. The second is the training itself.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">After the job ends or fails</p>
+<p>The Ray Dashboard and the charts exist only while the job runs. The command starts MLflow on the login node
+for you and keeps the connection open when a job ends, so the metrics stay under <strong>MLflow</strong> on the page. A
+run that stopped with an error is marked <strong>FAILED</strong> and keeps the curves logged up to that point. A run
+whose job was killed (time limit, failed node) is marked <strong>KILLED</strong> the next time the command runs.</p>
+</div>
+<p>Use <code>--job &lt;jobid&gt;</code> to show one job only, or any running job that was not started with <code>submit.sh</code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">VS Code</p>
+<p>If you work through VS Code Remote-SSH, run <code>bhaskera-dashboard ray</code> in its terminal, then forward port
+8265 from the <strong>Ports</strong> tab instead of typing the tunnel command.</p>
 </div>
 
 
