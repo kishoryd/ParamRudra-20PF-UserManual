@@ -22,7 +22,7 @@ mixture-of-experts (MoE) models, on 8 to 128 nodes (see [Benchmarks](benchmarks.
 
 | | |
 |---|---|
-| **Version** | 1.0.0 (Python 3.11, PyTorch 2.6 with CUDA 12.4, transformers 4.57) |
+| **Version** | 1.1.0 (Python 3.11, PyTorch 2.6 with CUDA 12.4, transformers 4.57) |
 | **Tested models** | Qwen3-14B, Llama-3.3-70B, Mistral-Large-123B (dense); Qwen3-30B-A3B, Qwen3-235B-A22B (MoE) |
 | **Parallelism** | QLoRA + DDP (4-bit), DDP, Pipeline, FSDP, HSDP |
 | **Partitions** | `debug` (tokenising), `gpu-small`, `gpu-large`, `gpu-massive` (training) |
@@ -30,7 +30,7 @@ mixture-of-experts (MoE) models, on 8 to 128 nodes (see [Benchmarks](benchmarks.
 ## Quick Start
 
 ```bash
-$ module load bhaskera/1.0.0
+$ module load bhaskera/1.1.0
 $ cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs
 $ cd /scratch/<project>/<username>/bhaskera-runs
 $ export SLURM_ACCOUNT=<your_account>
@@ -52,7 +52,7 @@ $ tail -f logs/qwen3-14b-qlora_<jobid>.out | grep --line-buffered -E '\[step|eva
 | [Installation](installation.md) | Loading the module, or installing your own copy |
 | [End-to-end Example](workflow.md) | Model and data, tokenising, training, expected output, resuming |
 | [Recipes](recipes.md) | Ready configurations for each model, and how many nodes and hours to request |
-| [Monitoring](monitoring.md) | The step log and the MLflow dashboard |
+| [Monitoring](monitoring.md) | The step log, MLflow, and the Ray Dashboard with charts for every node |
 | [Parallelism Strategies](parallelism.md) | QLoRA, DDP, Pipeline, FSDP and HSDP: which to use |
 | [Benchmarks](benchmarks.md) | Measured speed, MFU, memory and accuracy for every model, strategy and node count |
 | [Troubleshooting & Reference](troubleshooting.md) | Common errors, limitations, command reference |
