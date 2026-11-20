@@ -14,7 +14,7 @@ The run has four steps, all started from a login node:
 
 - Download the model and prepare the data
 - Tokenise the data (one CPU job, once per model and dataset)
-- Run a 10-step smoke test
+- Run a short first job (10 steps)
 - Run the full training job
 
 ## Input
@@ -127,7 +127,7 @@ data:
   val_tokenized_path: /scratch/<project>/<username>/cache/local_val_eb6d6d3703815f3c
 ```
 
-## Step 3: Smoke Test (10 steps)
+## Step 3: First Run (10 steps)
 
 The recipe runs 10 steps. Submit it on 8 nodes with a 1-hour limit:
 
@@ -221,7 +221,7 @@ What each field means is explained in [Monitoring](monitoring.md).
 
 ## Step 4: Full Run
 
-Work out the number of steps for one pass over your data from the smoke test:
+Work out the number of steps for one pass over your data from the first run:
 
 ```text
 max_steps = (tokens in your training set) / (tok/s × step_s)
@@ -235,4 +235,5 @@ and submit:
 $ ./submit.sh recipes/qwen3-14b-qlora.yaml 8 20
 ```
 
-The LoRA adapter is saved in `checkpoint.save_dir` when the run ends.
+A checkpoint with the trained LoRA weights and the optimizer state is written to `checkpoint.save_dir` when the
+run ends. Submitting the job again with the same `save_dir` and a larger `max_steps` continues from it.

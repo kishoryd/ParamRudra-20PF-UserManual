@@ -40,15 +40,16 @@ $ ./submit.sh recipes/<recipe>.yaml 8 12
 
 ## Known Limitations
 
-- **Checkpoints with QLoRA and DDP are written only when the run ends**, so the run must fit in one job
-  (see [Choosing Nodes and Hours](recipes.md#choosing-nodes-and-hours)). Pipeline recipes checkpoint
-  every 500 steps and resume when resubmitted.
+- **QLoRA, DDP and FSDP recipes write a checkpoint only when the run ends**, so a run longer than the
+  time limit has to be split with `max_steps` (see
+  [Choosing Nodes and Hours](recipes.md#choosing-nodes-and-hours)). Pipeline recipes checkpoint every 500
+  steps. All of them continue from the latest checkpoint when resubmitted, but the data starts again from
+  the beginning of the training set.
 - **MoE models are slow outside the Pipeline strategy** (0.2–1.7% MFU), because the standard expert code
   processes experts one at a time. Use the Pipeline recipes for MoE models.
 - **DDP needs the whole model on each GPU**: 70 B and larger need QLoRA or Pipeline.
 - **Qwen3-235B does not fit with QLoRA** (about 118 GB of 4-bit weights per GPU).
-- **gpt-oss-120b** is stored in MXFP4, which A100 GPUs cannot compute in; it has not been validated
-  for training.
+- **gpt-oss-120b** is stored in MXFP4, which A100 GPUs cannot compute in; training it is not supported.
 
 ## Quick Reference
 

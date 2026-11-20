@@ -14,38 +14,16 @@ numbers below come from those runs.
 
 ## What You Get
 
-<div class="grid cards" markdown>
-
--   :material-rocket-launch: **Fast at any scale**
-
-    ---
-
-    QLoRA recipes keep **34–39% MFU** from 8 to 128 nodes, and Pipeline **23–31%** on dense models.
-    Going from 8 to 128 nodes makes Qwen3-14B about **15× faster** (12.5 h → 49 min per epoch).
-
--   :material-memory: **Big models on 80 GB GPUs**
-
-    ---
-
-    QLoRA stores the frozen model in 4 bits: Llama-3.3-70B needs **55 GB per GPU instead of 141 GB**, and
-    Mistral-Large-123B fits too. Pipeline trains Qwen3-235B at **45 GB per GPU**.
-
--   :material-check-decagram: **Checked before it queues**
-
-    ---
-
-    `submit.sh` runs a preflight on the login node in seconds: model files, libraries, data, and a
-    GPU-memory estimate that was within 13% of the measured peak on all seven recipes checked (usually
-    within 5%). No more out-of-memory surprises after hours in the queue.
-
--   :material-file-cog: **One file per run**
-
-    ---
-
-    A recipe holds the model, data and strategy. Tested recipes for eight models are included; change
-    two paths and submit.
-
-</div>
+- **Speed that scales with the number of nodes.** QLoRA recipes keep 34–39% MFU from 8 to 128 nodes, and
+  Pipeline recipes 23–31% on dense models. Going from 8 to 128 nodes makes Qwen3-14B about 15 times faster
+  (12.5 h to 49 min per epoch).
+- **Large models on 80 GB GPUs.** QLoRA stores the frozen model in 4 bits: Llama-3.3-70B needs 55 GB per GPU
+  instead of 141 GB, and Mistral-Large-123B fits as well. Pipeline trains Qwen3-235B at 45 GB per GPU.
+- **A check before the job is queued.** `submit.sh` runs a preflight on the login node in seconds. It checks
+  the model files, libraries and data, and estimates GPU memory to about 15% of the measured peak, so a job
+  that cannot fit is rejected before it waits in the queue.
+- **One file per run.** A recipe holds the model, the data and the strategy. Recipes for eight model and
+  strategy combinations are included; change two paths and submit.
 
 ## Measured Benefits
 
