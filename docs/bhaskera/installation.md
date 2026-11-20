@@ -6,7 +6,7 @@ There are two ways to use Bhaskera on PARAM Rudra. Most users should load the mo
 
 ```bash
 $ module avail bhaskera
-$ module load bhaskera/2.2.0
+$ module load bhaskera/1.0.0
 ```
 
 The module provides:
@@ -40,7 +40,7 @@ $ cd Bhaskera
 $ BHASKERA_CUDA=12.4 bash setup.sh
 $ source .venv/bin/activate
 $ uv pip install "https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.3/flash_attn-2.7.3+cu12torch2.6cxx11abiFALSE-cp311-cp311-linux_x86_64.whl"
-$ uv pip install "ray[train,data,default]==2.56.1" peft==0.20.0 accelerate==1.14.0 liger-kernel==0.8.1 mlflow==3.15.0 pyarrow==25.0.0 bitsandbytes==0.50.2
+$ uv pip install -r slurm/requirements-paramrudra.lock
 ```
 
 !!! warning "Why each step is needed"
@@ -49,9 +49,9 @@ $ uv pip install "ray[train,data,default]==2.56.1" peft==0.20.0 accelerate==1.14
     - **Prebuilt flash-attention**: `setup.sh` tries to compile flash-attention, which needs the CUDA
       compiler (`nvcc`); there is no CUDA 12 compiler module on PARAM Rudra, so that step fails. The
       prebuilt package needs no compiler. All recipes need flash-attention (sequence packing uses it).
-    - **Pinned versions**: these are the versions used for every benchmark run. Newer Ray versions
-      require an authentication token between nodes and multi-node jobs fail at start-up with
-      `InvalidAuthToken`.
+    - **`requirements-paramrudra.lock`**: the exact package versions used for every benchmark run.
+      With newer Ray and grpcio releases, multi-node jobs fail at start-up (`InvalidAuthToken`, or the
+      worker nodes time out waiting for the first node).
 
 Then tell the job scripts where Bhaskera is, and copy the job scripts and recipes:
 
@@ -69,12 +69,12 @@ OK 2.6.0+cu124 12.4
 
 ## For Administrators: Central Installation
 
-`install-bhaskera.sh` builds Bhaskera for all users and `bhaskera/2.2.0.lua` is the matching Lmod
+`install-bhaskera.sh` builds Bhaskera for all users and `bhaskera/1.0.0.lua` is the matching Lmod
 modulefile. Both are in the Bhaskera repository under `slurm/`.
 
 ```bash
-$ bash slurm/install-bhaskera.sh                       # installs to /home/apps/bhaskera/2.2.0
-$ cp slurm/modulefiles/bhaskera/2.2.0.lua /home/apps/modulefiles/bhaskera/2.2.0.lua
+$ bash slurm/install-bhaskera.sh                       # installs to /home/apps/bhaskera/1.0.0
+$ cp slurm/modulefiles/bhaskera/1.0.0.lua /home/apps/modulefiles/bhaskera/1.0.0.lua
 ```
 
 The installer must be run with the final path (`PREFIX=...` to change it), because a Python

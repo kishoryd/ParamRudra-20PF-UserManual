@@ -112,6 +112,7 @@ nav:
 
   - LLM Fine-tuning:
       - Overview: bhaskera/index.md
+      - Why Bhaskera: bhaskera/why.md
       - Installation: bhaskera/installation.md
       - End-to-end Example: bhaskera/workflow.md
       - Recipes: bhaskera/recipes.md

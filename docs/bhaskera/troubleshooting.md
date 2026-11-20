@@ -16,23 +16,27 @@ icon: material/lifebuoy
 | `node running low on memory` (Ray kills workers) | Host RAM (about 187 GB per node) exhausted while loading a very large model | Use the Pipeline recipe for that model |
 | `invalid device ordinal` | A GPU on one node failed to start | Resubmit with that node excluded |
 | `DistBackendError` or an NCCL timeout | Network fault or a hung process | Resubmit; if it repeats on one node, exclude it |
-| `oom_kill` events in a tokenize job | The tokenize job ran with a small default memory | Use the provided `tokenize.sbatch` (`--exclusive --mem=0`) |
+| `oom_kill` events in a tokenize job | The tokenize job ran with a small default memory | Use the provided `tokenize.sbatch` (`--exclusive --mem=180G`) |
 
 ### Excluding a faulty node
 
 Find the node behind a failing worker from the address in the log (`ip=172.41.x.y`):
 
 ```bash
-$ getent hosts 172.41.x.y
-172.41.x.y   cbgpuXXXX-ib0 cbgpuXXXX-ib0.cdacb.in
+$ grep -w 172.41.x.y /etc/hosts
+172.41.x.y cbgpuXXXX-ib0 cbgpuXXXX-ib0.cdacb.in
 ```
 
-Then keep your jobs off it. `submit.sh` passes this to `sbatch`:
+Then keep your jobs off it. `submit.sh` passes `BHASKERA_EXCLUDE` to `sbatch --exclude`:
 
 ```bash
-$ export SBATCH_EXCLUDE=cbgpuXXXX            # comma-separated for several nodes
+$ export BHASKERA_EXCLUDE=cbgpuXXXX          # comma-separated for several nodes
 $ ./submit.sh recipes/<recipe>.yaml 8 12
 ```
+
+!!! note
+    The `SBATCH_EXCLUDE` environment variable is not applied on PARAM Rudra; use `BHASKERA_EXCLUDE`
+    (or `--exclude=` when calling `sbatch` yourself).
 
 ## Known Limitations
 
@@ -50,7 +54,7 @@ $ ./submit.sh recipes/<recipe>.yaml 8 12
 
 | Task | Command |
 |---|---|
-| Load Bhaskera | `module load bhaskera/2.2.0` (own installation: `source $BHASKERA_DIR/.venv/bin/activate`) |
+| Load Bhaskera | `module load bhaskera/1.0.0` (own installation: `source $BHASKERA_DIR/.venv/bin/activate`) |
 | Get the job scripts and recipes | `cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs` |
 | Set your account | `export SLURM_ACCOUNT=<your_account>` |
 | Download a model (login node) | `huggingface-cli download <org>/<model> --local-dir /scratch/<project>/<username>/models/<model>` |

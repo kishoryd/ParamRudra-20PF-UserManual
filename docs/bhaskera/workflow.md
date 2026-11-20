@@ -22,7 +22,7 @@ The run has four steps, all started from a login node:
 ### Run folder
 
 ```bash
-$ module load bhaskera/2.2.0
+$ module load bhaskera/1.0.0
 $ cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs
 $ cd /scratch/<project>/<username>/bhaskera-runs
 $ export SLURM_ACCOUNT=<your_account>
@@ -79,7 +79,7 @@ $ ./submit.sh tokenize recipes/tokenize-chatml.yaml
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=48
 #SBATCH --exclusive
-#SBATCH --mem=0
+#SBATCH --mem=180G                     # debug partition maximum per node
 #SBATCH --time=01:00:00
 #SBATCH --output=logs/%x_%j.out
 
@@ -167,6 +167,7 @@ per GPU:
 #SBATCH --gres=gpu:2
 #SBATCH --cpus-per-task=48
 #SBATCH --exclusive
+#SBATCH --mem=170G                     # host RAM per node; the GPU partitions default to only 20 GB
 #SBATCH --output=logs/%x_%j.out
 
 set -uo pipefail

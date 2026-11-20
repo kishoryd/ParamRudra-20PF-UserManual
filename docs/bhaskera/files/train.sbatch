@@ -14,6 +14,7 @@
 #SBATCH --gres=gpu:2
 #SBATCH --cpus-per-task=48
 #SBATCH --exclusive
+#SBATCH --mem=170G                     # host RAM per node; the GPU partitions default to only 20 GB
 #SBATCH --output=logs/%x_%j.out
 
 set -uo pipefail

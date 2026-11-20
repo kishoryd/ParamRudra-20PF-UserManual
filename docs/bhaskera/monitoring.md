@@ -42,7 +42,7 @@ Every run is also recorded with MLflow under `~/mlflow-runs`, so runs can be cha
 web page. Start the dashboard on a **login node**:
 
 ```bash
-$ module load bhaskera/2.2.0
+$ module load bhaskera/1.0.0
 $ bhaskera-dashboard start --port 5055      # the port is remembered for next time
 $ bhaskera-dashboard status
 $ bhaskera-dashboard tunnel                 # prints the SSH command for your laptop
