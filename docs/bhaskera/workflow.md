@@ -22,7 +22,7 @@ The run has four steps, all started from a login node:
 ### Run folder
 
 ```bash
-$ module load bhaskera/1.1.1
+$ module load bhaskera/1.1.2
 $ cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs
 $ cd /scratch/<project>/<username>/bhaskera-runs
 $ export SLURM_ACCOUNT=<your_account>

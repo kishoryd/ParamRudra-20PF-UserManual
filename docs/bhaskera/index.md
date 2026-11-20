@@ -22,7 +22,7 @@ mixture-of-experts (MoE) models, on 8 to 128 nodes (see [Benchmarks](benchmarks.
 
 | | |
 |---|---|
-| **Version** | 1.1.1 (Python 3.11, PyTorch 2.6 with CUDA 12.4, transformers 4.57) |
+| **Version** | 1.1.2 (Python 3.11, PyTorch 2.6 with CUDA 12.4, transformers 4.57) |
 | **Tested models** | Qwen3-14B, Llama-3.3-70B, Mistral-Large-123B (dense); Qwen3-30B-A3B, Qwen3-235B-A22B (MoE) |
 | **Parallelism** | QLoRA + DDP (4-bit), DDP, Pipeline, FSDP, HSDP |
 | **Partitions** | `debug` (tokenising), `gpu-small`, `gpu-large`, `gpu-massive` (training) |
@@ -30,7 +30,7 @@ mixture-of-experts (MoE) models, on 8 to 128 nodes (see [Benchmarks](benchmarks.
 ## Quick Start
 
 ```bash
-$ module load bhaskera/1.1.1
+$ module load bhaskera/1.1.2
 $ cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs
 $ cd /scratch/<project>/<username>/bhaskera-runs
 $ export SLURM_ACCOUNT=<your_account>
