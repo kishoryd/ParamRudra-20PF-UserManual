@@ -38,7 +38,7 @@ tokenizer config for vision (`tokenize_vision.yaml`, image and video) and one fo
 
 ```bash
 $ python -m bhaskera.launcher.tokenize --config configs/multimodal/tokenize_vision.yaml --split both
-$ sbatch scripts/submit_multimodal.sh configs/multimodal/fsdp.yaml
+$ ./submit.sh configs/multimodal/fsdp.yaml <nodes> <hours>
 ```
 
 Put the two printed cache paths into the training config first. Important settings: `data.modalities` (any of `text`,

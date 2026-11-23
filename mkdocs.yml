@@ -119,6 +119,8 @@ nav:
       - Monitoring: bhaskera/monitoring.md
       - Home Page: bhaskera/homepage.md
       - Multimodal: bhaskera/multimodal.md
+      - Resuming a Job: bhaskera/resume.md
+      - Model Registry: bhaskera/registry.md
       - Parallelism Strategies: bhaskera/parallelism.md
       - Benchmarks: bhaskera/benchmarks.md
       - Troubleshooting & Reference: bhaskera/troubleshooting.md

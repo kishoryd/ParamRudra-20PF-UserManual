@@ -67,6 +67,8 @@ $ ./submit.sh recipes/<recipe>.yaml 8 12
 | Home page: jobs, start, chat | `bhaskera-dashboard ray` (see [Home Page](homepage.md)) |
 | Chat with a trained run | `./submit.sh serve --run <run id>` |
 | Benchmark a trained run | `./submit.sh eval --run <run id> --tasks arc_easy,hellaswag --limit 200` |
+| Continue a run that stopped | `./submit.sh resume --run <run id>` (add `--step N` to go back) |
+| Save a trained model in the registry | `python -m bhaskera.launcher.register add --run <run id> --name <model> --alias champion` (see [Model Registry](registry.md)) |
 | Hyperparameter sweep | `python -m bhaskera.launcher.sweep plan\|submit\|report sweep.yaml` |
 | Check and clean a data file | `python -m bhaskera.launcher.data_tools inspect\|dedupe\|filter\|split` |
 

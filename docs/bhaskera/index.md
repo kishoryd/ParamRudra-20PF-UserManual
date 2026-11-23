@@ -57,6 +57,8 @@ $ tail -f logs/qwen3-14b-qlora_<jobid>.out | grep --line-buffered -E '\[step|eva
 | [Monitoring](monitoring.md) | The step log, MLflow, and the Ray Dashboard with charts for every node |
 | [Home Page](homepage.md) | One page for your jobs: start a job, chat with a trained model, benchmark it |
 | [Multimodal](multimodal.md) | Fine-tuning with images, video and audio |
+| [Model Registry](registry.md) | Naming and versioning trained models, aliases such as champion, using them by name |
+| [Resuming a Job](resume.md) | Checkpoints, continuing after a failure, going back after a loss spike |
 | [Parallelism Strategies](parallelism.md) | QLoRA, DDP, Pipeline, FSDP and HSDP: which to use |
 | [Benchmarks](benchmarks.md) | Measured speed, MFU, memory and accuracy for every model, strategy and node count |
 | [Troubleshooting & Reference](troubleshooting.md) | Common errors, limitations, command reference |

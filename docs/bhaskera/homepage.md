@@ -27,8 +27,10 @@ Press **Start a job**. Pick what to start:
 | Train a model | a recipe, the number of nodes, optionally the hours | `./submit.sh <recipe> <nodes> <hours>` |
 | Chat with a trained model | a trained run | `./submit.sh serve --run <run id>` |
 | Benchmark a trained model | a trained run, the benchmarks | `./submit.sh eval --run <run id> --tasks ...` |
+| Resume a stopped run | a run that failed or was killed, and the step to continue from | `./submit.sh resume --run <run id>` |
+| Register a model | a trained run, a name, an optional alias | `python -m bhaskera.launcher.register add ...` (no Slurm job: it takes a second) |
 
-**Check first** runs the partition limits and the recipe check and submits nothing. **Start** submits. The page runs the
+**Check first** runs the partition limits and the recipe check and submits nothing. **Start** submits (training and resuming ask once more before they use GPU hours). The page runs the
 same `submit.sh` you would run by hand, so every check still applies, and none can be skipped from the page. A recipe that
 still has `<project>/<username>` placeholders is listed but cannot be started.
 
@@ -69,6 +71,64 @@ $ python -m bhaskera.launcher.evaluate prepare --tasks arc_easy,hellaswag
 
 From the terminal: `./submit.sh eval --run <run id> --tasks arc_easy,hellaswag --limit 200` (`--limit` uses 200 examples per
 task for a quick check; leave it out for the real score).
+
+## The same things from the terminal
+
+Everything the page does is also a plain command, so you can use either, or both, on the same jobs.
+
+| What | On the page | In the terminal |
+|---|---|---|
+| Train a model | **Start a job**, Train a model | `./submit.sh recipes/<recipe>.yaml <nodes> <hours>` |
+| Check without submitting | **Check first** | `DRY_RUN=1 ./submit.sh recipes/<recipe>.yaml <nodes> <hours>` |
+| Chat with a trained model | **Chat** on a run | `./submit.sh serve --run <run id>`, then the steps below |
+| Benchmark a trained model | **Benchmark** on a run | `./submit.sh eval --run <run id> --tasks arc_easy,hellaswag --limit 200 --save-samples` |
+| Watch a job | the job card and **Logs** | `squeue -u $USER` and `tail -f logs/<name>_<job>.out` |
+| Save a trained model under a name | **Register a model** | `python -m bhaskera.launcher.register add --run <run id> --name <model> --alias champion` (see [Model Registry](registry.md)) |
+| Continue a run that stopped | **Resume** on the run | `./submit.sh resume --run <run id>` (see [Resuming a Job](resume.md)) |
+| Stop a job | not on the page yet | `scancel <job>` |
+| Look at runs and curves | the **Runs** table, **MLflow** | `bhaskera-dashboard start` |
+
+### Chat from the terminal
+
+```bash
+./submit.sh serve --run <run id>                 # prints the job number
+tail -f logs/bhaskera-serve_<job>.out            # wait for: === serving on <node>:<port> ===
+ssh -N -L <port>:localhost:<port> <node> &       # on the login node: a link to the model
+curl -s localhost:<port>/v1/chat/completions -H 'Content-Type: application/json' \
+     -d '{"messages": [{"role": "user", "content": "What is HPC?"}], "max_tokens": 200}'
+```
+
+The answer is in `choices[0].message.content` of the reply. Add `"use_adapter": false` to get the base model's answer from the same
+weights. The server answers only you and stops after the hours you gave (`SERVE_HOURS`, default 2) or with `scancel <job>`. On the page
+you skip all of this: the chat window opens by itself when the model is loaded.
+
+## Test the model on your own questions, and find what to correct
+
+The standard benchmarks say little about your own use. Test the model on examples from your own work:
+
+1. Put them in a JSONL file on `/scratch`, one per line: `{"question": "...", "answer": "..."}`.
+2. Turn the file into a test (it goes into a `tasks` folder next to `submit.sh`, which Bhaskera picks up by itself):
+   `python -m bhaskera.launcher.evaluate init-task --name my_test --data /scratch/<project>/<username>/my.jsonl`
+3. Run it. On the page, press **Benchmark** and type `my_test` under *other test names*. In the terminal:
+   `./submit.sh eval --run <run id> --tasks my_test --save-samples`
+4. Review the mistakes: `python -m bhaskera.launcher.evaluate review <folder>`. It sorts every example into **fixed by tuning**, **broken by
+   tuning** (the base model had it right), **still wrong** and **still right**, prints a few of each, and writes `review_my_test.jsonl` with
+   the prompt, the expected answer and both models' responses. The same files are stored with the training run in MLflow, under
+   `lm_eval/samples`.
+5. Correct the data. *Still wrong* usually means examples are missing or wrong in your training data; *broken* means the tuning was too narrow
+   or ran too long. Fix or add examples, tokenise again, train again, and run the same test: the numbers show whether it helped.
+
+The test above passes an example when the first line of the answer matches the expected one, ignoring case and punctuation. For answers
+that can be worded many ways, change `metric_list` in the generated file (the
+[lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) documents the options), or write the test as multiple choice.
+During training, `logging.mlflow_eval_samples: <n>` also stores example predictions on your validation split at every evaluation.
+
+## What "job slots" means
+
+The page shows, for example, *0 of 4 job slots used in gpu-debug*. This is a cluster rule, not a Bhaskera setting: the batch system allows
+each user a fixed number of jobs submitted at once in a partition (on PARAM Rudra, `gpu-debug` allows 4 submitted and 2 running, at most
+1 hour each). Bhaskera reads the limit from Slurm, shows how much of it you use, and checks it before submitting, so a job that would be
+refused is stopped with a clear message. On an account that several people share, everyone's jobs count together.
 
 !!! note "Shared accounts"
     The page lists the jobs of the Unix account you are logged in with. On an account that several people share, you see
