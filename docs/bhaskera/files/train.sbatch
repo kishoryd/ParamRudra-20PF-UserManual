@@ -11,6 +11,8 @@
 # exported in the shell you submit from (submit.sh checks this).
 #SBATCH --job-name=bhaskera
 #SBATCH --ntasks-per-node=1
+# The #SBATCH lines below are defaults for submitting this file by hand; ./submit.sh overrides GPUs, CPUs, memory and the
+# partition from the cluster profile (slurm/clusters/), so they need no editing on another cluster.
 #SBATCH --gres=gpu:2
 #SBATCH --cpus-per-task=48
 #SBATCH --exclusive
@@ -26,19 +28,30 @@ export HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1
 export MLFLOW_ALLOW_FILE_STORE=true
 source "$BHASKERA_DIR/bhaskera-activate.sh"          # loads CUDA 12.4 + Bhaskera's Python env
 
-# NCCL over InfiniBand (GPUDirect RDMA is not usable on PARAM Rudra GPU nodes).
-export NCCL_SOCKET_IFNAME=ib0 NCCL_DEBUG=WARN NCCL_ASYNC_ERROR_HANDLING=1
+# What the nodes offer comes from the cluster profile (slurm/clusters/*.yaml; $BHASKERA_CLUSTER_PROFILE), else from Slurm.
+read -r _part _hours PROFILE_GPUS _cpus PROFILE_NET _mem <<< "$(python -m bhaskera.launcher.cluster_profile plan "$SLURM_NNODES" 2>/dev/null || echo '- - - - - -')"
+GPUS_PER_NODE="${BHASKERA_GPUS_PER_NODE:-$([[ "$PROFILE_GPUS" != "-" ]] && echo "$PROFILE_GPUS" || echo "${SLURM_GPUS_ON_NODE:-2}")}"
+NET_IF="${BHASKERA_NET_INTERFACE:-$([[ "$PROFILE_NET" != "-" ]] && echo "$PROFILE_NET")}"
+
+# NCCL and Ray talk over the cluster's fast network interface when the profile names it (else they choose one).
+export BHASKERA_NET_INTERFACE="$NET_IF"
+[[ -n "$NET_IF" ]] && export NCCL_SOCKET_IFNAME="$NET_IF"
+export NCCL_DEBUG=WARN NCCL_ASYNC_ERROR_HANDLING=1
 export NCCL_TIMEOUT=3600 TORCH_NCCL_BLOCKING_WAIT=1 TORCH_DISTRIBUTED_TIMEOUT=3600
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 # DDP / QLoRA: 1 connection keeps gradient all-reduce in order; FSDP / pipeline: 32 lets transfers overlap compute.
 if grep -qE '^[[:space:]]*strategy:[[:space:]]*"?ddp' "$CONFIG"; then CDMC=1; else CDMC=32; fi
 export CUDA_DEVICE_MAX_CONNECTIONS=${CUDA_DEVICE_MAX_CONNECTIONS:-$CDMC}
 
-# One Ray cluster across all nodes of this job, addressed over ib0.
+# One Ray cluster across all nodes of this job, addressed over the fast network interface when one is named.
 nodes=($(scontrol show hostnames "$SLURM_JOB_NODELIST"))
-head_ip=$(srun --nodes=1 --ntasks=1 -w "${nodes[0]}" ip -4 addr show ib0 | awk '/inet / {print $2}' | cut -d/ -f1)
+if [[ -n "$NET_IF" ]]; then
+    head_ip=$(srun --nodes=1 --ntasks=1 -w "${nodes[0]}" ip -4 addr show "$NET_IF" | awk '/inet / {print $2}' | cut -d/ -f1)
+else
+    head_ip=$(srun --nodes=1 --ntasks=1 -w "${nodes[0]}" hostname -I | awk '{print $1}')
+fi
 if [[ -z "$head_ip" ]]; then
-    echo "=== could not read the ib0 address of ${nodes[0]} (Slurm controller unreachable or ib0 down); resubmit ==="
+    echo "=== could not read the network address of ${nodes[0]}${NET_IF:+ (interface $NET_IF)} (Slurm controller unreachable or the interface is down); resubmit ==="
     exit 1
 fi
 port=$(( 6379 + SLURM_JOB_ID % 1000 ))
@@ -79,11 +92,23 @@ if [[ -n "$OBS" && -x "$OBS/prometheus/prometheus" && -x "$OBS/grafana/bin/grafa
 else
     echo "=== charts: Prometheus/Grafana not installed (see install-observability.sh); the Ray Dashboard still lists every node ==="
 fi
-GPUS_PER_NODE=2
 WORKERS=$(( SLURM_NNODES * GPUS_PER_NODE ))
 
 echo "=== bhaskera: job $SLURM_JOB_ID, $SLURM_NNODES nodes, $WORKERS GPUs, config $CONFIG ==="
 echo "=== bhaskera: $(git -C "$BHASKERA_DIR" rev-parse --short HEAD 2>/dev/null || echo unknown) in $BHASKERA_DIR ==="
+
+# Check every node first (a few seconds): a faulty node is named now instead of failing the job later, and
+# it is remembered, so the next job of yours keeps away from it. BHASKERA_NODECHECK=0 skips this.
+NODEMAP="${SLURM_SUBMIT_DIR:-.}/logs/nodes_${SLURM_JOB_ID}.json"
+if [[ "${BHASKERA_NODECHECK:-1}" != "0" ]]; then
+    CHECK="$(timeout 300 srun --nodes="$SLURM_NNODES" --ntasks="$SLURM_NNODES" --ntasks-per-node=1 \
+             python -m bhaskera.launcher.nodecheck check --gpus "$GPUS_PER_NODE" 2>&1)"
+    echo "$CHECK" | python -m bhaskera.launcher.nodecheck summarize --nodes "$SLURM_NNODES" --save-map "$NODEMAP"
+    if [[ ${PIPESTATUS[1]} -ne 0 ]]; then
+        echo "=== stopped before training: resubmit the job (the faulty nodes are now skipped) ==="
+        exit 3
+    fi
+fi
 
 srun --nodes="$SLURM_NNODES" --ntasks="$SLURM_NNODES" \
     ray symmetric-run --address "$RAY_ADDRESS" --min-nodes "$SLURM_NNODES" \
@@ -92,4 +117,8 @@ srun --nodes="$SLURM_NNODES" --ntasks="$SLURM_NNODES" \
         python -m bhaskera.launcher.train --config "$CONFIG" --num-workers "$WORKERS" --no-dashboard
 RC=$?
 echo "=== training exit code: $RC ==="
+if [[ $RC -ne 0 ]]; then                       # say in plain words what went wrong, and on which node
+    JOBLOG="$(scontrol show job "$SLURM_JOB_ID" 2>/dev/null | sed -n 's/.*StdOut=//p' | head -1)"
+    [[ -n "$JOBLOG" ]] && python -m bhaskera.launcher.diagnose "$JOBLOG" ${NODEMAP:+--map "$NODEMAP"} || true
+fi
 exit $RC

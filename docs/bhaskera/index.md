@@ -6,14 +6,15 @@ icon: material/brain
 
 ## Introduction
 
-Bhaskera is a framework for fine-tuning large language models (LLMs) on the PARAM Rudra GPU nodes,
-from 1 node up to 128 nodes (256 A100 GPUs). It uses **LoRA**: the pre-trained model stays frozen and
+Bhaskera is a framework for fine-tuning large language models (LLMs), and models that also read images, video and
+audio, on Slurm GPU clusters. On PARAM Rudra it runs from 1 node up to 128 nodes (256 A100 GPUs). It uses **LoRA**: the pre-trained model stays frozen and
 only small add-on weights (an *adapter*) are trained, which needs far less GPU memory and far less
 communication between nodes than full fine-tuning.
 
 One YAML file (a *recipe*) describes a run: the model, the data, and how the work is spread across
 GPUs. Bhaskera starts a Ray cluster on the nodes SLURM gives your job, loads and splits the model,
-trains, evaluates, saves checkpoints and prints one line of metrics per step.
+trains, evaluates, saves checkpoints and prints one line of metrics per step. A web page lists your jobs, starts new
+ones, and lets you chat with the model you trained.
 
 Official site: <https://github.com/kishoryd/Bhaskera>.
 
@@ -22,15 +23,16 @@ mixture-of-experts (MoE) models, on 8 to 128 nodes (see [Benchmarks](benchmarks.
 
 | | |
 |---|---|
-| **Version** | 1.1.2 (Python 3.11, PyTorch 2.6 with CUDA 12.4, transformers 4.57) |
+| **Version** | 1.0.0 (Python 3.11, PyTorch 2.6 with CUDA 12.4, transformers 4.57) |
 | **Tested models** | Qwen3-14B, Llama-3.3-70B, Mistral-Large-123B (dense); Qwen3-30B-A3B, Qwen3-235B-A22B (MoE) |
 | **Parallelism** | QLoRA + DDP (4-bit), DDP, Pipeline, FSDP, HSDP |
+| **Multimodal** | Images, video and audio with Qwen3-VL and Qwen2.5-Omni (DDP, FSDP, HSDP) |
 | **Partitions** | `debug` (tokenising), `gpu-small`, `gpu-large`, `gpu-massive` (training) |
 
 ## Quick Start
 
 ```bash
-$ module load bhaskera/1.1.2
+$ module load bhaskera/1.0.0
 $ cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs
 $ cd /scratch/<project>/<username>/bhaskera-runs
 $ export SLURM_ACCOUNT=<your_account>
@@ -53,6 +55,8 @@ $ tail -f logs/qwen3-14b-qlora_<jobid>.out | grep --line-buffered -E '\[step|eva
 | [End-to-end Example](workflow.md) | Model and data, tokenising, training, expected output, resuming |
 | [Recipes](recipes.md) | Ready configurations for each model, and how many nodes and hours to request |
 | [Monitoring](monitoring.md) | The step log, MLflow, and the Ray Dashboard with charts for every node |
+| [Home Page](homepage.md) | One page for your jobs: start a job, chat with a trained model, benchmark it |
+| [Multimodal](multimodal.md) | Fine-tuning with images, video and audio |
 | [Parallelism Strategies](parallelism.md) | QLoRA, DDP, Pipeline, FSDP and HSDP: which to use |
 | [Benchmarks](benchmarks.md) | Measured speed, MFU, memory and accuracy for every model, strategy and node count |
 | [Troubleshooting & Reference](troubleshooting.md) | Common errors, limitations, command reference |

@@ -117,6 +117,8 @@ nav:
       - End-to-end Example: bhaskera/workflow.md
       - Recipes: bhaskera/recipes.md
       - Monitoring: bhaskera/monitoring.md
+      - Home Page: bhaskera/homepage.md
+      - Multimodal: bhaskera/multimodal.md
       - Parallelism Strategies: bhaskera/parallelism.md
       - Benchmarks: bhaskera/benchmarks.md
       - Troubleshooting & Reference: bhaskera/troubleshooting.md

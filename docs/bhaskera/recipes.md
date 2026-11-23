@@ -103,3 +103,20 @@ The partition time limits are 24 h on `gpu-small` (5–25 nodes), 12 h on `gpu-l
 `gpu-massive` (101–200 nodes). An epoch fits in one job for Qwen3-14B QLoRA and Qwen3-30B-A3B Pipeline at
 every node count, for Llama-3.3-70B (QLoRA and Pipeline) and Qwen3-235B-A22B (Pipeline) from 64 nodes, and for
 no node count with Mistral-Large-123B. Everything else takes several jobs.
+
+## Starter Configs for Other Models
+
+The recipes above are tested for the models in the table. For another model, copy a starter from `configs/` in the
+Bhaskera repository, replace the `<project>/<username>` paths, and run it like a recipe. There is one starter per parallelism
+for text and for multimodal models, and a tokenizer config for each model type:
+
+| | Text | Multimodal |
+|---|---|---|
+| DDP | `configs/text/ddp.yaml` | `configs/multimodal/ddp.yaml` |
+| FSDP2 | `configs/text/fsdp.yaml` | `configs/multimodal/fsdp.yaml` |
+| HSDP | `configs/text/hsdp.yaml` | `configs/multimodal/hsdp.yaml` |
+| Pipeline | `configs/text/pipeline.yaml` | not available |
+| Tokenise first | `configs/text/tokenize.yaml` | `tokenize_vision.yaml` (image, video), `tokenize_audio.yaml` |
+
+`configs/config.yaml` lists every option with its default. A key that does nothing, such as a typo, is reported with the
+closest real name when the config is loaded.

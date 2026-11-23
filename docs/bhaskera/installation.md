@@ -6,7 +6,7 @@ There are two ways to use Bhaskera on PARAM Rudra. Most users should load the mo
 
 ```bash
 $ module avail bhaskera
-$ module load bhaskera/1.1.2
+$ module load bhaskera/1.0.0
 ```
 
 The module provides:
@@ -14,7 +14,7 @@ The module provides:
 | Item | Where |
 |---|---|
 | Commands `bhaskera-tokenize`, `bhaskera-train`, `bhaskera-dashboard` and the Python environment | on `PATH` |
-| Job scripts (`train.sbatch`, `tokenize.sbatch`, `submit.sh`) and tested recipes | `$BHASKERA_KIT` |
+| Job scripts (`submit.sh`, `train.sbatch`, `tokenize.sbatch`, `eval.sbatch`, `serve.sbatch`), tested recipes and the PARAM Rudra cluster profile | `$BHASKERA_KIT` |
 | Bhaskera source | `$BHASKERA_DIR` |
 
 Copy the job scripts and recipes into your own folder on `/scratch`:
@@ -23,7 +23,7 @@ Copy the job scripts and recipes into your own folder on `/scratch`:
 $ cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs
 $ cd /scratch/<project>/<username>/bhaskera-runs
 $ ls
-recipes  submit.sh  tokenize.sbatch  train.sbatch
+clusters  eval.sbatch  recipes  serve.sbatch  submit.sh  tokenize.sbatch  train.sbatch
 ```
 
 Continue with the [End-to-end Example](workflow.md).
@@ -69,19 +69,21 @@ OK 2.6.0+cu124 12.4
 
 ## For Administrators: Central Installation
 
-`install-bhaskera.sh` builds Bhaskera for all users and `bhaskera/1.1.2.lua` is the matching Lmod
+`install-bhaskera.sh` builds Bhaskera for all users and `bhaskera/1.0.0.lua` is the matching Lmod
 modulefile. Both are in the Bhaskera repository under `slurm/`.
 
 ```bash
-$ bash slurm/install-bhaskera.sh                       # installs to /home/apps/bhaskera/1.1.2
+$ bash slurm/install-bhaskera.sh                       # installs to /home/apps/bhaskera/1.0.0
 $ mkdir -p /home/apps/AIStack/bhaskera
-$ cp slurm/modulefiles/bhaskera/1.1.2.lua /home/apps/AIStack/bhaskera/1.1.2.lua
+$ cp slurm/modulefiles/bhaskera/1.0.0.lua /home/apps/AIStack/bhaskera/1.0.0.lua
 ```
 
 The installer must be run with the final path (`PREFIX=...` to change it), because a Python
 environment cannot be moved after it is built. It also installs Prometheus and Grafana under
-`/home/apps/bhaskera/1.1.2/observability` (for the charts in the Ray Dashboard); this step needs internet
-access, and `WITH_CHARTS=0` skips it. It ends by printing the installed versions:
+`/home/apps/bhaskera/1.0.0/observability` (for the charts in the Ray Dashboard); this step needs internet
+access, and `WITH_CHARTS=0` skips it. It also installs the lm-evaluation-harness for benchmarks (`WITH_EVAL=0` skips it).
+The modulefile sets `BHASKERA_CLUSTER_PROFILE` to the PARAM Rudra profile, which holds the partitions, GPUs per node and network
+interface; another site writes its own profile (`clusters/example.yaml`). It ends by printing the installed versions:
 
 ```text
 OK  torch 2.6.0+cu124 (CUDA 12.4)  flash-attn 2.7.3  bitsandbytes 0.50.2  transformers 4.57.6  ray 2.56.1  peft 0.20.0

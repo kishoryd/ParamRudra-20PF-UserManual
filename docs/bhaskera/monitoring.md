@@ -62,7 +62,7 @@ Every run is recorded with MLflow under `~/mlflow-runs`, so runs can be charted 
 The Ray Dashboard command below starts MLflow for you. To run MLflow on its own, start it on a **login node**:
 
 ```bash
-$ module load bhaskera/1.1.2
+$ module load bhaskera/1.0.0
 $ bhaskera-dashboard start --port 5055      # the port is remembered for next time
 $ bhaskera-dashboard status
 $ bhaskera-dashboard tunnel                 # prints the SSH command for your laptop
@@ -116,17 +116,20 @@ node a job runs on, or wait for it to start: `bhaskera-dashboard ray` finds your
 them, and puts everything behind one address.
 
 ```bash
-$ module load bhaskera/1.1.2
+$ module load bhaskera/1.0.0
 $ bhaskera-dashboard ray                  # or: bhaskera-dashboard ray --job <jobid>
 
 From your laptop, this one command logs in and keeps everything open
 (the command is always the same; it finds your jobs and their nodes by itself):
 
-    ssh -p 4422 -L 8265:localhost:20029 <user>@paramrudra.cdacb.in "bash -lc 'module load bhaskera/1.1.2 && bhaskera-dashboard ray'"
+    ssh -p 4422 -L 8265:localhost:20029 <user>@paramrudra.cdacb.in "bash -lc 'module load bhaskera/1.0.0 && bhaskera-dashboard ray'"
 
 Then open http://localhost:8265 in a browser: your running jobs, with their Ray Dashboards,
 charts and MLflow, are linked from that page.
 ```
+
+!!! tip "The same page starts jobs"
+    The page also starts jobs, opens a chat with a trained model and runs benchmarks: see [Home Page](homepage.md).
 
 Run that command on your laptop, leave it open, and open <http://localhost:8265>. That page lists your running
 jobs, and for each one a link to its **Ray Dashboard** and its **Grafana charts**, and a link to **MLflow**.

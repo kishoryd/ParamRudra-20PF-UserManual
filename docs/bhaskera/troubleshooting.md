@@ -55,7 +55,7 @@ $ ./submit.sh recipes/<recipe>.yaml 8 12
 
 | Task | Command |
 |---|---|
-| Load Bhaskera | `module load bhaskera/1.1.2` (own installation: `source $BHASKERA_DIR/.venv/bin/activate`) |
+| Load Bhaskera | `module load bhaskera/1.0.0` (own installation: `source $BHASKERA_DIR/.venv/bin/activate`) |
 | Get the job scripts and recipes | `cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs` |
 | Set your account | `export SLURM_ACCOUNT=<your_account>` |
 | Download a model (login node) | `huggingface-cli download <org>/<model> --local-dir /scratch/<project>/<username>/models/<model>` |
@@ -64,6 +64,11 @@ $ ./submit.sh recipes/<recipe>.yaml 8 12
 | Follow the log | `tail -f logs/<recipe>_<jobid>.out \| grep -E '\[step\|eval\|exit code'` |
 | Check a recipe without submitting | `python -m bhaskera.launcher.preflight --config recipes/<recipe>.yaml --num-gpus 16` |
 | MLflow dashboard | `bhaskera-dashboard start --port 5055` / `status` / `tunnel` / `stop` |
+| Home page: jobs, start, chat | `bhaskera-dashboard ray` (see [Home Page](homepage.md)) |
+| Chat with a trained run | `./submit.sh serve --run <run id>` |
+| Benchmark a trained run | `./submit.sh eval --run <run id> --tasks arc_easy,hellaswag --limit 200` |
+| Hyperparameter sweep | `python -m bhaskera.launcher.sweep plan\|submit\|report sweep.yaml` |
+| Check and clean a data file | `python -m bhaskera.launcher.data_tools inspect\|dedupe\|filter\|split` |
 
 ## References
 

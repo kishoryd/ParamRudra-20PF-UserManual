@@ -85,7 +85,7 @@ logging:
   log_gpu_every_n_steps: 10
 monitoring:
   dashboard: true
-  dashboard_host: 0.0.0.0
+  dashboard_host: 127.0.0.1
   dashboard_port: 8265
   metrics_export_port: 8080
   metrics:
