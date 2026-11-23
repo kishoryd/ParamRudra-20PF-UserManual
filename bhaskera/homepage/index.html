@@ -1138,6 +1138,56 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-same-things-from-the-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The same things from the terminal
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The same things from the terminal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chat-from-the-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chat from the terminal
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-the-model-on-your-own-questions-and-find-what-to-correct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test the model on your own questions, and find what to correct
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-job-slots-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What "job slots" means
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1164,6 +1214,66 @@
     
   
     Multimodal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resume/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4c2.1 0 4.1.8 5.6 2.3 3.1 3.1 3.1 8.2 0 11.3-1.8 1.9-4.3 2.6-6.7 2.3l.5-2c1.7.2 3.5-.4 4.8-1.7 2.3-2.3 2.3-6.1 0-8.5C15.1 6.6 13.5 6 12 6v4.6l-5-5 5-5zM6.3 17.6C3.7 15 3.3 11 5.1 7.9l1.5 1.5c-1.1 2.2-.7 5 1.2 6.8q.75.75 1.8 1.2l-.6 2q-1.5-.6-2.7-1.8"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Resuming a Job
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../registry/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 10.96a.985.985 0 0 1-.37-1.37L3.13 7c.11-.2.28-.34.47-.42l7.83-4.4c.16-.12.36-.18.57-.18s.41.06.57.18l7.9 4.44c.19.1.35.26.44.46l1.45 2.52c.28.48.11 1.09-.36 1.36l-1 .58v4.96c0 .38-.21.71-.53.88l-7.9 4.44c-.16.12-.36.18-.57.18s-.41-.06-.57-.18l-7.9-4.44A.99.99 0 0 1 3 16.5v-5.54c-.3.17-.68.18-1 0m10-6.81v6.7l5.96-3.35zM5 15.91l6 3.38v-6.71L5 9.21zm14 0v-3.22l-5 2.9c-.33.18-.7.17-1 .01v3.69zm-5.15-2.55 6.28-3.63-.58-1.01-6.28 3.63z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Registry
   
 
     
@@ -2481,6 +2591,56 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-same-things-from-the-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The same things from the terminal
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The same things from the terminal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chat-from-the-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chat from the terminal
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-the-model-on-your-own-questions-and-find-what-to-correct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test the model on your own questions, and find what to correct
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-job-slots-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What "job slots" means
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2563,9 +2723,19 @@ from your laptop with the one SSH command described under <a href="../monitoring
 <td>a trained run, the benchmarks</td>
 <td><code>./submit.sh eval --run &lt;run id&gt; --tasks ...</code></td>
 </tr>
+<tr>
+<td>Resume a stopped run</td>
+<td>a run that failed or was killed, and the step to continue from</td>
+<td><code>./submit.sh resume --run &lt;run id&gt;</code></td>
+</tr>
+<tr>
+<td>Register a model</td>
+<td>a trained run, a name, an optional alias</td>
+<td><code>python -m bhaskera.launcher.register add ...</code> (no Slurm job: it takes a second)</td>
+</tr>
 </tbody>
 </table>
-<p><strong>Check first</strong> runs the partition limits and the recipe check and submits nothing. <strong>Start</strong> submits. The page runs the
+<p><strong>Check first</strong> runs the partition limits and the recipe check and submits nothing. <strong>Start</strong> submits (training and resuming ask once more before they use GPU hours). The page runs the
 same <code>submit.sh</code> you would run by hand, so every check still applies, and none can be skipped from the page. A recipe that
 still has <code>&lt;project&gt;/&lt;username&gt;</code> placeholders is listed but cannot be started.</p>
 <p>The page needs to know your account and where <code>submit.sh</code> is. Start it from your runs folder, with the account set:</p>
@@ -2594,6 +2764,98 @@ shown in the <strong>Runs</strong> table.</p>
 </code></pre></div>
 <p>From the terminal: <code>./submit.sh eval --run &lt;run id&gt; --tasks arc_easy,hellaswag --limit 200</code> (<code>--limit</code> uses 200 examples per
 task for a quick check; leave it out for the real score).</p>
+<h2 id="the-same-things-from-the-terminal">The same things from the terminal<a class="headerlink" href="#the-same-things-from-the-terminal" title="Permanent link">&para;</a></h2>
+<p>Everything the page does is also a plain command, so you can use either, or both, on the same jobs.</p>
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>On the page</th>
+<th>In the terminal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Train a model</td>
+<td><strong>Start a job</strong>, Train a model</td>
+<td><code>./submit.sh recipes/&lt;recipe&gt;.yaml &lt;nodes&gt; &lt;hours&gt;</code></td>
+</tr>
+<tr>
+<td>Check without submitting</td>
+<td><strong>Check first</strong></td>
+<td><code>DRY_RUN=1 ./submit.sh recipes/&lt;recipe&gt;.yaml &lt;nodes&gt; &lt;hours&gt;</code></td>
+</tr>
+<tr>
+<td>Chat with a trained model</td>
+<td><strong>Chat</strong> on a run</td>
+<td><code>./submit.sh serve --run &lt;run id&gt;</code>, then the steps below</td>
+</tr>
+<tr>
+<td>Benchmark a trained model</td>
+<td><strong>Benchmark</strong> on a run</td>
+<td><code>./submit.sh eval --run &lt;run id&gt; --tasks arc_easy,hellaswag --limit 200 --save-samples</code></td>
+</tr>
+<tr>
+<td>Watch a job</td>
+<td>the job card and <strong>Logs</strong></td>
+<td><code>squeue -u $USER</code> and <code>tail -f logs/&lt;name&gt;_&lt;job&gt;.out</code></td>
+</tr>
+<tr>
+<td>Save a trained model under a name</td>
+<td><strong>Register a model</strong></td>
+<td><code>python -m bhaskera.launcher.register add --run &lt;run id&gt; --name &lt;model&gt; --alias champion</code> (see <a href="../registry/">Model Registry</a>)</td>
+</tr>
+<tr>
+<td>Continue a run that stopped</td>
+<td><strong>Resume</strong> on the run</td>
+<td><code>./submit.sh resume --run &lt;run id&gt;</code> (see <a href="../resume/">Resuming a Job</a>)</td>
+</tr>
+<tr>
+<td>Stop a job</td>
+<td>not on the page yet</td>
+<td><code>scancel &lt;job&gt;</code></td>
+</tr>
+<tr>
+<td>Look at runs and curves</td>
+<td>the <strong>Runs</strong> table, <strong>MLflow</strong></td>
+<td><code>bhaskera-dashboard start</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="chat-from-the-terminal">Chat from the terminal<a class="headerlink" href="#chat-from-the-terminal" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>./submit.sh<span class="w"> </span>serve<span class="w"> </span>--run<span class="w"> </span>&lt;run<span class="w"> </span>id&gt;<span class="w">                 </span><span class="c1"># prints the job number</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>tail<span class="w"> </span>-f<span class="w"> </span>logs/bhaskera-serve_&lt;job&gt;.out<span class="w">            </span><span class="c1"># wait for: === serving on &lt;node&gt;:&lt;port&gt; ===</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>ssh<span class="w"> </span>-N<span class="w"> </span>-L<span class="w"> </span>&lt;port&gt;:localhost:&lt;port&gt;<span class="w"> </span>&lt;node&gt;<span class="w"> </span><span class="p">&amp;</span><span class="w">       </span><span class="c1"># on the login node: a link to the model</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>curl<span class="w"> </span>-s<span class="w"> </span>localhost:&lt;port&gt;/v1/chat/completions<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Type: application/json'</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">     </span>-d<span class="w"> </span><span class="s1">'{"messages": [{"role": "user", "content": "What is HPC?"}], "max_tokens": 200}'</span>
+</code></pre></div>
+<p>The answer is in <code>choices[0].message.content</code> of the reply. Add <code>"use_adapter": false</code> to get the base model's answer from the same
+weights. The server answers only you and stops after the hours you gave (<code>SERVE_HOURS</code>, default 2) or with <code>scancel &lt;job&gt;</code>. On the page
+you skip all of this: the chat window opens by itself when the model is loaded.</p>
+<h2 id="test-the-model-on-your-own-questions-and-find-what-to-correct">Test the model on your own questions, and find what to correct<a class="headerlink" href="#test-the-model-on-your-own-questions-and-find-what-to-correct" title="Permanent link">&para;</a></h2>
+<p>The standard benchmarks say little about your own use. Test the model on examples from your own work:</p>
+<ol>
+<li>Put them in a JSONL file on <code>/scratch</code>, one per line: <code>{"question": "...", "answer": "..."}</code>.</li>
+<li>Turn the file into a test (it goes into a <code>tasks</code> folder next to <code>submit.sh</code>, which Bhaskera picks up by itself):
+   <code>python -m bhaskera.launcher.evaluate init-task --name my_test --data /scratch/&lt;project&gt;/&lt;username&gt;/my.jsonl</code></li>
+<li>Run it. On the page, press <strong>Benchmark</strong> and type <code>my_test</code> under <em>other test names</em>. In the terminal:
+   <code>./submit.sh eval --run &lt;run id&gt; --tasks my_test --save-samples</code></li>
+<li>Review the mistakes: <code>python -m bhaskera.launcher.evaluate review &lt;folder&gt;</code>. It sorts every example into <strong>fixed by tuning</strong>, <strong>broken by
+   tuning</strong> (the base model had it right), <strong>still wrong</strong> and <strong>still right</strong>, prints a few of each, and writes <code>review_my_test.jsonl</code> with
+   the prompt, the expected answer and both models' responses. The same files are stored with the training run in MLflow, under
+   <code>lm_eval/samples</code>.</li>
+<li>Correct the data. <em>Still wrong</em> usually means examples are missing or wrong in your training data; <em>broken</em> means the tuning was too narrow
+   or ran too long. Fix or add examples, tokenise again, train again, and run the same test: the numbers show whether it helped.</li>
+</ol>
+<p>The test above passes an example when the first line of the answer matches the expected one, ignoring case and punctuation. For answers
+that can be worded many ways, change <code>metric_list</code> in the generated file (the
+<a href="https://github.com/EleutherAI/lm-evaluation-harness">lm-evaluation-harness</a> documents the options), or write the test as multiple choice.
+During training, <code>logging.mlflow_eval_samples: &lt;n&gt;</code> also stores example predictions on your validation split at every evaluation.</p>
+<h2 id="what-job-slots-means">What "job slots" means<a class="headerlink" href="#what-job-slots-means" title="Permanent link">&para;</a></h2>
+<p>The page shows, for example, <em>0 of 4 job slots used in gpu-debug</em>. This is a cluster rule, not a Bhaskera setting: the batch system allows
+each user a fixed number of jobs submitted at once in a partition (on PARAM Rudra, <code>gpu-debug</code> allows 4 submitted and 2 running, at most
+1 hour each). Bhaskera reads the limit from Slurm, shows how much of it you use, and checks it before submitting, so a job that would be
+refused is stopped with a clear message. On an account that several people share, everyone's jobs count together.</p>
 <div class="admonition note">
 <p class="admonition-title">Shared accounts</p>
 <p>The page lists the jobs of the Unix account you are logged in with. On an account that several people share, you see
