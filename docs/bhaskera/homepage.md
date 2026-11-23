@@ -53,6 +53,9 @@ A GPU node loads the base model and the adapter, which takes a few minutes. When
   answer comes from the same weights with the adapter switched off, so nothing is loaded twice.
 - *Options* sets the creativity and the longest answer.
 
+If the model reads images, video or audio (a multimodal run), the chat window has an **Attach** button: pick files, check the previews, and ask.
+The files stay in the conversation, so you can ask follow-up questions about them.
+
 The server runs on the node, stops after two hours (`SERVE_HOURS` changes it) or when you cancel the job, and answers only you.
 
 ## Benchmark a trained model

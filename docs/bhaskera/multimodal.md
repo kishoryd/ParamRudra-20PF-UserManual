@@ -31,6 +31,12 @@ One JSON object per line. `content` is a list of parts, also for plain text:
 `{"type": "video", "video": path}` and `{"type": "audio", "audio": path}` work the same way. Images, video and audio stay
 on disk; only their paths and token counts are cached, and they are decoded while training.
 
+## Chat with images, video and audio
+
+Once a multimodal run has finished with its adapter stored, **Chat** on the home page starts a server that reads files too, and the chat window
+gets an **Attach** button. Over the API, a message's `content` can be a list of parts (`text`, `image`, `video`, `audio`, with the files as base64).
+Files are checked by their own content and size before the model sees them.
+
 ## Run
 
 Start from the multimodal starters in the Bhaskera repository (`configs/multimodal/`): one for DDP, FSDP2 and HSDP, and a
