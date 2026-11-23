@@ -80,3 +80,12 @@ $ ./submit.sh recipes/<recipe>.yaml 8 12
 - LoRA: Hu et al., *LoRA: Low-Rank Adaptation of Large Language Models* (2021)
 - QLoRA: Dettmers et al., *QLoRA: Efficient Finetuning of Quantized LLMs* (2023)
 - Ray Train: <https://docs.ray.io/en/latest/train/train.html>
+
+## The MLflow link says the site cannot be reached
+
+The page's links to MLflow and to each job's Ray Dashboard use addresses like `mlflow.localhost:8265`, which go through the same SSH tunnel as the page itself.
+
+- If the page opens but `mlflow.localhost` is refused, the browser may be trying the IPv6 address (`::1`) while your tunnel listens on IPv4 only. Add a second forward to the
+  SSH command, `-L [::1]:8265:localhost:<port>`, or use Chrome or Firefox, which resolve `*.localhost` themselves.
+- If MLflow itself is not running on the login node, start it with `bhaskera-dashboard start`.
+- The home page's **Models** and **Runs** sections do not need MLflow's page: they read the same files directly.

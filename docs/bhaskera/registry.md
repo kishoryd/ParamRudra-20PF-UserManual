@@ -6,7 +6,7 @@ icon: material/package-variant
 
 A trained model is an adapter: a folder of a few hundred megabytes that sits on top of the base model. The **model registry** gives each
 adapter you want to keep a name and a version, so that "the one we use" is a name and not a run id you have to remember. It is part of
-MLflow, which Bhaskera already writes to, so there is nothing to set up. The home page's **Models** link opens it.
+MLflow, which Bhaskera already writes to, so there is nothing to set up. The home page's **Models** section lists every version with its alias and note.
 
 ## What gets saved, and when
 
@@ -17,17 +17,25 @@ To register at the end of training, add `logging.mlflow_register_model: <name>` 
 
 ## Register after you have looked at the results
 
-On the home page press **Start a job**, choose **Register a model**, pick the run, give it a name (or pick a name that exists to add a
-new version) and, if you like, an alias. In the terminal:
+On the home page open the **Start** menu and choose **Register**: pick the run, give it a name (or pick a name that exists to add a
+new version) and, if you like, an alias of your choice and a hand-off note. In the terminal:
 
 ```bash
-python -m bhaskera.launcher.register add --run <run id> --name my-assistant --alias champion
+python -m bhaskera.launcher.register add --run <run id> --name my-assistant --alias champion \
+    --note "For support questions. Weak on legal text."
 python -m bhaskera.launcher.register list
+python -m bhaskera.launcher.register show my-assistant:1      # the hand-off note
 ```
 
 Each version records the run it came from, its base model, the final evaluation and any benchmark results as tags, so the registry shows
-what each version is without opening the run. An **alias** such as `champion` points at one version. When a better one comes along,
+what each version is without opening the run. An **alias** is a label you choose (`champion` is only an example; use your own words, such as the stage it is in) that points at one version. When a better one comes along,
 register it with `--alias champion` again and the alias moves; the old version stays.
+
+## The hand-off note
+
+Each version also keeps a note for whoever picks it up next: the text you wrote (what it is for, which data, what it gets wrong), followed by what Bhaskera fills in from the run:
+the base model, the run, the LoRA settings, steps, learning rate, batch and sequence length, the training data, the results (evaluation loss and accuracy, benchmark scores), and how to use
+the adapter. The adapter needs the base model at the same path, so the note says where it was. `register show <name>:<version>` prints it, and the home page shows it when you hover over the row.
 
 ## Using a registered model
 
