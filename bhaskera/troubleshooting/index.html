@@ -1335,6 +1335,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-mlflow-link-says-the-site-cannot-be-reached" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The MLflow link says the site cannot be reached
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2575,6 +2586,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#the-mlflow-link-says-the-site-cannot-be-reached" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The MLflow link says the site cannot be reached
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2785,6 +2807,14 @@
 <li>LoRA: Hu et al., <em>LoRA: Low-Rank Adaptation of Large Language Models</em> (2021)</li>
 <li>QLoRA: Dettmers et al., <em>QLoRA: Efficient Finetuning of Quantized LLMs</em> (2023)</li>
 <li>Ray Train: <a href="https://docs.ray.io/en/latest/train/train.html">https://docs.ray.io/en/latest/train/train.html</a></li>
+</ul>
+<h2 id="the-mlflow-link-says-the-site-cannot-be-reached">The MLflow link says the site cannot be reached<a class="headerlink" href="#the-mlflow-link-says-the-site-cannot-be-reached" title="Permanent link">&para;</a></h2>
+<p>The page's links to MLflow and to each job's Ray Dashboard use addresses like <code>mlflow.localhost:8265</code>, which go through the same SSH tunnel as the page itself.</p>
+<ul>
+<li>If the page opens but <code>mlflow.localhost</code> is refused, the browser may be trying the IPv6 address (<code>::1</code>) while your tunnel listens on IPv4 only. Add a second forward to the
+  SSH command, <code>-L [::1]:8265:localhost:&lt;port&gt;</code>, or use Chrome or Firefox, which resolve <code>*.localhost</code> themselves.</li>
+<li>If MLflow itself is not running on the login node, start it with <code>bhaskera-dashboard start</code>.</li>
+<li>The home page's <strong>Models</strong> and <strong>Runs</strong> sections do not need MLflow's page: they read the same files directly.</li>
 </ul>
 
 

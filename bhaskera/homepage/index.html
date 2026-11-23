@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#the-home-page-jobs-start-chat" class="md-skip">
+        <a href="#the-home-page-jobs-start-chat-models" class="md-skip">
           Skip to content
         </a>
       
@@ -1106,10 +1106,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#start-a-job-without-the-terminal" class="md-nav__link">
+  <a href="#the-start-menu" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Start a job without the terminal
+        The Start menu
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create a recipe
       
     </span>
   </a>
@@ -1135,6 +1146,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Benchmark a trained model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compare-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compare models
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1171,6 +1199,17 @@
     <span class="md-ellipsis">
       
         Test the model on your own questions, and find what to correct
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models
       
     </span>
   </a>
@@ -2559,10 +2598,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#start-a-job-without-the-terminal" class="md-nav__link">
+  <a href="#the-start-menu" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Start a job without the terminal
+        The Start menu
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create a recipe
       
     </span>
   </a>
@@ -2588,6 +2638,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Benchmark a trained model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compare-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compare models
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2624,6 +2691,17 @@
     <span class="md-ellipsis">
       
         Test the model on your own questions, and find what to correct
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Models
       
     </span>
   </a>
@@ -2683,9 +2761,10 @@
   
 
 
-<h1 id="the-home-page-jobs-start-chat">The Home Page: Jobs, Start, Chat<a class="headerlink" href="#the-home-page-jobs-start-chat" title="Permanent link">&para;</a></h1>
+<h1 id="the-home-page-jobs-start-chat-models">The Home Page: Jobs, Start, Chat, Models<a class="headerlink" href="#the-home-page-jobs-start-chat-models" title="Permanent link">&para;</a></h1>
 <p><code>bhaskera-dashboard ray</code> serves one web page for everything you run. It lists your jobs and your recent runs, starts new
-jobs, and lets you talk to a model you have trained. It listens on the login node, is private to your user, and is opened
+jobs, and lets you talk to a model you have trained. A short <strong>path</strong> across the top (Prepare data, Create recipe, Train, Chat, Benchmark,
+Register) shows where you are and what comes next, and the <strong>Guide</strong> in the header explains the words used on the page. It listens on the login node, is private to your user, and is opened
 from your laptop with the one SSH command described under <a href="../monitoring/#ray-dashboard-charts-and-mlflow-in-one-place">Monitoring</a>.</p>
 <h2 id="what-it-shows">What it shows<a class="headerlink" href="#what-it-shows" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2697,8 +2776,8 @@ from your laptop with the one SSH command described under <a href="../monitoring
 <li><strong>Cluster limits and node health</strong> (at the bottom): your job slots in each partition, and any node a job found faulty.
   New jobs keep away from those nodes for three days.</li>
 </ul>
-<h2 id="start-a-job-without-the-terminal">Start a job without the terminal<a class="headerlink" href="#start-a-job-without-the-terminal" title="Permanent link">&para;</a></h2>
-<p>Press <strong>Start a job</strong>. Pick what to start:</p>
+<h2 id="the-start-menu">The Start menu<a class="headerlink" href="#the-start-menu" title="Permanent link">&para;</a></h2>
+<p>Open the <strong>Start</strong> menu at the top and choose what to do:</p>
 <table>
 <thead>
 <tr>
@@ -2709,35 +2788,60 @@ from your laptop with the one SSH command described under <a href="../monitoring
 </thead>
 <tbody>
 <tr>
-<td>Train a model</td>
+<td>Create a recipe</td>
+<td>the model, the data, a method, how long</td>
+<td>writes <code>recipes/&lt;name&gt;.yaml</code> (nothing runs)</td>
+</tr>
+<tr>
+<td>Train</td>
 <td>a recipe, the number of nodes, optionally the hours</td>
 <td><code>./submit.sh &lt;recipe&gt; &lt;nodes&gt; &lt;hours&gt;</code></td>
 </tr>
 <tr>
-<td>Chat with a trained model</td>
-<td>a trained run</td>
-<td><code>./submit.sh serve --run &lt;run id&gt;</code></td>
-</tr>
-<tr>
-<td>Benchmark a trained model</td>
-<td>a trained run, the benchmarks</td>
-<td><code>./submit.sh eval --run &lt;run id&gt; --tasks ...</code></td>
-</tr>
-<tr>
-<td>Resume a stopped run</td>
+<td>Resume</td>
 <td>a run that failed or was killed, and the step to continue from</td>
 <td><code>./submit.sh resume --run &lt;run id&gt;</code></td>
 </tr>
 <tr>
-<td>Register a model</td>
-<td>a trained run, a name, an optional alias</td>
+<td>Chat</td>
+<td>a trained run, or a registered model</td>
+<td><code>./submit.sh serve --run &lt;run id&gt;</code></td>
+</tr>
+<tr>
+<td>Benchmark</td>
+<td>one or more trained runs, the tests</td>
+<td><code>./submit.sh eval --run &lt;run id&gt; --tasks ...</code></td>
+</tr>
+<tr>
+<td>Register</td>
+<td>a trained run, a name, an optional alias and hand-off note</td>
 <td><code>python -m bhaskera.launcher.register add ...</code> (no Slurm job: it takes a second)</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Check first</strong> runs the partition limits and the recipe check and submits nothing. <strong>Start</strong> submits (training and resuming ask once more before they use GPU hours). The page runs the
 same <code>submit.sh</code> you would run by hand, so every check still applies, and none can be skipped from the page. A recipe that
-still has <code>&lt;project&gt;/&lt;username&gt;</code> placeholders is listed but cannot be started.</p>
+still has <code>&lt;project&gt;/&lt;username&gt;</code> placeholders is listed but cannot be started. A recipe that uses HSDP or Pipeline is refused, with the reason, when its
+shard size or stages do not divide the GPUs of the nodes you chose.</p>
+<h2 id="create-a-recipe">Create a recipe<a class="headerlink" href="#create-a-recipe" title="Permanent link">&para;</a></h2>
+<p>A recipe is the saved list of choices for one training run: which model to teach, which examples to teach it with, and for how long. The page asks
+for what you know and fills in the rest.</p>
+<ol>
+<li><strong>The model.</strong> A name for the recipe, text or multimodal (then also what the data holds: image, video, audio), and the method:
+   QLoRA + DDP (the usual start for text models), DDP, FSDP2, HSDP, Pipeline, or <strong>Custom</strong>. QLoRA and Pipeline are text only, and the page does not offer them for
+   multimodal models. The model is a Hugging Face folder that is already on disk.</li>
+<li><strong>The data.</strong> Tokenised data already made is found by itself (in the folders your recipes point to and in <code>cache</code> next to <code>submit.sh</code>) and listed with its model,
+   sequence length and number of rows. If you only have JSONL files, open <strong>My data is not tokenised yet</strong>, give the files, and press <strong>Prepare data</strong>: a short CPU job
+   tokenises them once, and the result shows up in the list.</li>
+<li><strong>The training.</strong> Steps, learning rate and LoRA rank are one click each; <em>More options</em> has batch size, gradient accumulation, how often to save a checkpoint, how often to
+   evaluate and, for HSDP and Pipeline, the shard group size or the stages.</li>
+</ol>
+<p>The recipe is checked with the training job's own loader before it is written, so it loads without warnings, and <strong>Check first</strong> shows the YAML without saving it. A recipe never overwrites
+an existing file. Training and resuming then work from the <strong>Train</strong> tab.</p>
+<p><strong>All settings</strong> lists every option a recipe has (about 160), grouped as in the config file, searchable, each with what it does. Anything you type there wins over the choices above. A name that is not a
+recipe option is refused with the closest real name.</p>
+<p><strong>Custom</strong> is for people who already know the settings: paste or write a whole recipe as YAML, or load one of the starters shipped with Bhaskera (the files in <code>configs/</code>) or one of your recipes and edit it.
+A copy is saved under your name with its own run name and checkpoint folder, so it never writes over the original run's checkpoints. The Ray Dashboard host stays on the local machine whatever the YAML says.</p>
 <p>The page needs to know your account and where <code>submit.sh</code> is. Start it from your runs folder, with the account set:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>ssh<span class="w"> </span>-p<span class="w"> </span><span class="m">4422</span><span class="w"> </span>-L<span class="w"> </span><span class="m">8265</span>:localhost:&lt;port&gt;<span class="w"> </span>&lt;user&gt;@paramrudra.cdacb.in<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="s2">"bash -lc 'module load bhaskera/1.0.0 &amp;&amp; cd /scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs &amp;&amp; SLURM_ACCOUNT=&lt;account&gt; bhaskera-dashboard ray'"</span>
@@ -2754,6 +2858,8 @@ A GPU node loads the base model and the adapter, which takes a few minutes. When
 </ul>
 <p>If the model reads images, video or audio (a multimodal run), the chat window has an <strong>Attach</strong> button: pick files, check the previews, and ask.
 The files stay in the conversation, so you can ask follow-up questions about them.</p>
+<p>The <strong>Close server</strong> button in the chat window (or on the job's card) stops the server and frees its GPU node. It asks for a second click, so a stray
+click does nothing.</p>
 <p>The server runs on the node, stops after two hours (<code>SERVE_HOURS</code> changes it) or when you cancel the job, and answers only you.</p>
 <h2 id="benchmark-a-trained-model">Benchmark a trained model<a class="headerlink" href="#benchmark-a-trained-model" title="Permanent link">&para;</a></h2>
 <p>Training loss says little about what the model can still do. <strong>Benchmark</strong> runs standard tests
@@ -2766,6 +2872,12 @@ shown in the <strong>Runs</strong> table.</p>
 </code></pre></div>
 <p>From the terminal: <code>./submit.sh eval --run &lt;run id&gt; --tasks arc_easy,hellaswag --limit 200</code> (<code>--limit</code> uses 200 examples per
 task for a quick check; leave it out for the real score).</p>
+<p>On the page you can tick <strong>several models</strong> (your runs, or registered names such as <code>my-assistant:2</code>): each gets its own job. <em>More options</em> sets how many examples are
+shown in each question (few-shot) and can skip the base model when you only need the tuned score. Your own tests (below) are ticked next to the standard ones.</p>
+<h3 id="compare-models">Compare models<a class="headerlink" href="#compare-models" title="Permanent link">&para;</a></h3>
+<p>Once runs have been benchmarked, <strong>Compare models</strong> appears under the Runs table. Tick the models to put side by side: for each test, every model's score, with the score of
+the base model it started from in brackets, and the best in each row in bold. Use the same tests and the same number of examples for every model, and note that models with different
+base models are comparable only on the same test.</p>
 <h2 id="the-same-things-from-the-terminal">The same things from the terminal<a class="headerlink" href="#the-same-things-from-the-terminal" title="Permanent link">&para;</a></h2>
 <p>Everything the page does is also a plain command, so you can use either, or both, on the same jobs.</p>
 <table>
@@ -2779,7 +2891,7 @@ task for a quick check; leave it out for the real score).</p>
 <tbody>
 <tr>
 <td>Train a model</td>
-<td><strong>Start a job</strong>, Train a model</td>
+<td><strong>Start</strong>, Train</td>
 <td><code>./submit.sh recipes/&lt;recipe&gt;.yaml &lt;nodes&gt; &lt;hours&gt;</code></td>
 </tr>
 <tr>
@@ -2803,8 +2915,13 @@ task for a quick check; leave it out for the real score).</p>
 <td><code>squeue -u $USER</code> and <code>tail -f logs/&lt;name&gt;_&lt;job&gt;.out</code></td>
 </tr>
 <tr>
+<td>Make a recipe</td>
+<td><strong>Start</strong>, Create recipe</td>
+<td>write <code>recipes/&lt;name&gt;.yaml</code> (see <a href="../recipes/">Recipes</a>)</td>
+</tr>
+<tr>
 <td>Save a trained model under a name</td>
-<td><strong>Register a model</strong></td>
+<td><strong>Register</strong></td>
 <td><code>python -m bhaskera.launcher.register add --run &lt;run id&gt; --name &lt;model&gt; --alias champion</code> (see <a href="../registry/">Model Registry</a>)</td>
 </tr>
 <tr>
@@ -2814,7 +2931,7 @@ task for a quick check; leave it out for the real score).</p>
 </tr>
 <tr>
 <td>Stop a job</td>
-<td>not on the page yet</td>
+<td><strong>Cancel job</strong> on its card (two clicks); <strong>Close server</strong> for a chat server</td>
 <td><code>scancel &lt;job&gt;</code></td>
 </tr>
 <tr>
@@ -2840,7 +2957,7 @@ you skip all of this: the chat window opens by itself when the model is loaded.<
 <li>Put them in a JSONL file on <code>/scratch</code>, one per line: <code>{"question": "...", "answer": "..."}</code>.</li>
 <li>Turn the file into a test (it goes into a <code>tasks</code> folder next to <code>submit.sh</code>, which Bhaskera picks up by itself):
    <code>python -m bhaskera.launcher.evaluate init-task --name my_test --data /scratch/&lt;project&gt;/&lt;username&gt;/my.jsonl</code></li>
-<li>Run it. On the page, press <strong>Benchmark</strong> and type <code>my_test</code> under <em>other test names</em>. In the terminal:
+<li>Run it. On the page, open <strong>Benchmark</strong>, then <em>Add a test of your own</em> (the file, the names of the question and answer fields): it runs the command above for you and ticks the test. In the terminal:
    <code>./submit.sh eval --run &lt;run id&gt; --tasks my_test --save-samples</code></li>
 <li>Review the mistakes: <code>python -m bhaskera.launcher.evaluate review &lt;folder&gt;</code>. It sorts every example into <strong>fixed by tuning</strong>, <strong>broken by
    tuning</strong> (the base model had it right), <strong>still wrong</strong> and <strong>still right</strong>, prints a few of each, and writes <code>review_my_test.jsonl</code> with
@@ -2853,6 +2970,10 @@ you skip all of this: the chat window opens by itself when the model is loaded.<
 that can be worded many ways, change <code>metric_list</code> in the generated file (the
 <a href="https://github.com/EleutherAI/lm-evaluation-harness">lm-evaluation-harness</a> documents the options), or write the test as multiple choice.
 During training, <code>logging.mlflow_eval_samples: &lt;n&gt;</code> also stores example predictions on your validation split at every evaluation.</p>
+<h2 id="models">Models<a class="headerlink" href="#models" title="Permanent link">&para;</a></h2>
+<p>The <strong>Models</strong> section lists every registered model version: the model, its version, the run it came from, its aliases and its evaluation loss, with <strong>Chat</strong> and <strong>Benchmark</strong>
+buttons. It is read from the registry directly, so it works with no job running and does not need MLflow's own page. A pencil next to the name means a hand-off note is kept with the
+version; hover over the row to read it. See <a href="../registry/">Saving and Finding Your Models</a>.</p>
 <h2 id="what-job-slots-means">What "job slots" means<a class="headerlink" href="#what-job-slots-means" title="Permanent link">&para;</a></h2>
 <p>The page shows, for example, <em>0 of 4 job slots used in gpu-debug</em>. This is a cluster rule, not a Bhaskera setting: the batch system allows
 each user a fixed number of jobs submitted at once in a partition (on PARAM Rudra, <code>gpu-debug</code> allows 4 submitted and 2 running, at most
