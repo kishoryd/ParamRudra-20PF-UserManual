@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/logo.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -1009,6 +1009,62 @@
     
   
     Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../homepage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home Page
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multimodal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multimodal
   
 
     
@@ -2589,7 +2645,7 @@
 <tbody>
 <tr>
 <td>Load Bhaskera</td>
-<td><code>module load bhaskera/1.1.2</code> (own installation: <code>source $BHASKERA_DIR/.venv/bin/activate</code>)</td>
+<td><code>module load bhaskera/1.0.0</code> (own installation: <code>source $BHASKERA_DIR/.venv/bin/activate</code>)</td>
 </tr>
 <tr>
 <td>Get the job scripts and recipes</td>
@@ -2622,6 +2678,26 @@
 <tr>
 <td>MLflow dashboard</td>
 <td><code>bhaskera-dashboard start --port 5055</code> / <code>status</code> / <code>tunnel</code> / <code>stop</code></td>
+</tr>
+<tr>
+<td>Home page: jobs, start, chat</td>
+<td><code>bhaskera-dashboard ray</code> (see <a href="../homepage/">Home Page</a>)</td>
+</tr>
+<tr>
+<td>Chat with a trained run</td>
+<td><code>./submit.sh serve --run &lt;run id&gt;</code></td>
+</tr>
+<tr>
+<td>Benchmark a trained run</td>
+<td><code>./submit.sh eval --run &lt;run id&gt; --tasks arc_easy,hellaswag --limit 200</code></td>
+</tr>
+<tr>
+<td>Hyperparameter sweep</td>
+<td><code>python -m bhaskera.launcher.sweep plan\|submit\|report sweep.yaml</code></td>
+</tr>
+<tr>
+<td>Check and clean a data file</td>
+<td><code>python -m bhaskera.launcher.data_tools inspect\|dedupe\|filter\|split</code></td>
 </tr>
 </tbody>
 </table>

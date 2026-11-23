@@ -1,7 +1,7 @@
 #!/bin/bash
 # Install Bhaskera centrally for all PARAM Rudra users (run once, by the maintainer, on a login node).
 #
-#   bash install-bhaskera.sh                      # installs to /home/apps/bhaskera/1.1.2
+#   bash install-bhaskera.sh                      # installs to /home/apps/bhaskera/1.0.0
 #   PREFIX=/some/other/path bash install-bhaskera.sh
 #
 # Layout created under $PREFIX:
@@ -10,13 +10,13 @@
 #   venv/       Python 3.11 environment: torch 2.6.0+cu124, flash-attn 2.7.3 (prebuilt), bitsandbytes
 #   observability/  Prometheus and Grafana (charts in the Ray Dashboard; skip with WITH_CHARTS=0)
 #   share/kit/  train.sbatch, tokenize.sbatch, submit.sh, make-quickstart.py, recipes/  (users copy this to /scratch)
-# Then install the modulefile:  bhaskera/1.1.2.lua  ->  <a MODULEPATH dir>/bhaskera/1.1.2.lua
+# Then install the modulefile:  bhaskera/1.0.0.lua  ->  <a MODULEPATH dir>/bhaskera/1.0.0.lua
 #
 # The environment is built at its final path on purpose: Python environments cannot be moved.
 set -euo pipefail
-PREFIX="${PREFIX:-/home/apps/bhaskera/1.1.2}"
+PREFIX="${PREFIX:-/home/apps/bhaskera/1.0.0}"
 REPO="${REPO:-https://github.com/kishoryd/Bhaskera.git}"
-REF="${REF:-v1.1.2}"                         # release tag to install
+REF="${REF:-v1.0.0}"                         # release tag to install
 KIT="$(cd "$(dirname "$0")" && pwd)"         # folder holding train.sbatch, submit.sh, recipes/
 FA_WHEEL="https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.3/flash_attn-2.7.3+cu12torch2.6cxx11abiFALSE-cp311-cp311-linux_x86_64.whl"
 
@@ -40,9 +40,16 @@ uv pip install "$FA_WHEEL"                   # prebuilt: no nvcc needed (there i
 uv pip install -r "$KIT/requirements-paramrudra.lock"
 
 mkdir -p "$PREFIX/share/kit/recipes"
-cp "$KIT"/train.sbatch "$KIT"/tokenize.sbatch "$KIT"/submit.sh "$KIT"/make-quickstart.py "$PREFIX/share/kit/"
+cp "$KIT"/train.sbatch "$KIT"/eval.sbatch "$KIT"/serve.sbatch "$KIT"/tokenize.sbatch "$KIT"/submit.sh "$KIT"/make-quickstart.py "$PREFIX/share/kit/"
 cp "$KIT"/recipes/*.yaml "$PREFIX/share/kit/recipes/"
+mkdir -p "$PREFIX/share/kit/clusters" && cp "$KIT"/clusters/*.yaml "$PREFIX/share/kit/clusters/"      # cluster profiles
 chmod +x "$PREFIX/share/kit/submit.sh"
+
+# EleutherAI lm-evaluation-harness, to benchmark a tuned model against its base (needs internet; skip with WITH_EVAL=0).
+# Installed under the benchmark pins, so it cannot change torch, transformers or the other tested versions.
+if [[ "${WITH_EVAL:-1}" == "1" ]]; then
+    uv pip install "lm-eval>=0.4.5" -c "$KIT/requirements-paramrudra.lock"
+fi
 
 # Prometheus and Grafana for the time-series charts of the Ray Dashboard (needs internet; skip with WITH_CHARTS=0).
 # Without them the dashboard still lists every node and GPU, only the charts are missing.
@@ -56,4 +63,4 @@ import torch, flash_attn, bitsandbytes, bhaskera, transformers, ray, peft
 print(f"OK  torch {torch.__version__} (CUDA {torch.version.cuda})  flash-attn {flash_attn.__version__}  "
       f"bitsandbytes {bitsandbytes.__version__}  transformers {transformers.__version__}  ray {ray.__version__}  peft {peft.__version__}")
 EOF
-echo "== done. Modulefile: set 'root' to $PREFIX in bhaskera/1.1.2.lua and place it in a MODULEPATH directory."
+echo "== done. Modulefile: set 'root' to $PREFIX in bhaskera/1.0.0.lua and place it in a MODULEPATH directory."

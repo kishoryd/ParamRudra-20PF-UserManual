@@ -2,186 +2,194 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/access/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/acknowledgement/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/apptainer/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/apptainer_slurmscript/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/batch/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/best-practices/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/building/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/configuration/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/contributing/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/data/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/debugging/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/enroot/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/environment/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/examples/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/gpu/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/knit/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/largefiles/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/machine-learning/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/modules/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/nsmforum/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/ondemand/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/policies/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/resource-management/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/spack/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/support/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/sycl/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/applications/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/applications/cp2k/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/applications/gromacs/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/applications/lammps/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/applications/namd/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/applications/nwchem/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/applications/openfoam/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/applications/quantum-chemistry/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/applications/vasp/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/applications/wrf/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/bhaskera/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/bhaskera/benchmarks/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/bhaskera/homepage/</loc>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/bhaskera/installation/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/bhaskera/monitoring/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
+    </url>
+    <url>
+         <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/bhaskera/multimodal/</loc>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/bhaskera/parallelism/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/bhaskera/recipes/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/bhaskera/troubleshooting/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/bhaskera/why/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
     <url>
          <loc>https://cdacindia.github.io/ParamRudra-20PF-UserManual/bhaskera/workflow/</loc>
-         <lastmod>2026-11-20</lastmod>
+         <lastmod>2026-11-23</lastmod>
     </url>
 </urlset>

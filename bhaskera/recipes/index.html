@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../assets/logo.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -1087,6 +1087,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#starter-configs-for-other-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starter Configs for Other Models
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1113,6 +1124,62 @@
     
   
     Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../homepage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home Page
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multimodal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multimodal
   
 
     
@@ -2439,6 +2506,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#starter-configs-for-other-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starter Configs for Other Models
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2714,6 +2792,48 @@ checkpoint, and the learning-rate schedule continues with it.</p>
 <code>gpu-massive</code> (101–200 nodes). An epoch fits in one job for Qwen3-14B QLoRA and Qwen3-30B-A3B Pipeline at
 every node count, for Llama-3.3-70B (QLoRA and Pipeline) and Qwen3-235B-A22B (Pipeline) from 64 nodes, and for
 no node count with Mistral-Large-123B. Everything else takes several jobs.</p>
+<h2 id="starter-configs-for-other-models">Starter Configs for Other Models<a class="headerlink" href="#starter-configs-for-other-models" title="Permanent link">&para;</a></h2>
+<p>The recipes above are tested for the models in the table. For another model, copy a starter from <code>configs/</code> in the
+Bhaskera repository, replace the <code>&lt;project&gt;/&lt;username&gt;</code> paths, and run it like a recipe. There is one starter per parallelism
+for text and for multimodal models, and a tokenizer config for each model type:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Text</th>
+<th>Multimodal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DDP</td>
+<td><code>configs/text/ddp.yaml</code></td>
+<td><code>configs/multimodal/ddp.yaml</code></td>
+</tr>
+<tr>
+<td>FSDP2</td>
+<td><code>configs/text/fsdp.yaml</code></td>
+<td><code>configs/multimodal/fsdp.yaml</code></td>
+</tr>
+<tr>
+<td>HSDP</td>
+<td><code>configs/text/hsdp.yaml</code></td>
+<td><code>configs/multimodal/hsdp.yaml</code></td>
+</tr>
+<tr>
+<td>Pipeline</td>
+<td><code>configs/text/pipeline.yaml</code></td>
+<td>not available</td>
+</tr>
+<tr>
+<td>Tokenise first</td>
+<td><code>configs/text/tokenize.yaml</code></td>
+<td><code>tokenize_vision.yaml</code> (image, video), <code>tokenize_audio.yaml</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>configs/config.yaml</code> lists every option with its default. A key that does nothing, such as a typo, is reported with the
+closest real name when the config is loaded.</p>
 
 
 

@@ -18,14 +18,14 @@
         <link rel="prev" href="../recipes/">
       
       
-        <link rel="next" href="../parallelism/">
+        <link rel="next" href="../homepage/">
       
       
         
       
       
       <link rel="icon" href="../../assets/logo.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -1110,6 +1110,62 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../homepage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home Page
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multimodal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multimodal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2557,7 +2613,7 @@
 <h2 id="mlflow-dashboard">MLflow Dashboard<a class="headerlink" href="#mlflow-dashboard" title="Permanent link">&para;</a></h2>
 <p>Every run is recorded with MLflow under <code>~/mlflow-runs</code>, so runs can be charted and compared in a web page.
 The Ray Dashboard command below starts MLflow for you. To run MLflow on its own, start it on a <strong>login node</strong>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/1.1.2
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/1.0.0
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>start<span class="w"> </span>--port<span class="w"> </span><span class="m">5055</span><span class="w">      </span><span class="c1"># the port is remembered for next time</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>status
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>tunnel<span class="w">                 </span><span class="c1"># prints the SSH command for your laptop</span>
@@ -2627,17 +2683,21 @@ the job with their CPU, memory and GPU load, with charts over time, and works fo
 dashboards listen on their node only, so they are reached through an SSH tunnel. You do not need to know which
 node a job runs on, or wait for it to start: <code>bhaskera-dashboard ray</code> finds your running jobs, links each of
 them, and puts everything behind one address.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/1.1.2
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/1.0.0
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>ray<span class="w">                  </span><span class="c1"># or: bhaskera-dashboard ray --job &lt;jobid&gt;</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
 <a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>From<span class="w"> </span>your<span class="w"> </span>laptop,<span class="w"> </span>this<span class="w"> </span>one<span class="w"> </span><span class="nb">command</span><span class="w"> </span>logs<span class="w"> </span><span class="k">in</span><span class="w"> </span>and<span class="w"> </span>keeps<span class="w"> </span>everything<span class="w"> </span>open
 <a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="o">(</span>the<span class="w"> </span><span class="nb">command</span><span class="w"> </span>is<span class="w"> </span>always<span class="w"> </span>the<span class="w"> </span>same<span class="p">;</span><span class="w"> </span>it<span class="w"> </span>finds<span class="w"> </span>your<span class="w"> </span><span class="nb">jobs</span><span class="w"> </span>and<span class="w"> </span>their<span class="w"> </span>nodes<span class="w"> </span>by<span class="w"> </span>itself<span class="o">)</span>:
 <a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span>ssh<span class="w"> </span>-p<span class="w"> </span><span class="m">4422</span><span class="w"> </span>-L<span class="w"> </span><span class="m">8265</span>:localhost:20029<span class="w"> </span>&lt;user&gt;@paramrudra.cdacb.in<span class="w"> </span><span class="s2">"bash -lc 'module load bhaskera/1.1.2 &amp;&amp; bhaskera-dashboard ray'"</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span>ssh<span class="w"> </span>-p<span class="w"> </span><span class="m">4422</span><span class="w"> </span>-L<span class="w"> </span><span class="m">8265</span>:localhost:20029<span class="w"> </span>&lt;user&gt;@paramrudra.cdacb.in<span class="w"> </span><span class="s2">"bash -lc 'module load bhaskera/1.0.0 &amp;&amp; bhaskera-dashboard ray'"</span>
 <a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
 <a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>Then<span class="w"> </span>open<span class="w"> </span>http://localhost:8265<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>browser:<span class="w"> </span>your<span class="w"> </span>running<span class="w"> </span>jobs,<span class="w"> </span>with<span class="w"> </span>their<span class="w"> </span>Ray<span class="w"> </span>Dashboards,
 <a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>charts<span class="w"> </span>and<span class="w"> </span>MLflow,<span class="w"> </span>are<span class="w"> </span>linked<span class="w"> </span>from<span class="w"> </span>that<span class="w"> </span>page.
 </code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">The same page starts jobs</p>
+<p>The page also starts jobs, opens a chat with a trained model and runs benchmarks: see <a href="../homepage/">Home Page</a>.</p>
+</div>
 <p>Run that command on your laptop, leave it open, and open <a href="http://localhost:8265">http://localhost:8265</a>. That page lists your running
 jobs, and for each one a link to its <strong>Ray Dashboard</strong> and its <strong>Grafana charts</strong>, and a link to <strong>MLflow</strong>.
 Run the command before or after you submit a job. Jobs that start later appear on the page by themselves, and
@@ -2743,13 +2803,13 @@ whose job was killed (time limit, failed node) is marked <strong>KILLED</strong>
         
         
           
-          <a href="../parallelism/" class="md-footer__link md-footer__link--next" aria-label="Next: Parallelism Strategies">
+          <a href="../homepage/" class="md-footer__link md-footer__link--next" aria-label="Next: Home Page">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Parallelism Strategies
+                Home Page
               </div>
             </div>
             <div class="md-footer__button md-icon">

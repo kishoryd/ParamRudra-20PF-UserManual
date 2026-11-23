@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../assets/logo.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -1102,6 +1102,62 @@
     
   
     Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="homepage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home Page
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="multimodal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multimodal
   
 
     
@@ -2461,13 +2517,14 @@
 
 <h1 id="llm-fine-tuning-with-bhaskera">LLM Fine-tuning with Bhaskera<a class="headerlink" href="#llm-fine-tuning-with-bhaskera" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Bhaskera is a framework for fine-tuning large language models (LLMs) on the PARAM Rudra GPU nodes,
-from 1 node up to 128 nodes (256 A100 GPUs). It uses <strong>LoRA</strong>: the pre-trained model stays frozen and
+<p>Bhaskera is a framework for fine-tuning large language models (LLMs), and models that also read images, video and
+audio, on Slurm GPU clusters. On PARAM Rudra it runs from 1 node up to 128 nodes (256 A100 GPUs). It uses <strong>LoRA</strong>: the pre-trained model stays frozen and
 only small add-on weights (an <em>adapter</em>) are trained, which needs far less GPU memory and far less
 communication between nodes than full fine-tuning.</p>
 <p>One YAML file (a <em>recipe</em>) describes a run: the model, the data, and how the work is spread across
 GPUs. Bhaskera starts a Ray cluster on the nodes SLURM gives your job, loads and splits the model,
-trains, evaluates, saves checkpoints and prints one line of metrics per step.</p>
+trains, evaluates, saves checkpoints and prints one line of metrics per step. A web page lists your jobs, starts new
+ones, and lets you chat with the model you trained.</p>
 <p>Official site: <a href="https://github.com/kishoryd/Bhaskera">https://github.com/kishoryd/Bhaskera</a>.</p>
 <p>Bhaskera has been benchmarked on PARAM Rudra with five models from 14 B to 235 B parameters, including
 mixture-of-experts (MoE) models, on 8 to 128 nodes (see <a href="benchmarks/">Benchmarks</a>).</p>
@@ -2481,7 +2538,7 @@ mixture-of-experts (MoE) models, on 8 to 128 nodes (see <a href="benchmarks/">Be
 <tbody>
 <tr>
 <td><strong>Version</strong></td>
-<td>1.1.2 (Python 3.11, PyTorch 2.6 with CUDA 12.4, transformers 4.57)</td>
+<td>1.0.0 (Python 3.11, PyTorch 2.6 with CUDA 12.4, transformers 4.57)</td>
 </tr>
 <tr>
 <td><strong>Tested models</strong></td>
@@ -2492,13 +2549,17 @@ mixture-of-experts (MoE) models, on 8 to 128 nodes (see <a href="benchmarks/">Be
 <td>QLoRA + DDP (4-bit), DDP, Pipeline, FSDP, HSDP</td>
 </tr>
 <tr>
+<td><strong>Multimodal</strong></td>
+<td>Images, video and audio with Qwen3-VL and Qwen2.5-Omni (DDP, FSDP, HSDP)</td>
+</tr>
+<tr>
 <td><strong>Partitions</strong></td>
 <td><code>debug</code> (tokenising), <code>gpu-small</code>, <code>gpu-large</code>, <code>gpu-massive</code> (training)</td>
 </tr>
 </tbody>
 </table>
 <h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/1.1.2
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/1.0.0
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span>cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$BHASKERA_KIT</span><span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">SLURM_ACCOUNT</span><span class="o">=</span>&lt;your_account&gt;
@@ -2540,6 +2601,14 @@ mixture-of-experts (MoE) models, on 8 to 128 nodes (see <a href="benchmarks/">Be
 <tr>
 <td><a href="monitoring/">Monitoring</a></td>
 <td>The step log, MLflow, and the Ray Dashboard with charts for every node</td>
+</tr>
+<tr>
+<td><a href="homepage/">Home Page</a></td>
+<td>One page for your jobs: start a job, chat with a trained model, benchmark it</td>
+</tr>
+<tr>
+<td><a href="multimodal/">Multimodal</a></td>
+<td>Fine-tuning with images, video and audio</td>
 </tr>
 <tr>
 <td><a href="parallelism/">Parallelism Strategies</a></td>
