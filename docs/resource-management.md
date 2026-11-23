@@ -1,6 +1,6 @@
 !!! tip "Fine-tuning large language models on the GPU nodes"
     Ready job scripts and tested recipes for LoRA / QLoRA fine-tuning of 14 B–235 B models on 8–128
-    GPU nodes, with measured speed for every configuration: see [LLM Fine-tuning](bhaskera/index.md).
+    GPU nodes, with measured speed for every configuration: see [Bhaskera](bhaskera/index.md).
 
 
 This section explains how you interact with the resource manager. It covers information about the resource manager, the definition of nodes within partitions, job policies, scheduler information, the process of submitting jobs to the system, monitoring active jobs and getting useful information about resource usage.

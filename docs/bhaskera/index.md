@@ -2,7 +2,7 @@
 icon: material/brain
 ---
 
-# LLM Fine-tuning with Bhaskera
+# Bhaskera
 
 ## Introduction
 

@@ -1,3 +1,7 @@
+---
+icon: material/image-multiple
+---
+
 # Multimodal Fine-tuning
 
 Bhaskera also fine-tunes models that read **images, video and audio** next to text, with the same strategies, recipes

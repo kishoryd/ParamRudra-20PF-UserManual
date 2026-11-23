@@ -1,3 +1,7 @@
+---
+icon: material/sitemap
+---
+
 # Parallelism Strategies
 
 Set `training.distributed.strategy` in the config. HSDP is `fsdp` with

@@ -1,3 +1,7 @@
+---
+icon: material/download
+---
+
 # Installation
 
 There are two ways to use Bhaskera on PARAM Rudra. Most users should load the module.

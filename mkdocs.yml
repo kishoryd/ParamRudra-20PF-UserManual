@@ -110,7 +110,7 @@ nav:
       - Batch System (SLURM): batch.md
       - Job Script Examples: examples.md
 
-  - LLM Fine-tuning:
+  - Bhaskera:
       - Overview: bhaskera/index.md
       - Why Bhaskera: bhaskera/why.md
       - Installation: bhaskera/installation.md

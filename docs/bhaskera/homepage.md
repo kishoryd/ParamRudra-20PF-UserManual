@@ -1,3 +1,7 @@
+---
+icon: material/view-dashboard
+---
+
 # The Home Page: Jobs, Start, Chat
 
 `bhaskera-dashboard ray` serves one web page for everything you run. It lists your jobs and your recent runs, starts new
