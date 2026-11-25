@@ -1388,10 +1388,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#a-run-shows-no-energy" class="md-nav__link">
+  <a href="#a-run-shows-no-gpu-energy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        A run shows no energy
+        A run shows no GPU energy
       
     </span>
   </a>
@@ -2661,10 +2661,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#a-run-shows-no-energy" class="md-nav__link">
+  <a href="#a-run-shows-no-gpu-energy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        A run shows no energy
+        A run shows no GPU energy
       
     </span>
   </a>
@@ -2895,8 +2895,8 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ssh<span class="w"> </span>-p<span class="w"> </span><span class="m">4422</span><span class="w"> </span>-L<span class="w"> </span><span class="m">8265</span>:localhost:&lt;port&gt;<span class="w"> </span>&lt;user&gt;@paramrudra.cdacb.in<span class="w"> </span><span class="s2">"bash -lc 'module --ignore_cache load bhaskera/1.0.0 &amp;&amp; bhaskera-dashboard ray'"</span>
 </code></pre></div>
 <p><code>--ignore_cache</code> helps on a node whose module cache is out of date: the module exists, but <code>module avail</code> and <code>module load</code> fail to see it.</p>
-<h2 id="a-run-shows-no-energy">A run shows no energy<a class="headerlink" href="#a-run-shows-no-energy" title="Permanent link">&para;</a></h2>
-<p>Only runs that recorded the GPU power show an energy figure. Runs made before the default metric level kept it have none. A very short run has fewer than two power readings (they are ten steps apart) and shows none either.</p>
+<h2 id="a-run-shows-no-gpu-energy">A run shows no GPU energy<a class="headerlink" href="#a-run-shows-no-gpu-energy" title="Permanent link">&para;</a></h2>
+<p>Only runs that recorded the GPU power show a GPU energy figure. Runs made before the default metric level kept it have none. A very short run has fewer than two power readings (they are ten steps apart) and shows none either.</p>
 
 
 

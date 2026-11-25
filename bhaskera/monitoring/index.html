@@ -1087,10 +1087,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#energy-used" class="md-nav__link">
+  <a href="#gpu-energy-used" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Energy used
+        GPU energy used
       
     </span>
   </a>
@@ -2561,10 +2561,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#energy-used" class="md-nav__link">
+  <a href="#gpu-energy-used" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Energy used
+        GPU energy used
       
     </span>
   </a>
@@ -2730,9 +2730,9 @@
 <p>A job can end as <code>COMPLETED</code> in SLURM even when training failed. A successful run ends with
 <code>=== training exit code: 0 ===</code>.</p>
 </div>
-<h2 id="energy-used">Energy used<a class="headerlink" href="#energy-used" title="Permanent link">&para;</a></h2>
+<h2 id="gpu-energy-used">GPU energy used<a class="headerlink" href="#gpu-energy-used" title="Permanent link">&para;</a></h2>
 <p>Every run records the power its GPUs draw (summed over all the GPUs of the job, every ten steps). Bhaskera works out the energy from that curve: the area under it, in kWh.
-It shows on the Home page as a total, as an <strong>Energy</strong> column in the runs table, and as <strong>Energy so far</strong> on a job that is running.</p>
+It shows on the Home page as <strong>GPU energy used</strong> (a total), as a <strong>GPU energy</strong> column in the runs table, and as <strong>GPU energy so far</strong> on a job that is running. The figure is the sum, over the readings, of the time between two readings multiplied by the average of the two power values.</p>
 <ul>
 <li>It counts the GPUs only. CPUs, memory, fans, cooling and the network are not included, so the node's real use is higher.</li>
 <li>It covers the time between the first and the last power reading, which is the training itself (not the minutes the model takes to load).</li>
