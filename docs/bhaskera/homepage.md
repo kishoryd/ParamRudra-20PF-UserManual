@@ -8,6 +8,18 @@ icon: material/view-dashboard
 jobs, and lets you talk to a model you have trained. It listens on the login node, is private to your user, and is opened
 from your laptop with the one SSH command described under [Monitoring](monitoring.md#ray-dashboard-charts-and-mlflow-in-one-place).
 
+## Starting the page
+
+From your laptop, in a terminal you leave open (`bhaskera-dashboard ray --info` prints the port; it is 20000 plus your user id modulo 10000):
+
+```bash
+$ ssh -p 4422 -L 8265:localhost:<port> <user>@paramrudra.cdacb.in \
+    "bash -lc 'module load bhaskera/1.0.0 && cd /scratch/<project>/<username>/bhaskera-runs && bhaskera-dashboard ray'"
+```
+
+Then open `http://localhost:8265`. The page finds `submit.sh` in the folder you start it from (your run folder). If you start it from another folder, it uses `~/bhaskera-runs`, which it makes from the shared kit the first time.
+Jobs are charged to your login name. `module load` is needed because a login shell started by `ssh host "command"` does not load it for you.
+
 ## The pages
 
 The page has five pages, each with its own set of cards. The names across the top are links; point at a name to see a menu of what it holds, or click it to open the page.
@@ -47,7 +59,7 @@ Every card and menu entry opens one of these dialogs:
 | Benchmark | one or more trained runs, the tests | `./submit.sh eval --run <run id> --tasks ...` |
 | Register | a trained run, a name, an optional alias and hand-off note | `python -m bhaskera.launcher.register add ...` (no Slurm job: it takes a second) |
 
-**Check first** runs the partition limits and the recipe check and submits nothing. **Start** submits (training and resuming ask once more before they use GPU hours). The page runs the
+**Check first** runs the partition limits and the recipe check and submits nothing. **Start** in the dialog submits (training and resuming ask once more before they use GPU hours). The page runs the
 same `submit.sh` you would run by hand, so every check still applies, and none can be skipped from the page. A recipe that
 still has `<project>/<username>` placeholders is listed but cannot be started. A recipe that uses HSDP or Pipeline is refused, with the reason, when its
 shard size or stages do not divide the GPUs of the nodes you chose.
@@ -74,16 +86,6 @@ recipe option is refused with the closest real name.
 
 **Custom** is for people who already know the settings: paste or write a whole recipe as YAML, or load one of the starters shipped with Bhaskera (the files in `configs/`) or one of your recipes and edit it.
 A copy is saved under your name with its own run name and checkpoint folder, so it never writes over the original run's checkpoints. The Ray Dashboard host stays on the local machine whatever the YAML says.
-
-The page needs to know where `submit.sh` is. Start it from your run folder; if you do not, it uses `~/bhaskera-runs`, which it makes from the shared kit the first time. Jobs are charged to your login name:
-
-```bash
-$ ssh -p 4422 -L 8265:localhost:<port> <user>@paramrudra.cdacb.in \
-    "bash -lc 'module load bhaskera/1.0.0 && cd /scratch/<project>/<username>/bhaskera-runs && bhaskera-dashboard ray'"
-```
-
-(`bhaskera-dashboard ray` prints the first part of this command with your port.) Without the account and folder the page
-still works; the Start button then says what is missing.
 
 ## Chat with a trained model
 
@@ -134,12 +136,12 @@ Everything the page does is also a plain command, so you can use either, or both
 
 | What | On the page | In the terminal |
 |---|---|---|
-| Train a model | **Start**, Train | `./submit.sh recipes/<recipe>.yaml <nodes> <hours>` |
+| Train a model | **New run**, Train | `./submit.sh recipes/<recipe>.yaml <nodes> <hours>` |
 | Check without submitting | **Check first** | `DRY_RUN=1 ./submit.sh recipes/<recipe>.yaml <nodes> <hours>` |
 | Chat with a trained model | **Chat** on a run | `./submit.sh serve --run <run id>`, then the steps below |
 | Benchmark a trained model | **Benchmark** on a run | `./submit.sh eval --run <run id> --tasks arc_easy,hellaswag --limit 200 --save-samples` |
 | Watch a job | the job card and **Logs** | `squeue -u $USER` and `tail -f logs/<name>_<job>.out` |
-| Make a recipe | **Start**, Create recipe | write `recipes/<name>.yaml` (see [Recipes](recipes.md)) |
+| Make a recipe | **New run**, Create recipe | write `recipes/<name>.yaml` (see [Recipes](recipes.md)) |
 | Save a trained model under a name | **Register** | `python -m bhaskera.launcher.register add --run <run id> --name <model> --alias champion` (see [Model Registry](registry.md)) |
 | Continue a run that stopped | **Resume** on the run | `./submit.sh resume --run <run id>` (see [Resuming a Job](resume.md)) |
 | Stop a job | **Cancel job** on its card (two clicks); **Close server** for a chat server | `scancel <job>` |
@@ -195,4 +197,4 @@ refused is stopped with a clear message. On an account that several people share
 
 !!! note "Shared accounts"
     The page lists the jobs of the Unix account you are logged in with. On an account that several people share, you see
-    everyone's jobs, and anyone on it can use the Start button.
+    everyone's jobs, and anyone on it can start jobs from the page.

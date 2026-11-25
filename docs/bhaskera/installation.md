@@ -85,6 +85,8 @@ in the model and data lists. You can always type the path of your own folder ins
 
 ## For Administrators: Central Installation
 
+On a cluster other than PARAM Rudra, follow [Setting Up on Another Cluster](new-cluster.md) instead: it covers the cluster profile, the modulefile and a first check.
+
 `install-bhaskera.sh` builds Bhaskera for all users and `bhaskera/1.0.0.lua` is the matching Lmod
 modulefile. Both are in the Bhaskera repository under `slurm/`.
 

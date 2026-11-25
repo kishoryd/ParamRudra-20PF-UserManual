@@ -114,6 +114,7 @@ nav:
       - Overview: bhaskera/index.md
       - Why Bhaskera: bhaskera/why.md
       - Installation: bhaskera/installation.md
+      - Setting Up on Another Cluster: bhaskera/new-cluster.md
       - End-to-end Example: bhaskera/workflow.md
       - Recipes: bhaskera/recipes.md
       - Monitoring: bhaskera/monitoring.md

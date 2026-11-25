@@ -17,7 +17,7 @@ To register at the end of training, add `logging.mlflow_register_model: <name>` 
 
 ## Register after you have looked at the results
 
-On the home page open the **Start** menu and choose **Register**: pick the run, give it a name (or pick a name that exists to add a
+On the home page press **New run** and choose **Register**: pick the run, give it a name (or pick a name that exists to add a
 new version) and, if you like, an alias of your choice and a hand-off note. In the terminal:
 
 ```bash

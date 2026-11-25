@@ -10,7 +10,7 @@ A recipe is a ready Bhaskera configuration for one model, using the fastest stra
 The recipes are in the `recipes/` folder of your run folder (copied from `$BHASKERA_KIT`). Each file lists its
 speed and memory use in the header.
 
-To make your own, open the home page's **Start** menu and choose **Create recipe**: it asks for the model, the data and how long, supports text and multimodal
+To make your own, press **New run** on the home page and choose **Create recipe**: it asks for the model, the data and how long, supports text and multimodal
 models with every strategy, and writes the file for you (see [The Home Page](homepage.md#create-a-recipe)).
 
 | Recipe | Model (Hugging Face name) | Strategy | Node count |
