@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#the-home-page-jobs-start-chat-models" class="md-skip">
+        <a href="#the-home-page-train-serve-evaluate-monitor" class="md-skip">
           Skip to content
         </a>
       
@@ -1095,6 +1095,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#the-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The pages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-it-shows" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1106,10 +1117,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-start-menu" class="md-nav__link">
+  <a href="#starting-things" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Start menu
+        Starting things
       
     </span>
   </a>
@@ -1313,6 +1324,36 @@
     
   
     Model Registry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ondemand/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.2 14.5v.24c-.7.6-1.2 1.5-1.2 2.46V20H6.5c-1.5 0-2.81-.5-3.89-1.57C1.54 17.38 1 16.09 1 14.58q0-1.95 1.17-3.48C3.34 9.57 4 9.43 5.25 9.15c.42-1.53 1.25-2.77 2.5-3.72S10.42 4 12 4c1.95 0 3.6.68 4.96 2.04 1.12 1.12 1.77 2.46 1.97 3.96-2.57.04-4.73 2.08-4.73 4.5m8.8 2.8v3.5c0 .6-.6 1.2-1.3 1.2h-5.5c-.6 0-1.2-.6-1.2-1.3v-3.5c0-.6.6-1.2 1.2-1.2v-1.5c0-1.4 1.4-2.5 2.8-2.5s2.8 1.1 2.8 2.5V16c.6 0 1.2.6 1.2 1.3m-2.5-2.8c0-.8-.7-1.3-1.5-1.3s-1.5.5-1.5 1.3V16h3z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Open OnDemand
   
 
     
@@ -2587,6 +2628,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#the-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The pages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-it-shows" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2598,10 +2650,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-start-menu" class="md-nav__link">
+  <a href="#starting-things" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Start menu
+        Starting things
       
     </span>
   </a>
@@ -2761,23 +2813,57 @@
   
 
 
-<h1 id="the-home-page-jobs-start-chat-models">The Home Page: Jobs, Start, Chat, Models<a class="headerlink" href="#the-home-page-jobs-start-chat-models" title="Permanent link">&para;</a></h1>
+<h1 id="the-home-page-train-serve-evaluate-monitor">The Home Page: Train, Serve, Evaluate, Monitor<a class="headerlink" href="#the-home-page-train-serve-evaluate-monitor" title="Permanent link">&para;</a></h1>
 <p><code>bhaskera-dashboard ray</code> serves one web page for everything you run. It lists your jobs and your recent runs, starts new
-jobs, and lets you talk to a model you have trained. A short <strong>path</strong> across the top (Prepare data, Create recipe, Train, Chat, Benchmark,
-Register) shows where you are and what comes next, and the <strong>Guide</strong> in the header explains the words used on the page. It listens on the login node, is private to your user, and is opened
+jobs, and lets you talk to a model you have trained. It listens on the login node, is private to your user, and is opened
 from your laptop with the one SSH command described under <a href="../monitoring/#ray-dashboard-charts-and-mlflow-in-one-place">Monitoring</a>.</p>
+<h2 id="the-pages">The pages<a class="headerlink" href="#the-pages" title="Permanent link">&para;</a></h2>
+<p>The page has five pages, each with its own set of cards. The names across the top are links; point at a name to see a menu of what it holds, or click it to open the page.
+Clicking the Bhaskera logo returns to Home.</p>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What is on it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Home</strong></td>
+<td>Four cards (a multimodal model, Chat, Benchmark, Save a model), your running jobs, and five numbers: running now, training runs, saved models, benchmarked, and the energy used</td>
+</tr>
+<tr>
+<td><strong>Train</strong></td>
+<td>Create a recipe (text or multimodal model, prepare your own data, or a custom recipe), train from a recipe, resume a stopped run, and your recent runs</td>
+</tr>
+<tr>
+<td><strong>Serve</strong></td>
+<td>Chat with a trained model, running chat servers, and every saved model</td>
+</tr>
+<tr>
+<td><strong>Evaluate</strong></td>
+<td>Benchmark one or several models, test your own questions, and compare models side by side</td>
+</tr>
+<tr>
+<td><strong>Monitor</strong></td>
+<td>MLflow, the Ray Dashboard while a job runs, cluster limits and node health</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>New run</strong> button at the top right opens the same dialogs as the cards. <strong>Docs</strong> in the header lists the guides, including the <strong>Guide</strong> that explains the words used on the page.
+Your name at the top right opens the account menu, with the Guide and <strong>Log out</strong>. Log out asks first, then stops the page; jobs you already started keep running.</p>
 <h2 id="what-it-shows">What it shows<a class="headerlink" href="#what-it-shows" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Jobs</strong>: state, partition, nodes and GPUs, progress and time left, and the live numbers from the job log (loss,
-  evaluation loss and accuracy, MFU, tokens per second, step time). The GPU load of each node is one click away. Buttons
+  evaluation loss and accuracy, MFU, tokens per second, step time, and the energy used so far). The GPU load of each node is one click away. Buttons
   open the Ray Dashboard, the GPU charts, the log, and the run in MLflow.</li>
-<li><strong>Runs</strong>: your recent MLflow runs, including finished and failed ones. A run that stopped writing is marked <em>stalled</em>.
-  Runs that were benchmarked show the result.</li>
-<li><strong>Cluster limits and node health</strong> (at the bottom): your job slots in each partition, and any node a job found faulty.
+<li><strong>Runs</strong>: your recent MLflow runs that Bhaskera made, including finished and failed ones. Runs that other tools wrote into the same MLflow store are not listed. A run that stopped writing is marked <em>stalled</em>.
+  Runs that were benchmarked show the result, and runs that recorded GPU power show the energy they used (see <a href="../monitoring/#energy-used">Monitoring</a>).</li>
+<li><strong>Cluster limits and node health</strong> (on Monitor): your job slots in each partition, and any node a job found faulty.
   New jobs keep away from those nodes for three days.</li>
 </ul>
-<h2 id="the-start-menu">The Start menu<a class="headerlink" href="#the-start-menu" title="Permanent link">&para;</a></h2>
-<p>Open the <strong>Start</strong> menu at the top and choose what to do:</p>
+<h2 id="starting-things">Starting things<a class="headerlink" href="#starting-things" title="Permanent link">&para;</a></h2>
+<p>Every card and menu entry opens one of these dialogs:</p>
 <table>
 <thead>
 <tr>
@@ -2966,13 +3052,13 @@ you skip all of this: the chat window opens by itself when the model is loaded.<
 <li>Correct the data. <em>Still wrong</em> usually means examples are missing or wrong in your training data; <em>broken</em> means the tuning was too narrow
    or ran too long. Fix or add examples, tokenise again, train again, and run the same test: the numbers show whether it helped.</li>
 </ol>
-<p>The test above passes an example when the first line of the answer matches the expected one, ignoring case and punctuation. For answers
+<p>The model is asked <code>Question: ... Answer:</code>, and the test passes an example when the first line of its reply contains the expected answer, ignoring case and punctuation. For answers
 that can be worded many ways, change <code>metric_list</code> in the generated file (the
 <a href="https://github.com/EleutherAI/lm-evaluation-harness">lm-evaluation-harness</a> documents the options), or write the test as multiple choice.
 During training, <code>logging.mlflow_eval_samples: &lt;n&gt;</code> also stores example predictions on your validation split at every evaluation.</p>
 <h2 id="models">Models<a class="headerlink" href="#models" title="Permanent link">&para;</a></h2>
-<p>The <strong>Models</strong> section lists every registered model version: the model, its version, the run it came from, its aliases and its evaluation loss, with <strong>Chat</strong> and <strong>Benchmark</strong>
-buttons. It is read from the registry directly, so it works with no job running and does not need MLflow's own page. A pencil next to the name means a hand-off note is kept with the
+<p>The <strong>Models</strong> section (on the Serve page) lists every registered model version: the model, its version, the run it came from, its aliases and its evaluation loss, with <strong>Chat</strong> and <strong>Benchmark</strong>
+buttons. Only versions that Bhaskera registered are listed. It is read from the registry directly, so it works with no job running and does not need MLflow's own page. A pencil next to the name means a hand-off note is kept with the
 version; hover over the row to read it. See <a href="../registry/">Saving and Finding Your Models</a>.</p>
 <h2 id="what-job-slots-means">What "job slots" means<a class="headerlink" href="#what-job-slots-means" title="Permanent link">&para;</a></h2>
 <p>The page shows, for example, <em>0 of 4 job slots used in gpu-debug</em>. This is a cluster rule, not a Bhaskera setting: the batch system allows

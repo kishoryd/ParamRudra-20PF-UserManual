@@ -1008,10 +1008,43 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#where-your-files-go" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where your files go
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shared-models-and-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shared models and data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#for-administrators-central-installation" class="md-nav__link">
     <span class="md-ellipsis">
       
         For Administrators: Central Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#for-administrators-open-ondemand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        For Administrators: Open OnDemand
       
     </span>
   </a>
@@ -1224,6 +1257,36 @@
     
   
     Model Registry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ondemand/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.2 14.5v.24c-.7.6-1.2 1.5-1.2 2.46V20H6.5c-1.5 0-2.81-.5-3.89-1.57C1.54 17.38 1 16.09 1 14.58q0-1.95 1.17-3.48C3.34 9.57 4 9.43 5.25 9.15c.42-1.53 1.25-2.77 2.5-3.72S10.42 4 12 4c1.95 0 3.6.68 4.96 2.04 1.12 1.12 1.77 2.46 1.97 3.96-2.57.04-4.73 2.08-4.73 4.5m8.8 2.8v3.5c0 .6-.6 1.2-1.3 1.2h-5.5c-.6 0-1.2-.6-1.2-1.3v-3.5c0-.6.6-1.2 1.2-1.2v-1.5c0-1.4 1.4-2.5 2.8-2.5s2.8 1.1 2.8 2.5V16c.6 0 1.2.6 1.2 1.3m-2.5-2.8c0-.8-.7-1.3-1.5-1.3s-1.5.5-1.5 1.3V16h3z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Open OnDemand
   
 
     
@@ -2531,10 +2594,43 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#where-your-files-go" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where your files go
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shared-models-and-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shared models and data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#for-administrators-central-installation" class="md-nav__link">
     <span class="md-ellipsis">
       
         For Administrators: Central Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#for-administrators-open-ondemand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        For Administrators: Open OnDemand
       
     </span>
   </a>
@@ -2651,6 +2747,14 @@ not available, or if you want to change Bhaskera's code.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import torch, flash_attn, bitsandbytes, bhaskera; print('OK', torch.__version__, torch.version.cuda)"</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>OK<span class="w"> </span><span class="m">2</span>.6.0+cu124<span class="w"> </span><span class="m">12</span>.4
 </code></pre></div>
+<h2 id="where-your-files-go">Where your files go<a class="headerlink" href="#where-your-files-go" title="Permanent link">&para;</a></h2>
+<p>Everything you create stays in your <strong>run folder</strong>, the one that holds <code>submit.sh</code>: the MLflow store (<code>mlflow-runs/</code>, with the model registry), your small settings
+(<code>.bhaskera/</code>), the benchmark data cache (<code>.cache/huggingface/</code>), recipes, checkpoints, logs and caches. Nothing is written to the home folder any more. If you already have
+a store in your home folder it is still used until a copy or a link exists in the run folder, so no earlier run disappears. To keep an old store, link it:
+<code>ln -s ~/mlflow-runs mlflow-runs</code>.</p>
+<h2 id="shared-models-and-data">Shared models and data<a class="headerlink" href="#shared-models-and-data" title="Permanent link">&para;</a></h2>
+<p>If the administrators keep models and tokenised data in <code>/home/apps/bhaskera/models</code> and <code>/home/apps/bhaskera/data</code>, the page offers them under <em>Shared on this cluster</em>
+in the model and data lists. You can always type the path of your own folder instead.</p>
 <h2 id="for-administrators-central-installation">For Administrators: Central Installation<a class="headerlink" href="#for-administrators-central-installation" title="Permanent link">&para;</a></h2>
 <p><code>install-bhaskera.sh</code> builds Bhaskera for all users and <code>bhaskera/1.0.0.lua</code> is the matching Lmod
 modulefile. Both are in the Bhaskera repository under <code>slurm/</code>.</p>
@@ -2666,6 +2770,9 @@ The modulefile sets <code>BHASKERA_CLUSTER_PROFILE</code> to the PARAM Rudra pro
 interface; another site writes its own profile (<code>clusters/example.yaml</code>). It ends by printing the installed versions:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>OK  torch 2.6.0+cu124 (CUDA 12.4)  flash-attn 2.7.3  bitsandbytes 0.50.2  transformers 4.57.6  ray 2.56.1  peft 0.20.0
 </code></pre></div>
+<h2 id="for-administrators-open-ondemand">For Administrators: Open OnDemand<a class="headerlink" href="#for-administrators-open-ondemand" title="Permanent link">&para;</a></h2>
+<p>Sites that run Open OnDemand can give users Bhaskera as an interactive app: they press Launch, then Open, and the page opens in a browser tab with nothing to set up.
+See <a href="../ondemand/">Open OnDemand</a>.</p>
 
 
 

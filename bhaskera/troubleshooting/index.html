@@ -1151,6 +1151,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../ondemand/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.2 14.5v.24c-.7.6-1.2 1.5-1.2 2.46V20H6.5c-1.5 0-2.81-.5-3.89-1.57C1.54 17.38 1 16.09 1 14.58q0-1.95 1.17-3.48C3.34 9.57 4 9.43 5.25 9.15c.42-1.53 1.25-2.77 2.5-3.72S10.42 4 12 4c1.95 0 3.6.68 4.96 2.04 1.12 1.12 1.77 2.46 1.97 3.96-2.57.04-4.73 2.08-4.73 4.5m8.8 2.8v3.5c0 .6-.6 1.2-1.3 1.2h-5.5c-.6 0-1.2-.6-1.2-1.3v-3.5c0-.6.6-1.2 1.2-1.2v-1.5c0-1.4 1.4-2.5 2.8-2.5s2.8 1.1 2.8 2.5V16c.6 0 1.2.6 1.2 1.3m-2.5-2.8c0-.8-.7-1.3-1.5-1.3s-1.5.5-1.5 1.3V16h3z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Open OnDemand
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../parallelism/" class="md-nav__link">
         
   
@@ -1340,6 +1370,28 @@
     <span class="md-ellipsis">
       
         The MLflow link says the site cannot be reached
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bhaskera-dashboard-command-not-found-or-module-avail-does-not-show-bhaskera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bhaskera-dashboard: command not found, or module avail does not show Bhaskera
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-run-shows-no-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A run shows no energy
       
     </span>
   </a>
@@ -2597,6 +2649,28 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#bhaskera-dashboard-command-not-found-or-module-avail-does-not-show-bhaskera" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bhaskera-dashboard: command not found, or module avail does not show Bhaskera
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-run-shows-no-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A run shows no energy
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2816,6 +2890,13 @@
 <li>If MLflow itself is not running on the login node, start it with <code>bhaskera-dashboard start</code>.</li>
 <li>The home page's <strong>Models</strong> and <strong>Runs</strong> sections do not need MLflow's page: they read the same files directly.</li>
 </ul>
+<h2 id="bhaskera-dashboard-command-not-found-or-module-avail-does-not-show-bhaskera"><code>bhaskera-dashboard: command not found</code>, or <code>module avail</code> does not show Bhaskera<a class="headerlink" href="#bhaskera-dashboard-command-not-found-or-module-avail-does-not-show-bhaskera" title="Permanent link">&para;</a></h2>
+<p>A login shell started by <code>ssh host "command"</code> does not load the module, so the command is not on the path. Load it in the same command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ssh<span class="w"> </span>-p<span class="w"> </span><span class="m">4422</span><span class="w"> </span>-L<span class="w"> </span><span class="m">8265</span>:localhost:&lt;port&gt;<span class="w"> </span>&lt;user&gt;@paramrudra.cdacb.in<span class="w"> </span><span class="s2">"bash -lc 'module --ignore_cache load bhaskera/1.0.0 &amp;&amp; bhaskera-dashboard ray'"</span>
+</code></pre></div>
+<p><code>--ignore_cache</code> helps on a node whose module cache is out of date: the module exists, but <code>module avail</code> and <code>module load</code> fail to see it.</p>
+<h2 id="a-run-shows-no-energy">A run shows no energy<a class="headerlink" href="#a-run-shows-no-energy" title="Permanent link">&para;</a></h2>
+<p>Only runs that recorded the GPU power show an energy figure. Runs made before the default metric level kept it have none. A very short run has fewer than two power readings (they are ten steps apart) and shows none either.</p>
 
 
 
