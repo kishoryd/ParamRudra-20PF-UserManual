@@ -1244,16 +1244,16 @@
   
   
     <li class="md-nav__item">
-      <a href="ondemand/" class="md-nav__link">
+      <a href="data/" class="md-nav__link">
         
   
   
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.2 14.5v.24c-.7.6-1.2 1.5-1.2 2.46V20H6.5c-1.5 0-2.81-.5-3.89-1.57C1.54 17.38 1 16.09 1 14.58q0-1.95 1.17-3.48C3.34 9.57 4 9.43 5.25 9.15c.42-1.53 1.25-2.77 2.5-3.72S10.42 4 12 4c1.95 0 3.6.68 4.96 2.04 1.12 1.12 1.77 2.46 1.97 3.96-2.57.04-4.73 2.08-4.73 4.5m8.8 2.8v3.5c0 .6-.6 1.2-1.3 1.2h-5.5c-.6 0-1.2-.6-1.2-1.3v-3.5c0-.6.6-1.2 1.2-1.2v-1.5c0-1.4 1.4-2.5 2.8-2.5s2.8 1.1 2.8 2.5V16c.6 0 1.2.6 1.2 1.3m-2.5-2.8c0-.8-.7-1.3-1.5-1.3s-1.5.5-1.5 1.3V16h3z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 13c-2.17 0-4.07 1.16-5.12 2.89-.6.07-1.23.11-1.88.11-4.42 0-8-1.79-8-4V9c0 2.21 3.58 4 8 4s8-1.79 8-4v3c0 .36-.1.71-.28 1.05C19.5 13 19.24 13 19 13m-7-2c4.42 0 8-1.79 8-4s-3.58-4-8-4-8 1.79-8 4 3.58 4 8 4m1.1 6.96c-.36.04-.73.04-1.1.04-4.42 0-8-1.79-8-4v3c0 2.21 3.58 4 8 4 .46 0 .9 0 1.33-.06A6 6 0 0 1 13 19c0-.36.04-.7.1-1.04M20 20v-4h-2v4h-2l3 3 3-3z"/></svg>
   
   <span class="md-ellipsis">
     
   
-    Open OnDemand
+    Downloads and Dataset Versions
   
 
     
@@ -2658,13 +2658,12 @@ mixture-of-experts (MoE) models, on 8 to 128 nodes (see <a href="benchmarks/">Be
 </table>
 <h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/1.0.0
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span>cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$BHASKERA_KIT</span><span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span>cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$BHASKERA_KIT</span><span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs<span class="w">     </span><span class="c1"># your run folder: any folder you choose</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">SLURM_ACCOUNT</span><span class="o">=</span>&lt;your_account&gt;
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>$<span class="w"> </span>./submit.sh<span class="w"> </span>tokenize<span class="w"> </span>recipes/tokenize-chatml.yaml<span class="w">        </span><span class="c1"># once: tokenise your data</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>$<span class="w"> </span>./submit.sh<span class="w"> </span>recipes/qwen3-14b-qlora.yaml<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="m">12</span><span class="w">             </span><span class="c1"># recipe, nodes, hours</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>$<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>logs/qwen3-14b-qlora_&lt;jobid&gt;.out<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--line-buffered<span class="w"> </span>-E<span class="w"> </span><span class="s1">'\[step|eval|exit code'</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>$<span class="w"> </span>./submit.sh<span class="w"> </span>tokenize<span class="w"> </span>recipes/tokenize-chatml.yaml<span class="w">        </span><span class="c1"># once: tokenise your data</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>$<span class="w"> </span>./submit.sh<span class="w"> </span>recipes/qwen3-14b-qlora.yaml<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="m">12</span><span class="w">             </span><span class="c1"># recipe, nodes, hours</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>$<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>logs/qwen3-14b-qlora_&lt;jobid&gt;.out<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>--line-buffered<span class="w"> </span>-E<span class="w"> </span><span class="s1">'\[step|eval|exit code'</span>
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
