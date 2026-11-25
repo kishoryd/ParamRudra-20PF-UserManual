@@ -1428,6 +1428,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#there-is-not-enough-space-for-or-only-n-gb-free" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "There is not enough space for ..." or "only N GB free"
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2701,6 +2712,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#there-is-not-enough-space-for-or-only-n-gb-free" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "There is not enough space for ..." or "only N GB free"
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2927,6 +2949,10 @@
 <p><code>--ignore_cache</code> helps on a node whose module cache is out of date: the module exists, but <code>module avail</code> and <code>module load</code> fail to see it.</p>
 <h2 id="a-run-shows-no-gpu-energy">A run shows no GPU energy<a class="headerlink" href="#a-run-shows-no-gpu-energy" title="Permanent link">&para;</a></h2>
 <p>Only runs that recorded the GPU power show a GPU energy figure. Runs made before the default metric level kept it have none. A very short run has fewer than two power readings (they are ten steps apart) and shows none either.</p>
+<h2 id="there-is-not-enough-space-for-or-only-n-gb-free">"There is not enough space for ..." or "only N GB free"<a class="headerlink" href="#there-is-not-enough-space-for-or-only-n-gb-free" title="Permanent link">&para;</a></h2>
+<p>Bhaskera checks the free space of the disk before it writes anything large, and stops instead of failing half way. It checks new recipes (checkpoints), starting training, preparing data, downloads, and, before any job, that the run folder's disk has at least 1 GB.
+The message names the folder and the disk's free space. What to do: choose a folder on a disk with more room (<strong>Save them in</strong> under <em>Checkpoints</em>, or the folder of a download), keep fewer checkpoints (<code>keep_last_n</code>), turn checkpoints off for a trial run, or delete old checkpoints and runs (<strong>Clear failed and stalled</strong> on the Train page removes failed runs from the list; the checkpoint folders are in <code>checkpoints/</code> and are yours to delete).
+The figure is the disk's free space. A quota on your account can be lower and is not visible to Bhaskera, so a job can still run out of room on a quota-limited home folder: keep the run folder on <code>/scratch</code>.</p>
 
 
 

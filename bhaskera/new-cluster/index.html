@@ -2993,7 +2993,7 @@ Check what Bhaskera reads from it:</p>
 <li>Open the page from your laptop with the SSH command the module prints (<code>bhaskera-dashboard ray --info</code>), and check that the run, its loss curve and its GPU energy are listed.</li>
 </ol>
 <p>Then try 2 nodes. A single node working does not prove the network settings: most multi-node problems show up only here.</p>
-<p>Users need to set nothing: jobs are charged to their login name, and the page makes <code>~/bhaskera-runs</code> for them on first start. If your Slurm accounts are not the login names, tell users to <code>export SLURM_ACCOUNT=&lt;account&gt;</code>. If home folders have small quotas, tell them to keep their run folder on the large file system (<code>cp -r $BHASKERA_KIT &lt;big folder&gt;/bhaskera-runs</code>, then start the page from it): checkpoints are large.</p>
+<p>Users need to set nothing: jobs are charged to their login name, and the page makes <code>~/bhaskera-runs</code> for them on first start. If your Slurm accounts are not the login names, tell users to <code>export SLURM_ACCOUNT=&lt;account&gt;</code>. Bhaskera checks the free space of a disk before it writes anything large (checkpoints, prepared data, downloads) and refuses a job on a disk with under 1 GB free, and the page warns on Home below 20 GB; a per-user quota is not visible to it. If home folders have small quotas, tell users to keep their run folder on the large file system (<code>cp -r $BHASKERA_KIT &lt;big folder&gt;/bhaskera-runs</code>, then start the page from it): checkpoints are large.</p>
 <h2 id="where-it-breaks-on-a-new-cluster">Where it breaks on a new cluster<a class="headerlink" href="#where-it-breaks-on-a-new-cluster" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
