@@ -103,3 +103,9 @@ ssh -p 4422 -L 8265:localhost:<port> <user>@paramrudra.cdacb.in "bash -lc 'modul
 ## A run shows no GPU energy
 
 Only runs that recorded the GPU power show a GPU energy figure. Runs made before the default metric level kept it have none. A very short run has fewer than two power readings (they are ten steps apart) and shows none either.
+
+## "There is not enough space for ..." or "only N GB free"
+
+Bhaskera checks the free space of the disk before it writes anything large, and stops instead of failing half way. It checks new recipes (checkpoints), starting training, preparing data, downloads, and, before any job, that the run folder's disk has at least 1 GB.
+The message names the folder and the disk's free space. What to do: choose a folder on a disk with more room (**Save them in** under *Checkpoints*, or the folder of a download), keep fewer checkpoints (`keep_last_n`), turn checkpoints off for a trial run, or delete old checkpoints and runs (**Clear failed and stalled** on the Train page removes failed runs from the list; the checkpoint folders are in `checkpoints/` and are yours to delete).
+The figure is the disk's free space. A quota on your account can be lower and is not visible to Bhaskera, so a job can still run out of room on a quota-limited home folder: keep the run folder on `/scratch`.

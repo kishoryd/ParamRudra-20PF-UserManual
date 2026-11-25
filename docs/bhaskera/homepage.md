@@ -82,6 +82,10 @@ for what you know and fills in the rest.
 The recipe is checked with the training job's own loader before it is written, so it loads without warnings, and **Check first** shows the YAML without saving it. A recipe never overwrites
 an existing file. Training and resuming then work from the **Train** tab.
 
+**Checkpoints** (in *The training*): save them or not, how often (every N steps), how many to keep (the newest N; 0 keeps all), and the folder to save them in. A checkpoint holds the whole wrapped model, tens of GB for a 14B model, so keep few and, because home folders fill up fast, save them on a large disk (for example under `/scratch`): the recipe gets its own folder inside the one you give. Without a folder they go to `checkpoints/` in your run folder.
+With checkpoints off, a run that stops cannot be resumed; it has to start again.
+**Check first** shows how much room the checkpoints have. A recipe whose checkpoints would not fit is refused.
+
 **All settings** lists every option a recipe has (about 160), grouped as in the config file, searchable, each with what it does. Anything you type there wins over the choices above. A name that is not a
 recipe option is refused with the closest real name.
 
