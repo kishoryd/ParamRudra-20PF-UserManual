@@ -16,12 +16,12 @@ Clicking the Bhaskera logo returns to Home.
 | Page | What is on it |
 |---|---|
 | **Home** | Four cards (a multimodal model, Chat, Benchmark, Save a model), your running jobs, and five numbers: running now, training runs, saved models, benchmarked, and the energy used |
-| **Train** | Create a recipe (text or multimodal model, prepare your own data, or a custom recipe), train from a recipe, resume a stopped run, and your recent runs |
+| **Train** | Create a recipe (text or multimodal model, prepare your own data, or a custom recipe), train from a recipe, resume a stopped run, your recent runs, and your registered data with its versions |
 | **Serve** | Chat with a trained model, running chat servers, and every saved model |
 | **Evaluate** | Benchmark one or several models, test your own questions, and compare models side by side |
 | **Monitor** | MLflow, the Ray Dashboard while a job runs, cluster limits and node health |
 
-The **New run** button at the top right opens the same dialogs as the cards. **Docs** in the header lists the guides, including the **Guide** that explains the words used on the page.
+The **New run** button at the top right opens the same dialogs as the cards. **Downloads** in the header fetches a model or a dataset from Hugging Face into a folder you choose, and holds the Hugging Face sign-in (see [Downloads and Dataset Versions](data.md)). **Docs** lists the guides, including the **Guide** that explains the words used on the page.
 Your name at the top right opens the account menu, with the Guide and **Log out**. Log out asks first, then stops the page; jobs you already started keep running.
 
 ## What it shows
@@ -75,11 +75,11 @@ recipe option is refused with the closest real name.
 **Custom** is for people who already know the settings: paste or write a whole recipe as YAML, or load one of the starters shipped with Bhaskera (the files in `configs/`) or one of your recipes and edit it.
 A copy is saved under your name with its own run name and checkpoint folder, so it never writes over the original run's checkpoints. The Ray Dashboard host stays on the local machine whatever the YAML says.
 
-The page needs to know your account and where `submit.sh` is. Start it from your runs folder, with the account set:
+The page needs to know where `submit.sh` is. Start it from your run folder; if you do not, it uses `~/bhaskera-runs`, which it makes from the shared kit the first time. Jobs are charged to your login name:
 
 ```bash
 $ ssh -p 4422 -L 8265:localhost:<port> <user>@paramrudra.cdacb.in \
-    "bash -lc 'module load bhaskera/1.0.0 && cd /scratch/<project>/<username>/bhaskera-runs && SLURM_ACCOUNT=<account> bhaskera-dashboard ray'"
+    "bash -lc 'module load bhaskera/1.0.0 && cd /scratch/<project>/<username>/bhaskera-runs && bhaskera-dashboard ray'"
 ```
 
 (`bhaskera-dashboard ray` prints the first part of this command with your port.) Without the account and folder the page

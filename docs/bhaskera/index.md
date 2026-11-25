@@ -33,9 +33,8 @@ mixture-of-experts (MoE) models, on 8 to 128 nodes (see [Benchmarks](benchmarks.
 
 ```bash
 $ module load bhaskera/1.0.0
-$ cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs
+$ cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs     # your run folder: any folder you choose
 $ cd /scratch/<project>/<username>/bhaskera-runs
-$ export SLURM_ACCOUNT=<your_account>
 
 $ ./submit.sh tokenize recipes/tokenize-chatml.yaml        # once: tokenise your data
 $ ./submit.sh recipes/qwen3-14b-qlora.yaml 8 12             # recipe, nodes, hours

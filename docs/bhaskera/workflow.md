@@ -25,8 +25,10 @@ The run has four steps, all started from a login node:
 $ module load bhaskera/1.0.0
 $ cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs
 $ cd /scratch/<project>/<username>/bhaskera-runs
-$ export SLURM_ACCOUNT=<your_account>
 ```
+
+Jobs are charged to your login name, which is your Slurm account on PARAM Rudra, so there is nothing to set. If you work under another account, `export SLURM_ACCOUNT=<account>` first.
+The run folder holds recipes, logs and checkpoints (large for big models), so a folder on `/scratch` is the usual choice. If you make none, the home page creates `~/bhaskera-runs` from the shared kit the first time it starts.
 
 ### Model
 

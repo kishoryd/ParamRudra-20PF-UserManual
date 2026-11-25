@@ -57,7 +57,7 @@ $ ./submit.sh recipes/<recipe>.yaml 8 12
 |---|---|
 | Load Bhaskera | `module load bhaskera/1.0.0` (own installation: `source $BHASKERA_DIR/.venv/bin/activate`) |
 | Get the job scripts and recipes | `cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs` |
-| Set your account | `export SLURM_ACCOUNT=<your_account>` |
+| Use another account (optional: the default is your login name) | `export SLURM_ACCOUNT=<account>` |
 | Download a model (login node) | `huggingface-cli download <org>/<model> --local-dir /scratch/<project>/<username>/models/<model>` |
 | Tokenise | `./submit.sh tokenize recipes/tokenize-chatml.yaml` |
 | Train (recipe, nodes, hours) | `./submit.sh recipes/<recipe>.yaml 8 12` |

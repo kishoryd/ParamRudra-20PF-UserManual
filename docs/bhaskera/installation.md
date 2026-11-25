@@ -104,8 +104,3 @@ interface; another site writes its own profile (`clusters/example.yaml`). It end
 ```text
 OK  torch 2.6.0+cu124 (CUDA 12.4)  flash-attn 2.7.3  bitsandbytes 0.50.2  transformers 4.57.6  ray 2.56.1  peft 0.20.0
 ```
-
-## For Administrators: Open OnDemand
-
-Sites that run Open OnDemand can give users Bhaskera as an interactive app: they press Launch, then Open, and the page opens in a browser tab with nothing to set up.
-See [Open OnDemand](ondemand.md).
