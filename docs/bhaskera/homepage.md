@@ -41,7 +41,8 @@ Your name at the top right opens the account menu, with the Guide and **Log out*
 - **Jobs**: state, partition, nodes and GPUs, progress and time left, and the live numbers from the job log (loss,
   evaluation loss and accuracy, MFU, tokens per second, step time, and the GPU energy used so far). The GPU load of each node is one click away. Buttons
   open the Ray Dashboard, the GPU charts, the log, and the run in MLflow.
-- **Runs**: your recent MLflow runs that Bhaskera made, including finished and failed ones. Runs that other tools wrote into the same MLflow store are not listed. A run that stopped writing is marked *stalled*.
+- **Runs**: your recent MLflow runs that Bhaskera made, including finished and failed ones. The table shows the latest 10; **Show 10 more**, **Show all** and **Show fewer** change that.
+  **Remove** on a row takes a finished, failed or stalled run off the list, and **Clear failed and stalled** does that for all of them at once; both ask first. Removing only marks the run deleted in MLflow, so it can be brought back with `mlflow runs restore --run-id <id>`. Only your own Bhaskera runs can be removed, and never one that is still running. Runs that other tools wrote into the same MLflow store are not listed. A run that stopped writing is marked *stalled*.
   Runs that were benchmarked show the result, and runs that recorded GPU power show the GPU energy they used (see [Monitoring](monitoring.md#gpu-energy-used)).
 - **Cluster limits and node health** (on Monitor): your job slots in each partition, and any node a job found faulty.
   New jobs keep away from those nodes for three days.
