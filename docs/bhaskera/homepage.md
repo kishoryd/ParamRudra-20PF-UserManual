@@ -15,7 +15,7 @@ Clicking the Bhaskera logo returns to Home.
 
 | Page | What is on it |
 |---|---|
-| **Home** | Four cards (a multimodal model, Chat, Benchmark, Save a model), your running jobs, and five numbers: running now, training runs, saved models, benchmarked, and the energy used |
+| **Home** | Four cards (a multimodal model, Chat, Benchmark, Save a model), your running jobs, and five numbers: running now, training runs, saved models, benchmarked, and the GPU energy used |
 | **Train** | Create a recipe (text or multimodal model, prepare your own data, or a custom recipe), train from a recipe, resume a stopped run, your recent runs, and your registered data with its versions |
 | **Serve** | Chat with a trained model, running chat servers, and every saved model |
 | **Evaluate** | Benchmark one or several models, test your own questions, and compare models side by side |
@@ -27,10 +27,10 @@ Your name at the top right opens the account menu, with the Guide and **Log out*
 ## What it shows
 
 - **Jobs**: state, partition, nodes and GPUs, progress and time left, and the live numbers from the job log (loss,
-  evaluation loss and accuracy, MFU, tokens per second, step time, and the energy used so far). The GPU load of each node is one click away. Buttons
+  evaluation loss and accuracy, MFU, tokens per second, step time, and the GPU energy used so far). The GPU load of each node is one click away. Buttons
   open the Ray Dashboard, the GPU charts, the log, and the run in MLflow.
 - **Runs**: your recent MLflow runs that Bhaskera made, including finished and failed ones. Runs that other tools wrote into the same MLflow store are not listed. A run that stopped writing is marked *stalled*.
-  Runs that were benchmarked show the result, and runs that recorded GPU power show the energy they used (see [Monitoring](monitoring.md#energy-used)).
+  Runs that were benchmarked show the result, and runs that recorded GPU power show the GPU energy they used (see [Monitoring](monitoring.md#gpu-energy-used)).
 - **Cluster limits and node health** (on Monitor): your job slots in each partition, and any node a job found faulty.
   New jobs keep away from those nodes for three days.
 

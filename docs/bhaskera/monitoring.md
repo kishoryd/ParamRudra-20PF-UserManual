@@ -56,10 +56,10 @@ A low minimum next to a high mean points at one GPU that is waiting for the othe
     A job can end as `COMPLETED` in SLURM even when training failed. A successful run ends with
     `=== training exit code: 0 ===`.
 
-## Energy used
+## GPU energy used
 
 Every run records the power its GPUs draw (summed over all the GPUs of the job, every ten steps). Bhaskera works out the energy from that curve: the area under it, in kWh.
-It shows on the Home page as a total, as an **Energy** column in the runs table, and as **Energy so far** on a job that is running.
+It shows on the Home page as **GPU energy used** (a total), as a **GPU energy** column in the runs table, and as **GPU energy so far** on a job that is running. The figure is the sum, over the readings, of the time between two readings multiplied by the average of the two power values.
 
 - It counts the GPUs only. CPUs, memory, fans, cooling and the network are not included, so the node's real use is higher.
 - It covers the time between the first and the last power reading, which is the training itself (not the minutes the model takes to load).

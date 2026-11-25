@@ -100,6 +100,6 @@ ssh -p 4422 -L 8265:localhost:<port> <user>@paramrudra.cdacb.in "bash -lc 'modul
 
 `--ignore_cache` helps on a node whose module cache is out of date: the module exists, but `module avail` and `module load` fail to see it.
 
-## A run shows no energy
+## A run shows no GPU energy
 
-Only runs that recorded the GPU power show an energy figure. Runs made before the default metric level kept it have none. A very short run has fewer than two power readings (they are ten steps apart) and shows none either.
+Only runs that recorded the GPU power show a GPU energy figure. Runs made before the default metric level kept it have none. A very short run has fewer than two power readings (they are ten steps apart) and shows none either.
