@@ -89,3 +89,17 @@ The page's links to MLflow and to each job's Ray Dashboard use addresses like `m
   SSH command, `-L [::1]:8265:localhost:<port>`, or use Chrome or Firefox, which resolve `*.localhost` themselves.
 - If MLflow itself is not running on the login node, start it with `bhaskera-dashboard start`.
 - The home page's **Models** and **Runs** sections do not need MLflow's page: they read the same files directly.
+
+## `bhaskera-dashboard: command not found`, or `module avail` does not show Bhaskera
+
+A login shell started by `ssh host "command"` does not load the module, so the command is not on the path. Load it in the same command:
+
+```bash
+ssh -p 4422 -L 8265:localhost:<port> <user>@paramrudra.cdacb.in "bash -lc 'module --ignore_cache load bhaskera/1.0.0 && bhaskera-dashboard ray'"
+```
+
+`--ignore_cache` helps on a node whose module cache is out of date: the module exists, but `module avail` and `module load` fail to see it.
+
+## A run shows no energy
+
+Only runs that recorded the GPU power show an energy figure. Runs made before the default metric level kept it have none. A very short run has fewer than two power readings (they are ten steps apart) and shows none either.

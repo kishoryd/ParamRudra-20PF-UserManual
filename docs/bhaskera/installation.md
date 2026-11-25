@@ -71,6 +71,18 @@ $ python -c "import torch, flash_attn, bitsandbytes, bhaskera; print('OK', torch
 OK 2.6.0+cu124 12.4
 ```
 
+## Where your files go
+
+Everything you create stays in your **run folder**, the one that holds `submit.sh`: the MLflow store (`mlflow-runs/`, with the model registry), your small settings
+(`.bhaskera/`), the benchmark data cache (`.cache/huggingface/`), recipes, checkpoints, logs and caches. Nothing is written to the home folder any more. If you already have
+a store in your home folder it is still used until a copy or a link exists in the run folder, so no earlier run disappears. To keep an old store, link it:
+`ln -s ~/mlflow-runs mlflow-runs`.
+
+## Shared models and data
+
+If the administrators keep models and tokenised data in `/home/apps/bhaskera/models` and `/home/apps/bhaskera/data`, the page offers them under *Shared on this cluster*
+in the model and data lists. You can always type the path of your own folder instead.
+
 ## For Administrators: Central Installation
 
 `install-bhaskera.sh` builds Bhaskera for all users and `bhaskera/1.0.0.lua` is the matching Lmod
@@ -92,3 +104,8 @@ interface; another site writes its own profile (`clusters/example.yaml`). It end
 ```text
 OK  torch 2.6.0+cu124 (CUDA 12.4)  flash-attn 2.7.3  bitsandbytes 0.50.2  transformers 4.57.6  ray 2.56.1  peft 0.20.0
 ```
+
+## For Administrators: Open OnDemand
+
+Sites that run Open OnDemand can give users Bhaskera as an interactive app: they press Launch, then Open, and the page opens in a browser tab with nothing to set up.
+See [Open OnDemand](ondemand.md).

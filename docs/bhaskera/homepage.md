@@ -2,26 +2,41 @@
 icon: material/view-dashboard
 ---
 
-# The Home Page: Jobs, Start, Chat, Models
+# The Home Page: Train, Serve, Evaluate, Monitor
 
 `bhaskera-dashboard ray` serves one web page for everything you run. It lists your jobs and your recent runs, starts new
-jobs, and lets you talk to a model you have trained. A short **path** across the top (Prepare data, Create recipe, Train, Chat, Benchmark,
-Register) shows where you are and what comes next, and the **Guide** in the header explains the words used on the page. It listens on the login node, is private to your user, and is opened
+jobs, and lets you talk to a model you have trained. It listens on the login node, is private to your user, and is opened
 from your laptop with the one SSH command described under [Monitoring](monitoring.md#ray-dashboard-charts-and-mlflow-in-one-place).
+
+## The pages
+
+The page has five pages, each with its own set of cards. The names across the top are links; point at a name to see a menu of what it holds, or click it to open the page.
+Clicking the Bhaskera logo returns to Home.
+
+| Page | What is on it |
+|---|---|
+| **Home** | Four cards (a multimodal model, Chat, Benchmark, Save a model), your running jobs, and five numbers: running now, training runs, saved models, benchmarked, and the energy used |
+| **Train** | Create a recipe (text or multimodal model, prepare your own data, or a custom recipe), train from a recipe, resume a stopped run, and your recent runs |
+| **Serve** | Chat with a trained model, running chat servers, and every saved model |
+| **Evaluate** | Benchmark one or several models, test your own questions, and compare models side by side |
+| **Monitor** | MLflow, the Ray Dashboard while a job runs, cluster limits and node health |
+
+The **New run** button at the top right opens the same dialogs as the cards. **Docs** in the header lists the guides, including the **Guide** that explains the words used on the page.
+Your name at the top right opens the account menu, with the Guide and **Log out**. Log out asks first, then stops the page; jobs you already started keep running.
 
 ## What it shows
 
 - **Jobs**: state, partition, nodes and GPUs, progress and time left, and the live numbers from the job log (loss,
-  evaluation loss and accuracy, MFU, tokens per second, step time). The GPU load of each node is one click away. Buttons
+  evaluation loss and accuracy, MFU, tokens per second, step time, and the energy used so far). The GPU load of each node is one click away. Buttons
   open the Ray Dashboard, the GPU charts, the log, and the run in MLflow.
-- **Runs**: your recent MLflow runs, including finished and failed ones. A run that stopped writing is marked *stalled*.
-  Runs that were benchmarked show the result.
-- **Cluster limits and node health** (at the bottom): your job slots in each partition, and any node a job found faulty.
+- **Runs**: your recent MLflow runs that Bhaskera made, including finished and failed ones. Runs that other tools wrote into the same MLflow store are not listed. A run that stopped writing is marked *stalled*.
+  Runs that were benchmarked show the result, and runs that recorded GPU power show the energy they used (see [Monitoring](monitoring.md#energy-used)).
+- **Cluster limits and node health** (on Monitor): your job slots in each partition, and any node a job found faulty.
   New jobs keep away from those nodes for three days.
 
-## The Start menu
+## Starting things
 
-Open the **Start** menu at the top and choose what to do:
+Every card and menu entry opens one of these dialogs:
 
 | | You choose | What runs |
 |---|---|---|
@@ -160,15 +175,15 @@ The standard benchmarks say little about your own use. Test the model on example
 5. Correct the data. *Still wrong* usually means examples are missing or wrong in your training data; *broken* means the tuning was too narrow
    or ran too long. Fix or add examples, tokenise again, train again, and run the same test: the numbers show whether it helped.
 
-The test above passes an example when the first line of the answer matches the expected one, ignoring case and punctuation. For answers
+The model is asked `Question: ... Answer:`, and the test passes an example when the first line of its reply contains the expected answer, ignoring case and punctuation. For answers
 that can be worded many ways, change `metric_list` in the generated file (the
 [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) documents the options), or write the test as multiple choice.
 During training, `logging.mlflow_eval_samples: <n>` also stores example predictions on your validation split at every evaluation.
 
 ## Models
 
-The **Models** section lists every registered model version: the model, its version, the run it came from, its aliases and its evaluation loss, with **Chat** and **Benchmark**
-buttons. It is read from the registry directly, so it works with no job running and does not need MLflow's own page. A pencil next to the name means a hand-off note is kept with the
+The **Models** section (on the Serve page) lists every registered model version: the model, its version, the run it came from, its aliases and its evaluation loss, with **Chat** and **Benchmark**
+buttons. Only versions that Bhaskera registered are listed. It is read from the registry directly, so it works with no job running and does not need MLflow's own page. A pencil next to the name means a hand-off note is kept with the
 version; hover over the row to read it. See [Saving and Finding Your Models](registry.md).
 
 ## What "job slots" means

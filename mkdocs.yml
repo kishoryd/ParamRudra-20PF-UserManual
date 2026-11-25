@@ -121,6 +121,7 @@ nav:
       - Multimodal: bhaskera/multimodal.md
       - Resuming a Job: bhaskera/resume.md
       - Model Registry: bhaskera/registry.md
+      - Open OnDemand: bhaskera/ondemand.md
       - Parallelism Strategies: bhaskera/parallelism.md
       - Benchmarks: bhaskera/benchmarks.md
       - Troubleshooting & Reference: bhaskera/troubleshooting.md
