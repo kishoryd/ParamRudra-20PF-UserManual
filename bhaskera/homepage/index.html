@@ -941,6 +941,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../new-cluster/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19h1a1 1 0 0 1 1 1h7v2h-7a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1H2v-2h7a1 1 0 0 1 1-1h1v-2H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-7zM4 3h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1m5 4h1V5H9zm0 8h1v-2H9zM5 5v2h2V5zm0 8v2h2v-2z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Setting Up on Another Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../workflow/" class="md-nav__link">
         
   
@@ -1093,6 +1123,17 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#starting-the-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starting the page
+      
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#the-pages" class="md-nav__link">
@@ -2628,6 +2669,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#starting-the-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starting the page
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#the-pages" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2817,6 +2869,13 @@
 <p><code>bhaskera-dashboard ray</code> serves one web page for everything you run. It lists your jobs and your recent runs, starts new
 jobs, and lets you talk to a model you have trained. It listens on the login node, is private to your user, and is opened
 from your laptop with the one SSH command described under <a href="../monitoring/#ray-dashboard-charts-and-mlflow-in-one-place">Monitoring</a>.</p>
+<h2 id="starting-the-page">Starting the page<a class="headerlink" href="#starting-the-page" title="Permanent link">&para;</a></h2>
+<p>From your laptop, in a terminal you leave open (<code>bhaskera-dashboard ray --info</code> prints the port; it is 20000 plus your user id modulo 10000):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>ssh<span class="w"> </span>-p<span class="w"> </span><span class="m">4422</span><span class="w"> </span>-L<span class="w"> </span><span class="m">8265</span>:localhost:&lt;port&gt;<span class="w"> </span>&lt;user&gt;@paramrudra.cdacb.in<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="s2">"bash -lc 'module load bhaskera/1.0.0 &amp;&amp; cd /scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs &amp;&amp; bhaskera-dashboard ray'"</span>
+</code></pre></div>
+<p>Then open <code>http://localhost:8265</code>. The page finds <code>submit.sh</code> in the folder you start it from (your run folder). If you start it from another folder, it uses <code>~/bhaskera-runs</code>, which it makes from the shared kit the first time.
+Jobs are charged to your login name. <code>module load</code> is needed because a login shell started by <code>ssh host "command"</code> does not load it for you.</p>
 <h2 id="the-pages">The pages<a class="headerlink" href="#the-pages" title="Permanent link">&para;</a></h2>
 <p>The page has five pages, each with its own set of cards. The names across the top are links; point at a name to see a menu of what it holds, or click it to open the page.
 Clicking the Bhaskera logo returns to Home.</p>
@@ -2905,7 +2964,7 @@ Your name at the top right opens the account menu, with the Guide and <strong>Lo
 </tr>
 </tbody>
 </table>
-<p><strong>Check first</strong> runs the partition limits and the recipe check and submits nothing. <strong>Start</strong> submits (training and resuming ask once more before they use GPU hours). The page runs the
+<p><strong>Check first</strong> runs the partition limits and the recipe check and submits nothing. <strong>Start</strong> in the dialog submits (training and resuming ask once more before they use GPU hours). The page runs the
 same <code>submit.sh</code> you would run by hand, so every check still applies, and none can be skipped from the page. A recipe that
 still has <code>&lt;project&gt;/&lt;username&gt;</code> placeholders is listed but cannot be started. A recipe that uses HSDP or Pipeline is refused, with the reason, when its
 shard size or stages do not divide the GPUs of the nodes you chose.</p>
@@ -2928,12 +2987,6 @@ an existing file. Training and resuming then work from the <strong>Train</strong
 recipe option is refused with the closest real name.</p>
 <p><strong>Custom</strong> is for people who already know the settings: paste or write a whole recipe as YAML, or load one of the starters shipped with Bhaskera (the files in <code>configs/</code>) or one of your recipes and edit it.
 A copy is saved under your name with its own run name and checkpoint folder, so it never writes over the original run's checkpoints. The Ray Dashboard host stays on the local machine whatever the YAML says.</p>
-<p>The page needs to know where <code>submit.sh</code> is. Start it from your run folder; if you do not, it uses <code>~/bhaskera-runs</code>, which it makes from the shared kit the first time. Jobs are charged to your login name:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>ssh<span class="w"> </span>-p<span class="w"> </span><span class="m">4422</span><span class="w"> </span>-L<span class="w"> </span><span class="m">8265</span>:localhost:&lt;port&gt;<span class="w"> </span>&lt;user&gt;@paramrudra.cdacb.in<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="s2">"bash -lc 'module load bhaskera/1.0.0 &amp;&amp; cd /scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs &amp;&amp; bhaskera-dashboard ray'"</span>
-</code></pre></div>
-<p>(<code>bhaskera-dashboard ray</code> prints the first part of this command with your port.) Without the account and folder the page
-still works; the Start button then says what is missing.</p>
 <h2 id="chat-with-a-trained-model">Chat with a trained model<a class="headerlink" href="#chat-with-a-trained-model" title="Permanent link">&para;</a></h2>
 <p>Train with <code>logging.mlflow_log_adapter: true</code> so the adapter is stored with the run. Then press <strong>Chat</strong> on a finished run.
 A GPU node loads the base model and the adapter, which takes a few minutes. When it is ready, a chat window opens on the page:</p>
@@ -2977,7 +3030,7 @@ base models are comparable only on the same test.</p>
 <tbody>
 <tr>
 <td>Train a model</td>
-<td><strong>Start</strong>, Train</td>
+<td><strong>New run</strong>, Train</td>
 <td><code>./submit.sh recipes/&lt;recipe&gt;.yaml &lt;nodes&gt; &lt;hours&gt;</code></td>
 </tr>
 <tr>
@@ -3002,7 +3055,7 @@ base models are comparable only on the same test.</p>
 </tr>
 <tr>
 <td>Make a recipe</td>
-<td><strong>Start</strong>, Create recipe</td>
+<td><strong>New run</strong>, Create recipe</td>
 <td>write <code>recipes/&lt;name&gt;.yaml</code> (see <a href="../recipes/">Recipes</a>)</td>
 </tr>
 <tr>
@@ -3068,7 +3121,7 @@ refused is stopped with a clear message. On an account that several people share
 <div class="admonition note">
 <p class="admonition-title">Shared accounts</p>
 <p>The page lists the jobs of the Unix account you are logged in with. On an account that several people share, you see
-everyone's jobs, and anyone on it can use the Start button.</p>
+everyone's jobs, and anyone on it can start jobs from the page.</p>
 </div>
 
 

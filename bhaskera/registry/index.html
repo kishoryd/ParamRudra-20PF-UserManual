@@ -941,6 +941,36 @@
   
   
     <li class="md-nav__item">
+      <a href="../new-cluster/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19h1a1 1 0 0 1 1 1h7v2h-7a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1H2v-2h7a1 1 0 0 1 1-1h1v-2H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-7zM4 3h16a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1m5 4h1V5H9zm0 8h1v-2H9zM5 5v2h2V5zm0 8v2h2v-2z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Setting Up on Another Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../workflow/" class="md-nav__link">
         
   
@@ -2644,7 +2674,7 @@ MLflow, which Bhaskera already writes to, so there is nothing to set up. The hom
 format and stored with the MLflow run. Without it there is nothing to register, and neither Chat nor Benchmark can use the run.</p>
 <p>To register at the end of training, add <code>logging.mlflow_register_model: &lt;name&gt;</code> too. Most people prefer to look at the results first:</p>
 <h2 id="register-after-you-have-looked-at-the-results">Register after you have looked at the results<a class="headerlink" href="#register-after-you-have-looked-at-the-results" title="Permanent link">&para;</a></h2>
-<p>On the home page open the <strong>Start</strong> menu and choose <strong>Register</strong>: pick the run, give it a name (or pick a name that exists to add a
+<p>On the home page press <strong>New run</strong> and choose <strong>Register</strong>: pick the run, give it a name (or pick a name that exists to add a
 new version) and, if you like, an alias of your choice and a hand-off note. In the terminal:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-m<span class="w"> </span>bhaskera.launcher.register<span class="w"> </span>add<span class="w"> </span>--run<span class="w"> </span>&lt;run<span class="w"> </span>id&gt;<span class="w"> </span>--name<span class="w"> </span>my-assistant<span class="w"> </span>--alias<span class="w"> </span>champion<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span>--note<span class="w"> </span><span class="s2">"For support questions. Weak on legal text."</span>
