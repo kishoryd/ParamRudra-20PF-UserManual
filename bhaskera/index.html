@@ -18,7 +18,7 @@
         <link rel="prev" href="../examples/">
       
       
-        <link rel="next" href="why/">
+        <link rel="next" href="start-here/">
       
       
         
@@ -926,6 +926,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-bhaskera-brings-to-the-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Bhaskera brings to the table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pick-your-starting-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pick your starting point
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -962,6 +984,36 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="start-here/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m13.13 22.19-1.63-3.83c1.57-.58 3.04-1.36 4.4-2.27zM5.64 12.5l-3.83-1.63 6.1-2.77C7 9.46 6.22 10.93 5.64 12.5M21.61 2.39S16.66.269 11 5.93c-2.19 2.19-3.5 4.6-4.35 6.71-.28.75-.09 1.57.46 2.13l2.13 2.12c.55.56 1.37.74 2.12.46A19.1 19.1 0 0 0 18.07 13c5.66-5.66 3.54-10.61 3.54-10.61m-7.07 7.07c-.78-.78-.78-2.05 0-2.83s2.05-.78 2.83 0c.77.78.78 2.05 0 2.83s-2.05.78-2.83 0m-5.66 7.07-1.41-1.41zM6.24 22l3.64-3.64c-.34-.09-.67-.24-.97-.45L4.83 22zM2 22h1.41l4.77-4.76-1.42-1.41L2 20.59zm0-2.83 4.09-4.08c-.21-.3-.36-.62-.45-.97L2 17.76z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Start Here (First Run)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1277,8 +1329,6 @@
       <a href="data/" class="md-nav__link">
         
   
-  
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 13c-2.17 0-4.07 1.16-5.12 2.89-.6.07-1.23.11-1.88.11-4.42 0-8-1.79-8-4V9c0 2.21 3.58 4 8 4s8-1.79 8-4v3c0 .36-.1.71-.28 1.05C19.5 13 19.24 13 19 13m-7-2c4.42 0 8-1.79 8-4s-3.58-4-8-4-8 1.79-8 4 3.58 4 8 4m1.1 6.96c-.36.04-.73.04-1.1.04-4.42 0-8-1.79-8-4v3c0 2.21 3.58 4 8 4 .46 0 .9 0 1.33-.06A6 6 0 0 1 13 19c0-.36.04-.7.1-1.04M20 20v-4h-2v4h-2l3 3 3-3z"/></svg>
   
   <span class="md-ellipsis">
     
@@ -2569,6 +2619,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-bhaskera-brings-to-the-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Bhaskera brings to the table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pick-your-starting-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pick your starting point
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2645,17 +2717,82 @@
 
 <h1 id="bhaskera">Bhaskera<a class="headerlink" href="#bhaskera" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Bhaskera is a framework for fine-tuning large language models (LLMs), and models that also read images, video and
-audio, on Slurm GPU clusters. On PARAM Rudra it runs from 1 node up to 128 nodes (256 A100 GPUs). It uses <strong>LoRA</strong>: the pre-trained model stays frozen and
-only small add-on weights (an <em>adapter</em>) are trained, which needs far less GPU memory and far less
-communication between nodes than full fine-tuning.</p>
-<p>One YAML file (a <em>recipe</em>) describes a run: the model, the data, and how the work is spread across
-GPUs. Bhaskera starts a Ray cluster on the nodes SLURM gives your job, loads and splits the model,
-trains, evaluates, saves checkpoints and prints one line of metrics per step. A web page lists your jobs, starts new
-ones, and lets you chat with the model you trained.</p>
-<p>Official site: <a href="https://github.com/kishoryd/Bhaskera">https://github.com/kishoryd/Bhaskera</a>.</p>
-<p>Bhaskera has been benchmarked on PARAM Rudra with five models from 14 B to 235 B parameters, including
-mixture-of-experts (MoE) models, on 8 to 128 nodes (see <a href="benchmarks/">Benchmarks</a>).</p>
+<p>Bhaskera teaches a pre-trained language model something new, on a cluster of GPUs, from the command line. You give it three things: a <strong>model</strong> to start from, <strong>data</strong> to learn from, and one small file (a <em>recipe</em>) that says how. It does the rest: it checks that everything is in place, asks Slurm for the GPUs, starts the training across all of them, saves progress as it goes, and keeps a record of every run. It handles text models, and models that also read images, video and audio.</p>
+<p>This is called <strong>fine-tuning</strong>. A model such as Qwen3 or Llama has learned general language from a huge amount of text. Fine-tuning continues its training on your own examples (your support tickets, your documents, your question and answer pairs) so that it answers the way you need. Bhaskera is for people who want to do that on a shared Slurm cluster without writing the distributed-training code themselves.</p>
+<p>On PARAM Rudra it runs from 1 node up to 128 nodes (256 A100 GPUs). Most runs use <strong>LoRA</strong>: the pre-trained model stays as it is and only a small add-on (an <em>adapter</em>) is trained, which needs far less GPU memory and far less communication between nodes. <strong>Full fine-tuning</strong>, which trains every weight, is available too.</p>
+<p>Official site: <a href="https://github.com/kishoryd/Bhaskera">https://github.com/kishoryd/Bhaskera</a>. If you have never done this before, start with <a href="start-here/">Start Here: Your First Run</a>.</p>
+<h2 id="what-bhaskera-brings-to-the-table">What Bhaskera brings to the table<a class="headerlink" href="#what-bhaskera-brings-to-the-table" title="Permanent link">&para;</a></h2>
+<p>Fine-tuning a large model on a cluster is not one hard step but many small ones, and each can fail in its own way. Bhaskera is the work around the training, as well as the training itself.</p>
+<table>
+<thead>
+<tr>
+<th>You need to ...</th>
+<th>What Bhaskera does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Describe a run</td>
+<td>One YAML file: the model, the data, how to spread the work over the GPUs. The same file runs on 1 node or 128.</td>
+</tr>
+<tr>
+<td>Train at any size</td>
+<td>LoRA and QLoRA (4-bit) with DDP, FSDP2, HSDP and Pipeline parallelism, measured on PARAM Rudra with five models from 14 B to 235 B parameters, including mixture-of-experts models, on 8 to 128 nodes (<a href="benchmarks/">Benchmarks</a>). Full fine-tuning of every weight with DDP, FSDP2 or HSDP, tried on a 14 B model (<a href="recipes/#full-fine-tuning-training-every-weight">Recipes</a>).</td>
+</tr>
+<tr>
+<td>Train models that see and hear</td>
+<td>Images, video and audio (Qwen3-VL, Qwen2.5-Omni) with the same recipes and commands.</td>
+</tr>
+<tr>
+<td>Get your data in</td>
+<td>Tokenising from JSONL, JSON, CSV, TSV, Parquet or Arrow; models and datasets named by their Hugging Face address and downloaded for you, even from a login node that has no internet; datasets with names, versions and fingerprints, so every run records exactly what it trained on.</td>
+</tr>
+<tr>
+<td>Avoid wasting GPU hours</td>
+<td>Checks before anything is submitted: files and libraries are there, the model fits in GPU memory, the partition limits allow it, the disk has room for the checkpoints. A node that failed before is skipped.</td>
+</tr>
+<tr>
+<td>Survive failures</td>
+<td>Checkpoints, and <code>resume</code> to continue from the last one, or from an earlier one after a loss spike. A failed job ends with a plain explanation of what went wrong and on which node.</td>
+</tr>
+<tr>
+<td>Know whether it worked</td>
+<td>Benchmark the tuned model against its base on standard tests or on your own questions, see what tuning fixed and what it broke, compare models side by side, and chat with the result.</td>
+</tr>
+<tr>
+<td>Keep track</td>
+<td>Every run, its curves, its settings, its adapter and its GPU energy in MLflow, a model registry with names, versions and hand-off notes, and a web page for all of it.</td>
+</tr>
+<tr>
+<td>Use it on your cluster</td>
+<td>Everything that belongs to one cluster is a profile (partitions, GPUs, network), not code. See <a href="new-cluster/">Setting Up on Another Cluster</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>Two ways to use it: the <strong>command line</strong> (this guide's focus: <code>./submit.sh</code>, a few small commands) and a <strong>web page</strong> that does the same things with buttons (<a href="homepage/">Home Page</a>). Everything the page does can be done from a terminal.</p>
+<h2 id="pick-your-starting-point">Pick your starting point<a class="headerlink" href="#pick-your-starting-point" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Your situation</th>
+<th>Go to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>I have no model and no data.</strong> I want to see it work, or I will use a public model and dataset.</td>
+<td><a href="start-here/#case-1-i-have-no-model-and-no-dataset">Case 1</a></td>
+</tr>
+<tr>
+<td><strong>I bring my own model and my own data</strong>, tokenised or not.</td>
+<td><a href="start-here/#case-2-i-bring-my-own-model-and-my-own-data">Case 2</a></td>
+</tr>
+<tr>
+<td><strong>I only want to measure a model I already have</strong>, with no training.</td>
+<td><a href="start-here/#case-3-benchmark-a-model-you-already-have">Case 3</a></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -2710,6 +2847,10 @@ mixture-of-experts (MoE) models, on 8 to 128 nodes (see <a href="benchmarks/">Be
 </thead>
 <tbody>
 <tr>
+<td><a href="start-here/">Start Here: Your First Run</a></td>
+<td>The words, the idea, and three step-by-step cases: no model and no data, your own model and data, benchmarking a model you have</td>
+</tr>
+<tr>
 <td><a href="why/">Why Bhaskera</a></td>
 <td>Features, measured benefits, and how it is built</td>
 </tr>
@@ -2718,20 +2859,24 @@ mixture-of-experts (MoE) models, on 8 to 128 nodes (see <a href="benchmarks/">Be
 <td>Loading the module, or installing your own copy</td>
 </tr>
 <tr>
+<td><a href="new-cluster/">Setting Up on Another Cluster</a></td>
+<td>For an administrator: a first install on a cluster other than PARAM Rudra</td>
+</tr>
+<tr>
 <td><a href="workflow/">End-to-end Example</a></td>
 <td>Model and data, tokenising, training, expected output, resuming</td>
 </tr>
 <tr>
 <td><a href="recipes/">Recipes</a></td>
-<td>Ready configurations for each model, and how many nodes and hours to request</td>
+<td>Ready configurations for each model, full fine-tuning, and how many nodes and hours to request</td>
+</tr>
+<tr>
+<td><a href="data/">Downloads and Dataset Versions</a></td>
+<td>Data formats, Hugging Face names in a recipe, downloading, naming and versioning data</td>
 </tr>
 <tr>
 <td><a href="monitoring/">Monitoring</a></td>
-<td>The step log, MLflow, and the Ray Dashboard with charts for every node</td>
-</tr>
-<tr>
-<td><a href="homepage/">Home Page</a></td>
-<td>One page for your jobs: start a job, chat with a trained model, benchmark it</td>
+<td>The step log, MLflow, GPU energy, and the Ray Dashboard with charts for every node</td>
 </tr>
 <tr>
 <td><a href="multimodal/">Multimodal</a></td>
@@ -2752,6 +2897,10 @@ mixture-of-experts (MoE) models, on 8 to 128 nodes (see <a href="benchmarks/">Be
 <tr>
 <td><a href="benchmarks/">Benchmarks</a></td>
 <td>Measured speed, MFU, memory and accuracy for every model, strategy and node count</td>
+</tr>
+<tr>
+<td><a href="homepage/">Home Page</a></td>
+<td>The web page: your jobs, runs, data and models, and the same actions with buttons</td>
 </tr>
 <tr>
 <td><a href="troubleshooting/">Troubleshooting &amp; Reference</a></td>
@@ -2892,13 +3041,13 @@ mixture-of-experts (MoE) models, on 8 to 128 nodes (see <a href="benchmarks/">Be
         
         
           
-          <a href="why/" class="md-footer__link md-footer__link--next" aria-label="Next: Why Bhaskera">
+          <a href="start-here/" class="md-footer__link md-footer__link--next" aria-label="Next: Start Here (First Run)">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Why Bhaskera
+                Start Here (First Run)
               </div>
             </div>
             <div class="md-footer__button md-icon">
