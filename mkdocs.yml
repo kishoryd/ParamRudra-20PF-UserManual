@@ -111,24 +111,23 @@ nav:
       - Job Script Examples: examples.md
 
   - Bhaskera:
-      - Bhaskera Dashboard: bhaskera/homepage.md
       - Overview: bhaskera/index.md
-      - Start Here (First Run): bhaskera/start-here.md
       - Why Bhaskera: bhaskera/why.md
-      - Installation: bhaskera/installation.md
-      - Setting Up on Another Cluster: bhaskera/new-cluster.md
+      - Start Here (First Run): bhaskera/start-here.md
+      - Bhaskera Dashboard: bhaskera/homepage.md
       - End-to-end Example: bhaskera/workflow.md
+      - Data Format: bhaskera/data.md
+      - Downloads and Dataset Versions: bhaskera/downloads.md
       - Recipes: bhaskera/recipes.md
       - Multimodal: bhaskera/multimodal.md
+      - Parallelism Strategies: bhaskera/parallelism.md
+      - Benchmarks: bhaskera/benchmarks.md
       - Monitoring: bhaskera/monitoring.md
       - Resuming a Job: bhaskera/resume.md
       - Model Registry: bhaskera/registry.md
-      - Data Format: bhaskera/data.md
-      - Downloads and Dataset Versions: bhaskera/downloads.md
-      - Parallelism Strategies: bhaskera/parallelism.md
-      - Benchmarks: bhaskera/benchmarks.md
+      - Installation: bhaskera/installation.md
+      - Setting Up on Another Cluster: bhaskera/new-cluster.md
       - Troubleshooting: bhaskera/troubleshooting.md
-
   - Software:
       - Modules & Conda: modules.md
       - Spack Packages: spack.md
