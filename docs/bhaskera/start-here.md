@@ -183,6 +183,7 @@ Raw data can be a file, a folder or a pattern, in **JSONL, JSON, CSV, TSV, Parqu
 | `chatml` | `messages`: a list of `{role, content}` | `{"messages": [{"role": "user", "content": "..."}, {"role": "assistant", "content": "..."}]}` |
 | `alpaca` | `instruction`, `output`, optionally `input` | `{"instruction": "...", "input": "", "output": "..."}` |
 | `sharegpt` | `conversations`: a list of `{from, value}` | `{"conversations": [{"from": "human", "value": "..."}, {"from": "gpt", "value": "..."}]}` |
+| `prompt_completion` | `prompt` and `completion` (other column names: `format_options: {prompt_field: question, completion_field: answer}`) | `{"prompt": "...", "completion": "..."}` |
 
 Put a few hundred examples aside as a validation file; the run uses it to show whether the model is really improving. Then copy the tokenise recipe, fill in your paths, and run it:
 

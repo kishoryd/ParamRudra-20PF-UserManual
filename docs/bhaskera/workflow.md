@@ -60,7 +60,7 @@ Put a separate validation file next to it (a few hundred to a few thousand conve
 /scratch/<project>/<username>/data/val.jsonl
 ```
 
-`alpaca` (`instruction`, `input`, `output`) and `sharegpt` (`conversations` with `from` / `value`) files
+`alpaca` (`instruction`, `input`, `output`), `sharegpt` (`conversations` with `from` / `value`) and `prompt_completion` (`prompt`, `completion`) files
 also work: set `data.format` in the tokenize recipe.
 
 ## Step 1: Tokenise

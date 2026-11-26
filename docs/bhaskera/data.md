@@ -17,13 +17,18 @@ The tokenise step (`./submit.sh tokenize`) reads your raw data in any of these, 
 | **Compressed** (`.gz`) | Any of the above with `.gz` added, for example `data.csv.gz`. |
 | **A Hugging Face dataset saved to disk** (a folder from `save_to_disk`) | One split per folder: point `train_path` at the split's folder. |
 
-One path must hold one format (JSON lines and JSON arrays may be mixed). What the *columns* must be is a separate choice, `data.format`:
+One path must hold one format (JSON lines and JSON arrays may be mixed). What the *columns* must be is a separate choice, `data.format`. Four layouts are built in, and they cover most public datasets:
 
-| `data.format` | The columns each row needs |
-|---|---|
-| `chatml` | `messages`: a list of `{role, content}` turns (`data.format_options.messages_field` names another column) |
-| `alpaca` | `instruction`, `output`, and optionally `input` |
-| `sharegpt` | `conversations`: a list of `{from, value}` turns |
+| `data.format` | The columns each row needs | Typical sources |
+|---|---|---|
+| `chatml` | `messages`: a list of `{role, content}` turns (`data.format_options.messages_field` names another column) | OpenAI-style chat files, UltraChat, Nemotron chat, most chat datasets on Hugging Face |
+| `alpaca` | `instruction`, `output`, and optionally `input` | Alpaca and its many copies |
+| `sharegpt` | `conversations`: a list of `{from, value}` turns | ShareGPT, Vicuna and OpenHermes style files |
+| `prompt_completion` | `prompt` and `completion`; `format_options: {prompt_field: ..., completion_field: ...}` names other columns | Question and answer sets (`question`/`answer`), Dolly (`instruction`/`response`), OpenAI's older fine-tuning files |
+
+Text with no columns at all (books, code, articles) needs no format: see [Plain text](#plain-text).
+
+A layout that is none of these can be added without changing Bhaskera: write a small Python function that turns one row into one string, register it with `@register_format("my_format")` (the example is at the top of `bhaskera/data/formats/__init__.py`), and set `data.format: my_format`. This route is not tested on the cluster, because the function must also be importable by the tokenising workers. A few lines of Python or `pandas` that rename the columns into one of the layouts above are enough.
 
 Verified on PARAM Rudra: the same 2,000 instruction rows as CSV, TSV and a JSON array each tokenised to the same cache (2,000 rows at sequence length 512, format `alpaca`).
 

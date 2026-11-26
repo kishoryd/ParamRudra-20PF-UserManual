@@ -17,7 +17,7 @@ $ ssh -p 4422 -L 8265:localhost:<port> <user>@paramrudra.cdacb.in \
     "bash -lc 'module load bhaskera/1.0.0 && cd /scratch/<project>/<username>/bhaskera-runs && bhaskera-dashboard ray'"
 ```
 
-Then open `http://localhost:8265`. The page finds `submit.sh` in the folder you start it from (your run folder). If you start it from another folder, it uses `~/bhaskera-runs`, which it makes from the shared kit the first time.
+Then open `http://localhost:8265`. The command lands on whichever login node you are given; to start the page on a node of your choice, such as login01 (which has internet), see [Land on a login node you choose](monitoring.md#land-on-a-login-node-you-choose-login01-has-internet). The page finds `submit.sh` in the folder you start it from (your run folder). If you start it from another folder, it uses `~/bhaskera-runs`, which it makes from the shared kit the first time.
 Jobs are charged to your login name. `module load` is needed because a login shell started by `ssh host "command"` does not load it for you.
 
 ## The pages

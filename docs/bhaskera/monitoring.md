@@ -78,17 +78,26 @@ $ bhaskera-dashboard status
 $ bhaskera-dashboard tunnel                 # prints the SSH command for your laptop
 ```
 
-`bhaskera-dashboard tunnel` prints the command for the login node you are on, for example:
+`bhaskera-dashboard tunnel` prints the command for the login node you are on. Run it **on your laptop** and leave that terminal open:
 
 ```text
-  From your laptop:
-    ssh -L 5055:localhost:5055 login02
-    open http://localhost:5055
+  From your laptop (leave it open):
+    ssh -p 4422 -t -t -L 5055:localhost:15055 <user>@paramrudra.cdacb.in "ssh -t -t -L 15055:localhost:5055 login01"
+    then open http://localhost:5055
 ```
 
-On your laptop, run that command through your usual connection to PARAM Rudra (see
-[Getting Access](../access.md)) so that it ends on the same login node, and open <http://localhost:5055>, then
-the experiment **bhaskera**. A multi-node job is one run. It has these curves:
+The command has two hops because `paramrudra.cdacb.in` hands out a different login node each time you connect (login01, login03, login05 and so on), and MLflow runs only on the node where you started it. The first `ssh` logs in, and the second one, inside it, goes on to the node that runs MLflow (`login01` here; the command always names the node you started it on). Then open <http://localhost:5055> and choose the experiment **bhaskera**.
+
+!!! warning "Do not use `ssh -J`"
+    `ssh -J <user>@paramrudra.cdacb.in:4422 <user>@login01` does not work: the login nodes refuse to pass a connection on to another machine. Use the two-hop command above.
+
+!!! warning "MLflow stops when you log out"
+    The MLflow started by `bhaskera-dashboard start` ends when the login session that started it ends (checked on PARAM Rudra: started over a one-line `ssh`, it was gone afterwards). Keep a session open for as long as you look at the charts: the tunnel command above leaves you in a shell on that node, so the simplest way is to run `bhaskera-dashboard start` in that shell, in a second terminal opened with the same `ssh ... login01` hop, or to use the home page (`bhaskera-dashboard ray`), which starts MLflow itself and keeps it while the page runs.
+
+!!! tip "Closing it"
+    Press `Ctrl-C` in the laptop terminal, or type `exit`. The tunnel closes. Run `bhaskera-dashboard stop` on the login node if MLflow is still running.
+
+A multi-node job is one run. It has these curves:
 
 | Metric | What it is |
 |---|---|
@@ -137,6 +146,22 @@ From your laptop, this one command logs in and keeps everything open
 Then open http://localhost:8265 in a browser: your running jobs, with their Ray Dashboards,
 charts and MLflow, are linked from that page.
 ```
+
+The port in the command (20029 here) is your own: `bhaskera-dashboard ray --info` prints the command with the right one.
+
+### Land on a login node you choose (login01 has internet)
+
+The command above starts the page on whichever login node you are given. That is fine for everything except downloads from Hugging Face, which need internet, and on PARAM Rudra only login01, login02, login03 and login05 have it. (The page already sends a download to a node that has internet when it runs on one that does not, so this is only needed if you want to be on login01 yourself.) To start the page on a given node, add `--node`:
+
+```bash
+$ bhaskera-dashboard ray --info --node login01
+    ssh -p 4422 -t -t -L 8265:localhost:18265 <user>@paramrudra.cdacb.in "ssh -t -t -L 18265:localhost:20029 login01 \"bash -lc 'module load bhaskera/1.0.0 && bhaskera-dashboard ray'\""
+```
+
+Run the printed line on your laptop, as it is printed, and open <http://localhost:8265>. Only one copy of the page can run per user on a node: if it says the port is in use, stop the old one (`Ctrl-C` in its terminal).
+
+!!! note "If the connection hangs: \"timed out during banner exchange\""
+    The login nodes slow down when many connections arrive in a short time (several `ssh` and `scp` commands in a row, for example). Wait a minute and try again, and open one connection at a time. Nothing is wrong with your account.
 
 !!! tip "The same page starts jobs"
     The page also starts jobs, opens a chat with a trained model and runs benchmarks: see [Home Page](homepage.md).
