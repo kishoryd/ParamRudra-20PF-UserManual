@@ -82,27 +82,6 @@ a store in your home folder it is still used until a copy or a link exists in th
 
 If the administrators keep models and tokenised data in `/home/apps/bhaskera/models` and `/home/apps/bhaskera/data`, the page offers them under *Shared on this cluster*
 in the model and data lists. You can always type the path of your own folder instead.
-
-## For Administrators: Central Installation
-
-On a cluster other than PARAM Rudra, follow [Setting Up on Another Cluster](new-cluster.md) instead: it covers the cluster profile, the modulefile and a first check.
-
-`install-bhaskera.sh` builds Bhaskera for all users and `bhaskera/1.0.0.lua` is the matching Lmod
-modulefile. Both are in the Bhaskera repository under `slurm/`.
-
-```bash
-$ bash slurm/install-bhaskera.sh                       # installs to /home/apps/bhaskera/1.0.0
-$ mkdir -p /home/apps/AIStack/bhaskera
-$ cp slurm/modulefiles/bhaskera/1.0.0.lua /home/apps/AIStack/bhaskera/1.0.0.lua
-```
-
-The installer must be run with the final path (`PREFIX=...` to change it), because a Python
-environment cannot be moved after it is built. It also installs Prometheus and Grafana under
-`/home/apps/bhaskera/1.0.0/observability` (for the charts in the Ray Dashboard); this step needs internet
-access, and `WITH_CHARTS=0` skips it. It also installs the lm-evaluation-harness for benchmarks (`WITH_EVAL=0` skips it).
-The modulefile sets `BHASKERA_CLUSTER_PROFILE` to the PARAM Rudra profile, which holds the partitions, GPUs per node and network
-interface; another site writes its own profile (`clusters/example.yaml`). It ends by printing the installed versions:
-
 ```text
 OK  torch 2.6.0+cu124 (CUDA 12.4)  flash-attn 2.7.3  bitsandbytes 0.50.2  transformers 4.57.6  ray 2.56.1  peft 0.20.0
 ```
