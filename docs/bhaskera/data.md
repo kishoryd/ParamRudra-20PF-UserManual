@@ -69,8 +69,5 @@ data:
 
 A folder of Parquet files with `input_ids` and `labels` (and `attention_mask`, or set `data.pack_sequences: true`) works as `data.tokenized_path`, without Bhaskera's tokenise step. Rename columns with `data.column_map`. Write a `metadata.json` (`{"model_name": "<model folder>", "seq_len": 4096}`) next to the files: without it Bhaskera cannot check that the length and tokenizer match, and the home page does not list the folder. Rows are never re-padded, so `data.seq_len` must equal their length.
 
-## A layout that is not listed
-
-Rename the columns into one of the layouts above (a few lines of Python or `pandas`). To add a layout instead, write a function that turns one row into one string, register it with `@register_format("my_format")` (see the top of `bhaskera/data/formats/__init__.py`) and set `data.format: my_format`. This route is not tested on the cluster.
 
 Getting data in from Hugging Face, and naming and versioning it: [Downloads and Dataset Versions](downloads.md).
