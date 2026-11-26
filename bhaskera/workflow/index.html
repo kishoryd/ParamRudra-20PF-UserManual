@@ -1195,6 +1195,61 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#step-5-watch-it-mlflow-ray-dashboard-grafana" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Watch It (MLflow, Ray Dashboard, Grafana)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-chat-with-the-trained-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Chat With the Trained Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-evaluate-on-your-own-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: Evaluate on Your Own Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-benchmark-against-the-base-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8: Benchmark Against the Base Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-9-save-the-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 9: Save the Model
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2895,6 +2950,61 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#step-5-watch-it-mlflow-ray-dashboard-grafana" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Watch It (MLflow, Ray Dashboard, Grafana)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-chat-with-the-trained-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Chat With the Trained Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-7-evaluate-on-your-own-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: Evaluate on Your Own Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-8-benchmark-against-the-base-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8: Benchmark Against the Base Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-9-save-the-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 9: Save the Model
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2946,13 +3056,18 @@
 <p>This page takes one model, <strong>Qwen3-14B</strong>, from raw data to a trained LoRA adapter, using the
 <code>qwen3-14b-qlora.yaml</code> recipe. Every other recipe works the same way; only the model and the node
 count change (see <a href="../recipes/">Recipes</a>).</p>
-<p>The run has four steps, all started from a login node:</p>
-<ul>
+<p>The run has nine steps, all started from a login node. Steps 1 to 4 train the model; steps 5 to 9 are what you do with it afterwards.</p>
+<ol>
 <li>Download the model and prepare the data</li>
 <li>Tokenise the data (one CPU job, once per model and dataset)</li>
 <li>Run a short first job (10 steps)</li>
 <li>Run the full training job</li>
-</ul>
+<li>Watch it: MLflow, and optionally the Ray Dashboard and Grafana</li>
+<li>Chat with the trained model (serve)</li>
+<li>Evaluate it on your own questions</li>
+<li>Benchmark it against the base model</li>
+<li>Save it under a name (register)</li>
+</ol>
 <h2 id="input">Input<a class="headerlink" href="#input" title="Permanent link">&para;</a></h2>
 <h3 id="run-folder">Run folder<a class="headerlink" href="#run-folder" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/1.0.0
@@ -3120,6 +3235,72 @@ and submit:</p>
 </code></pre></div>
 <p>A checkpoint with the trained LoRA weights and the optimizer state is written to <code>checkpoint.save_dir</code> when the
 run ends. Submitting the job again with the same <code>save_dir</code> and a larger <code>max_steps</code> continues from it.</p>
+<div class="admonition note">
+<p class="admonition-title">Keep the adapter</p>
+<p>Steps 6 to 9 use the <strong>adapter</strong> the run stores, which needs <code>logging.mlflow_log_adapter: true</code>. The shipped recipes and the recipes the dashboard writes set it. A full fine-tune stores no adapter, so it has no Chat, Benchmark by run or Register.</p>
+</div>
+<p>Steps 5 to 9 need the <strong>run id</strong> of the finished training run: the 32-character id in the <strong>Runs</strong> table of the dashboard (and in MLflow's run page). Every command below can also be done with a button on the <a href="../homepage/">Bhaskera dashboard</a>; the commands are shown because they work from any terminal.</p>
+<h2 id="step-5-watch-it-mlflow-ray-dashboard-grafana">Step 5: Watch It (MLflow, Ray Dashboard, Grafana)<a class="headerlink" href="#step-5-watch-it-mlflow-ray-dashboard-grafana" title="Permanent link">&para;</a></h2>
+<p>Open the dashboard on a login node. Run this on your laptop and leave it open (the command comes from <code>bhaskera-dashboard ray --info</code>; add <code>--node login01</code> to land on a login node of your choice, and see <a href="../monitoring/#ray-dashboard-charts-and-mlflow-in-one-place">Monitoring</a>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>$<span class="w"> </span>ssh<span class="w"> </span>-p<span class="w"> </span><span class="m">4422</span><span class="w"> </span>-L<span class="w"> </span><span class="m">8265</span>:localhost:&lt;port&gt;<span class="w"> </span>&lt;user&gt;@paramrudra.cdacb.in<span class="w"> </span><span class="s2">"bash -lc 'module load bhaskera/1.0.0 &amp;&amp; bhaskera-dashboard ray'"</span>
+</code></pre></div>
+<p>Then open <code>http://localhost:8265</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Use it for</th>
+<th>Needs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MLflow</strong></td>
+<td>The run's loss and evaluation curves, throughput, GPU energy and the model registry, kept after the job ends</td>
+<td>Nothing extra (the dashboard starts it)</td>
+</tr>
+<tr>
+<td><strong>Ray Dashboard</strong> <em>(optional)</em></td>
+<td>While the job runs: every node's CPU, memory and GPU load, the workers and their logs. Open it on the job's card</td>
+<td>A running job</td>
+</tr>
+<tr>
+<td><strong>Grafana</strong> <em>(optional)</em>, shown as <strong>GPU charts</strong></td>
+<td>GPU, CPU and memory over time for every node</td>
+<td>Prometheus and Grafana installed next to Bhaskera; without them the other two still work</td>
+</tr>
+</tbody>
+</table>
+<p>To look at MLflow alone, without the dashboard, run <code>bhaskera-dashboard start</code> on a login node and <code>bhaskera-dashboard tunnel</code> prints the command for your laptop. MLflow started this way stops when the login session that started it ends.</p>
+<h2 id="step-6-chat-with-the-trained-model">Step 6: Chat With the Trained Model<a class="headerlink" href="#step-6-chat-with-the-trained-model" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>$<span class="w"> </span>./submit.sh<span class="w"> </span>serve<span class="w"> </span>--run<span class="w"> </span>&lt;run<span class="w"> </span>id&gt;<span class="w">                 </span><span class="c1"># prints the job number</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>$<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>logs/bhaskera-serve_&lt;job&gt;.out<span class="w">            </span><span class="c1"># wait for: === serving on &lt;node&gt;:&lt;port&gt; ===</span>
+</code></pre></div>
+<p>Loading takes 5 to 8 minutes for a 14 B model. On the dashboard, press <strong>Chat</strong> on the run instead: the window opens by itself when the model is ready, with <strong>Tuned</strong>, <strong>Base</strong> and <strong>Compare</strong> answers side by side. From a terminal, link to the node from the login node and ask:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>$<span class="w"> </span>ssh<span class="w"> </span>-N<span class="w"> </span>-L<span class="w"> </span>&lt;port&gt;:localhost:&lt;port&gt;<span class="w"> </span>&lt;node&gt;<span class="w"> </span><span class="p">&amp;</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>$<span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>localhost:&lt;port&gt;/v1/chat/completions<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Type: application/json'</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">       </span>-d<span class="w"> </span><span class="s1">'{"messages": [{"role": "user", "content": "What is HPC?"}], "max_tokens": 200}'</span>
+</code></pre></div>
+<p>Add <code>"use_adapter": false</code> to get the base model's answer from the same weights. The server stops after two hours (<code>SERVE_HOURS</code> changes it) or with <code>scancel &lt;job&gt;</code>, which frees the GPU node.</p>
+<h2 id="step-7-evaluate-on-your-own-questions">Step 7: Evaluate on Your Own Questions<a class="headerlink" href="#step-7-evaluate-on-your-own-questions" title="Permanent link">&para;</a></h2>
+<p>Standard benchmarks say little about your own use, so test the model on examples from your work. Put them in a JSONL file, one <code>{"question": "...", "answer": "..."}</code> per line, then:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>bhaskera.launcher.evaluate<span class="w"> </span>init-task<span class="w"> </span>--name<span class="w"> </span>my_test<span class="w"> </span>--data<span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/my.jsonl
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>$<span class="w"> </span>./submit.sh<span class="w"> </span><span class="nb">eval</span><span class="w"> </span>--run<span class="w"> </span>&lt;run<span class="w"> </span>id&gt;<span class="w"> </span>--tasks<span class="w"> </span>my_test<span class="w"> </span>--save-samples
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>bhaskera.launcher.evaluate<span class="w"> </span>review<span class="w"> </span>&lt;folder&gt;<span class="w">        </span><span class="c1"># fixed by tuning, broken by tuning, still wrong</span>
+</code></pre></div>
+<p><code>review</code> sorts every example into <strong>fixed by tuning</strong>, <strong>broken by tuning</strong> (the base model had it right), <strong>still wrong</strong> and <strong>still right</strong>. Fix or add training examples for what is still wrong, tokenise again, train again and run the same test: the numbers show whether it helped. More in <a href="../homepage/#test-the-model-on-your-own-questions-and-find-what-to-correct">The Bhaskera Dashboard</a>.</p>
+<h2 id="step-8-benchmark-against-the-base-model">Step 8: Benchmark Against the Base Model<a class="headerlink" href="#step-8-benchmark-against-the-base-model" title="Permanent link">&para;</a></h2>
+<p>Training loss does not say what the model can still do. Download the test data once on a login node (compute nodes have no internet), then run the standard tests on the base and the tuned model:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>bhaskera.launcher.evaluate<span class="w"> </span>prepare<span class="w"> </span>--tasks<span class="w"> </span>arc_easy,hellaswag
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>$<span class="w"> </span>./submit.sh<span class="w"> </span><span class="nb">eval</span><span class="w"> </span>--run<span class="w"> </span>&lt;run<span class="w"> </span>id&gt;<span class="w"> </span>--tasks<span class="w"> </span>arc_easy,hellaswag<span class="w"> </span>--limit<span class="w"> </span><span class="m">200</span><span class="w">      </span><span class="c1"># --limit: a quick check; leave it out for the real score</span>
+</code></pre></div>
+<p>The result shows the change per task and counts as <em>better</em> or <em>worse</em> only when it is larger than twice the standard error. It is stored with the run and shown in the <strong>Runs</strong> table; <strong>Compare models</strong> puts several side by side. Use the same tests and the same number of examples for every model you compare.</p>
+<h2 id="step-9-save-the-model">Step 9: Save the Model<a class="headerlink" href="#step-9-save-the-model" title="Permanent link">&para;</a></h2>
+<p>Give the trained model a name, a version and a note, so a colleague can find it without a run id:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>bhaskera.launcher.register<span class="w"> </span>add<span class="w"> </span>--run<span class="w"> </span>&lt;run<span class="w"> </span>id&gt;<span class="w"> </span>--name<span class="w"> </span>my-assistant<span class="w"> </span>--alias<span class="w"> </span>champion
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>bhaskera.launcher.register<span class="w"> </span>list
+</code></pre></div>
+<p>Chat, benchmark and compare accept the registered name in place of a run id (<code>my-assistant</code>, <code>my-assistant:2</code>, <code>my-assistant@champion</code>). On the dashboard this is <strong>Register</strong>. See <a href="../registry/">Model Registry</a> for versions, aliases and notes. A run that stopped early can be continued with <code>./submit.sh resume --run &lt;run id&gt;</code> (<a href="../resume/">Resuming a Job</a>).</p>
 
 
 
