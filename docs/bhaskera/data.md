@@ -13,6 +13,7 @@ The tokenise step (`./submit.sh tokenize`) reads your raw data in any of these, 
 | **CSV / TSV** (`.csv`, `.tsv`) | One row per line with a header. Every cell is read as text, and an empty cell stays empty text. A cell that holds a list as JSON text (the `messages` or `conversations` column of a chat dataset) is decoded. |
 | **Parquet** (`.parquet`) | Read as it is. |
 | **Arrow / Feather** (`.arrow`, `.feather`) | The Arrow IPC file or stream format. |
+| **Plain text** (`.txt`, `.text`, `.md`) | Text with no columns, for continued pre-training or a book or code corpus. See [Plain text](#plain-text) below. |
 | **Compressed** (`.gz`) | Any of the above with `.gz` added, for example `data.csv.gz`. |
 | **A Hugging Face dataset saved to disk** (a folder from `save_to_disk`) | One split per folder: point `train_path` at the split's folder. |
 
@@ -28,6 +29,26 @@ Verified on PARAM Rudra: the same 2,000 instruction rows as CSV, TSV and a JSON 
 
 !!! note "No validation file"
     A recipe without `val_path` tokenises the training data only, and says so. Training then runs without an evaluation set. Add a `val_path` and tokenise again to get one.
+
+### Plain text
+
+For text that is not question and answer, point `train_path` at `.txt` files and leave out `data.format`:
+
+```yaml
+data:
+  name: local
+  train_path: /scratch/<project>/<username>/data/books/      # a folder of .txt files
+  val_path:   /scratch/<project>/<username>/data/val.txt
+  seq_len: 4096
+  format_options:
+    text_split: file        # file | paragraphs | lines
+    chunk: true
+```
+
+- `text_split` says what one training example is: a whole **file** (the default), a **paragraph** (pieces separated by a blank line) or one **line**. Empty pieces are dropped.
+- `chunk: true` cuts every example into `seq_len` pieces and ends each with the model's end-of-text token. Without it, an example longer than `seq_len` is cut off and the rest is lost, which for whole books means almost all of the text. Use `chunk: true` for files and long paragraphs.
+- Text files are read one file per task, so a large corpus is spread over the workers; a single file is read by one worker, so split a very large file into several. Files are read as UTF-8.
+- Set these two keys in the recipe file; the Create recipe dialog does not ask for them.
 
 ### Data you tokenised yourself
 

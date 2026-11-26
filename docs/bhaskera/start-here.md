@@ -176,7 +176,7 @@ A model is a **Hugging Face model folder**: it has a `config.json`, the weight f
 
 ### Your data, not tokenised yet
 
-Raw data can be a file, a folder or a pattern, in **JSONL, JSON, CSV, TSV, Parquet or Arrow** (optionally `.gz`): see [what formats work](data.md#what-data-formats-work). What matters is the *columns*, set with `data.format`:
+Raw data can be a file, a folder or a pattern, in **JSONL, JSON, CSV, TSV, Parquet, Arrow or plain text** (optionally `.gz`): see [what formats work](data.md#what-data-formats-work). What matters is the *columns*, set with `data.format`:
 
 | `data.format` | Each row needs | Example |
 |---|---|---|
