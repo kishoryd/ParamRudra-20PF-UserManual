@@ -118,9 +118,9 @@ nav:
       - Setting Up on Another Cluster: bhaskera/new-cluster.md
       - End-to-end Example: bhaskera/workflow.md
       - Recipes: bhaskera/recipes.md
+      - Multimodal: bhaskera/multimodal.md
       - Monitoring: bhaskera/monitoring.md
       - Home Page: bhaskera/homepage.md
-      - Multimodal: bhaskera/multimodal.md
       - Resuming a Job: bhaskera/resume.md
       - Model Registry: bhaskera/registry.md
       - Data Format: bhaskera/data.md
