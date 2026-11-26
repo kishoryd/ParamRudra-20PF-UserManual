@@ -2744,6 +2744,64 @@ The recipes are in the <code>recipes/</code> folder of your run folder (copied f
 speed and memory use in the header.</p>
 <p>To make your own, press <strong>New run</strong> on the home page and choose <strong>Create recipe</strong>: it asks for the model, the data and how long, supports text and multimodal
 models with every strategy, and writes the file for you (see <a href="../homepage/#create-a-recipe">The Home Page</a>).</p>
+<p>Every model that was benchmarked has a recipe for each method that fits it. "—" means that method ran out of memory in the benchmark, so there is no recipe for it.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>QLoRA + DDP</th>
+<th>LoRA + DDP</th>
+<th>Pipeline</th>
+<th>HSDP</th>
+<th>FSDP2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Qwen/Qwen3-14B</code></td>
+<td><code>qwen3-14b-qlora</code></td>
+<td><code>qwen3-14b-ddp</code></td>
+<td><code>qwen3-14b-pipeline</code></td>
+<td><code>qwen3-14b-hsdp</code></td>
+<td><code>qwen3-14b-fsdp</code></td>
+</tr>
+<tr>
+<td><code>Qwen/Qwen3-30B-A3B-Instruct-2507</code> (MoE)</td>
+<td><code>qwen3-30b-a3b-qlora</code></td>
+<td><code>qwen3-30b-a3b-ddp</code></td>
+<td><code>qwen3-30b-a3b-pipeline</code></td>
+<td><code>qwen3-30b-a3b-hsdp</code></td>
+<td><code>qwen3-30b-a3b-fsdp</code></td>
+</tr>
+<tr>
+<td><code>meta-llama/Llama-3.3-70B-Instruct</code></td>
+<td><code>llama-3.3-70b-qlora</code></td>
+<td>—</td>
+<td><code>llama-3.3-70b-pipeline</code></td>
+<td><code>llama-3.3-70b-hsdp</code></td>
+<td><code>llama-3.3-70b-fsdp</code></td>
+</tr>
+<tr>
+<td><code>mistralai/Mistral-Large-Instruct-2411</code></td>
+<td><code>mistral-large-123b-qlora</code></td>
+<td>—</td>
+<td><code>mistral-large-123b-pipeline</code></td>
+<td><code>mistral-large-123b-hsdp</code></td>
+<td><code>mistral-large-123b-fsdp</code></td>
+</tr>
+<tr>
+<td><code>Qwen/Qwen3-235B-A22B-Instruct-2507</code> (MoE)</td>
+<td>—</td>
+<td>—</td>
+<td><code>qwen3-235b-a22b-pipeline</code></td>
+<td><code>qwen3-235b-a22b-hsdp</code></td>
+<td><code>qwen3-235b-a22b-fsdp</code></td>
+</tr>
+</tbody>
+</table>
+<p>Each file is <code>recipes/&lt;name&gt;.yaml</code>. The fastest one for each model is in <a href="../benchmarks/">Benchmarks</a>; in short, QLoRA + DDP for the dense 14 B to 123 B models and Pipeline for the MoE models.
+Node counts: any for DDP, QLoRA and FSDP2. Pipeline needs 2 GPUs per node to add up to a whole number of stages (4 stages: a multiple of 2 nodes, 8 stages: a multiple of 4, 16 stages: a multiple of 8). HSDP needs a whole number of shard groups (a group of 4 GPUs: a multiple of 2 nodes, a group of 16: a multiple of 8).</p>
+<p>Other recipes:</p>
 <table>
 <thead>
 <tr>
@@ -2754,54 +2812,6 @@ models with every strategy, and writes the file for you (see <a href="../homepag
 </tr>
 </thead>
 <tbody>
-<tr>
-<td><code>qwen3-14b-qlora.yaml</code></td>
-<td><code>Qwen/Qwen3-14B</code></td>
-<td>QLoRA + DDP</td>
-<td>any</td>
-</tr>
-<tr>
-<td><code>qwen3-14b-ddp.yaml</code></td>
-<td><code>Qwen/Qwen3-14B</code></td>
-<td>DDP</td>
-<td>any</td>
-</tr>
-<tr>
-<td><code>qwen3-30b-a3b-pipeline.yaml</code></td>
-<td><code>Qwen/Qwen3-30B-A3B-Instruct-2507</code></td>
-<td>Pipeline, 4 stages</td>
-<td>multiple of 2</td>
-</tr>
-<tr>
-<td><code>llama-3.3-70b-qlora.yaml</code></td>
-<td><code>meta-llama/Llama-3.3-70B-Instruct</code></td>
-<td>QLoRA + DDP</td>
-<td>any</td>
-</tr>
-<tr>
-<td><code>llama-3.3-70b-pipeline.yaml</code></td>
-<td><code>meta-llama/Llama-3.3-70B-Instruct</code></td>
-<td>Pipeline, 4 stages</td>
-<td>multiple of 2</td>
-</tr>
-<tr>
-<td><code>mistral-large-123b-qlora.yaml</code></td>
-<td><code>mistralai/Mistral-Large-Instruct-2411</code></td>
-<td>QLoRA + DDP, batch size 1</td>
-<td>any</td>
-</tr>
-<tr>
-<td><code>mistral-large-123b-pipeline.yaml</code></td>
-<td><code>mistralai/Mistral-Large-Instruct-2411</code></td>
-<td>Pipeline, 8 stages</td>
-<td>multiple of 4</td>
-</tr>
-<tr>
-<td><code>qwen3-235b-a22b-pipeline.yaml</code></td>
-<td><code>Qwen/Qwen3-235B-A22B-Instruct-2507</code></td>
-<td>Pipeline, 16 stages</td>
-<td>multiple of 8</td>
-</tr>
 <tr>
 <td><code>param-1-2.9b-ddp.yaml</code></td>
 <td><code>bharatgenai/Param-1-2.9B-Instruct</code></td>
@@ -2828,6 +2838,13 @@ models with every strategy, and writes the file for you (see <a href="../homepag
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="admonition-title">How the recipes relate to the benchmark</p>
+<p>The speed and memory in each header are the measured benchmark numbers for that model and method. The recipes were written
+to the same settings (LoRA rank 16, sequence length 4096, the shard group sizes above) and every one loads cleanly in
+Bhaskera's configuration check, but a recipe is a starting point: run <code>DRY_RUN=1 ./submit.sh recipes/&lt;name&gt;.yaml &lt;nodes&gt; 1</code>
+first, which checks the model, data, GPU memory estimate and node count without submitting.</p>
+</div>
 <p>A pipeline recipe splits the model into <em>stages</em> on different GPUs, so the number of GPUs (2 per node) must be
 a multiple of the number of stages. <code>submit.sh</code> checks this before it submits.</p>
 <h2 id="bharatgen-models">BharatGen Models<a class="headerlink" href="#bharatgen-models" title="Permanent link">&para;</a></h2>

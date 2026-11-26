@@ -2719,7 +2719,7 @@
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>Bhaskera teaches a pre-trained language model something new, on a cluster of GPUs, from the command line. You give it three things: a <strong>model</strong> to start from, <strong>data</strong> to learn from, and one small file (a <em>recipe</em>) that says how. It does the rest: it checks that everything is in place, asks Slurm for the GPUs, starts the training across all of them, saves progress as it goes, and keeps a record of every run. It handles text models, and models that also read images, video and audio.</p>
 <p>This is called <strong>fine-tuning</strong>. A model such as Qwen3 or Llama has learned general language from a huge amount of text. Fine-tuning continues its training on your own examples (your support tickets, your documents, your question and answer pairs) so that it answers the way you need. Bhaskera is for people who want to do that on a shared Slurm cluster without writing the distributed-training code themselves.</p>
-<p>On PARAM Rudra it runs from 1 node up to 128 nodes (256 A100 GPUs). Most runs use <strong>LoRA</strong>: the pre-trained model stays as it is and only a small add-on (an <em>adapter</em>) is trained, which needs far less GPU memory and far less communication between nodes. <strong>Full fine-tuning</strong>, which trains every weight, is available too.</p>
+<p>On PARAM Rudra it is tested from 1 node up to 128 nodes (256 A100 GPUs). Most runs use <strong>LoRA</strong>: the pre-trained model stays as it is and only a small add-on (an <em>adapter</em>) is trained, which needs far less GPU memory and far less communication between nodes. <strong>Full fine-tuning</strong>, which trains every weight, is available too.</p>
 <p>Official site: <a href="https://github.com/kishoryd/Bhaskera">https://github.com/kishoryd/Bhaskera</a>. If you have never done this before, start with <a href="start-here/">Start Here: Your First Run</a>.</p>
 <h2 id="what-bhaskera-brings-to-the-table">What Bhaskera brings to the table<a class="headerlink" href="#what-bhaskera-brings-to-the-table" title="Permanent link">&para;</a></h2>
 <p>Fine-tuning a large model on a cluster is not one hard step but many small ones, and each can fail in its own way. Bhaskera is the work around the training, as well as the training itself.</p>
@@ -2733,7 +2733,7 @@
 <tbody>
 <tr>
 <td>Describe a run</td>
-<td>One YAML file: the model, the data, how to spread the work over the GPUs. The same file runs on 1 node or 128.</td>
+<td>One YAML file: the model, the data, how to spread the work over the GPUs. The same file runs on N nodes.</td>
 </tr>
 <tr>
 <td>Train at any size</td>
@@ -2745,7 +2745,7 @@
 </tr>
 <tr>
 <td>Get your data in</td>
-<td>Tokenising from JSONL, JSON, CSV, TSV, Parquet or Arrow; models and datasets named by their Hugging Face address and downloaded for you, even from a login node that has no internet; datasets with names, versions and fingerprints, so every run records exactly what it trained on.</td>
+<td>Tokenising from JSONL, JSON, CSV, TSV, Parquet, Arrow or plain text; models and datasets named by their Hugging Face address and downloaded for you, even from a login node that has no internet; datasets with names, versions and fingerprints, so every run records exactly what it trained on.</td>
 </tr>
 <tr>
 <td>Avoid wasting GPU hours</td>

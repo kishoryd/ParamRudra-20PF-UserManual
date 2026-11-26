@@ -1434,83 +1434,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#bhaskera-dashboard-command-not-found-or-module-avail-does-not-show-bhaskera" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        bhaskera-dashboard: command not found, or module avail does not show Bhaskera
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#a-run-shows-no-gpu-energy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        A run shows no GPU energy
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#there-is-not-enough-space-for-or-only-n-gb-free" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        "There is not enough space for ..." or "only N GB free"
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#this-page-runs-on-login0n-which-cannot-reach-the-internet" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        "this page runs on login0N, which cannot reach the internet"
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#splitval-requested-but-dataval_path-is-not-set" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        "split='val' requested but data.val_path is not set"
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#unsupported-files-expected-one-of-or-mixed-formats-in-one-local-dataset-path" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        "unsupported file(s) ... expected one of ..." or "mixed formats in one local dataset path"
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#module-load-bhaskera100-says-the-module-is-unknown-on-one-login-node" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        module load bhaskera/1.0.0 says the module is unknown, on one login node
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2762,83 +2685,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#bhaskera-dashboard-command-not-found-or-module-avail-does-not-show-bhaskera" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        bhaskera-dashboard: command not found, or module avail does not show Bhaskera
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#a-run-shows-no-gpu-energy" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        A run shows no GPU energy
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#there-is-not-enough-space-for-or-only-n-gb-free" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        "There is not enough space for ..." or "only N GB free"
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#this-page-runs-on-login0n-which-cannot-reach-the-internet" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        "this page runs on login0N, which cannot reach the internet"
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#splitval-requested-but-dataval_path-is-not-set" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        "split='val' requested but data.val_path is not set"
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#unsupported-files-expected-one-of-or-mixed-formats-in-one-local-dataset-path" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        "unsupported file(s) ... expected one of ..." or "mixed formats in one local dataset path"
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#module-load-bhaskera100-says-the-module-is-unknown-on-one-login-node" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        module load bhaskera/1.0.0 says the module is unknown, on one login node
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2961,10 +2807,8 @@
   steps. All of them continue from the latest checkpoint when resubmitted, but the data starts again from
   the beginning of the training set.</li>
 <li><strong>MoE models are slow outside the Pipeline strategy</strong> (0.2–1.7% MFU), because the standard expert code
-  processes experts one at a time. Use the Pipeline recipes for MoE models.</li>
-<li><strong>DDP needs the whole model on each GPU</strong>: 70 B and larger need QLoRA or Pipeline.</li>
-<li><strong>Qwen3-235B does not fit with QLoRA</strong> (about 118 GB of 4-bit weights per GPU).</li>
-<li><strong>gpt-oss-120b</strong> is stored in MXFP4, which A100 GPUs cannot compute in; training it is not supported.</li>
+  processes experts one at a time. Use the Pipeline recipes for MoE models.
+-</li>
 </ul>
 <h2 id="quick-reference">Quick Reference<a class="headerlink" href="#quick-reference" title="Permanent link">&para;</a></h2>
 <table>
@@ -2982,10 +2826,6 @@
 <tr>
 <td>Get the job scripts and recipes</td>
 <td><code>cp -r $BHASKERA_KIT /scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs</code></td>
-</tr>
-<tr>
-<td>Use another account (optional: the default is your login name)</td>
-<td><code>export SLURM_ACCOUNT=&lt;account&gt;</code></td>
 </tr>
 <tr>
 <td>Download a model (login node)</td>
@@ -3056,29 +2896,9 @@
 <li>If the page opens but <code>mlflow.localhost</code> is refused, the browser may be trying the IPv6 address (<code>::1</code>) while your tunnel listens on IPv4 only. Add a second forward to the
   SSH command, <code>-L [::1]:8265:localhost:&lt;port&gt;</code>, or use Chrome or Firefox, which resolve <code>*.localhost</code> themselves.</li>
 <li>If MLflow itself is not running on the login node, start it with <code>bhaskera-dashboard start</code>.</li>
-<li>The home page's <strong>Models</strong> and <strong>Runs</strong> sections do not need MLflow's page: they read the same files directly.</li>
+<li>The home page's <strong>Models</strong> and <strong>Runs</strong> sections do not need MLflow's page: they read the same files directly.
+On PARAM Rudra the module is found on every login node except login04, whose <code>MODULEPATH</code> lacks <code>/home/apps/AIStack</code> (a setup difference on that node, not a Bhaskera fault). Use another login node, or add the path yourself: <code>module use /home/apps/AIStack</code>, then load it. If it is unknown elsewhere, the module cache may be out of date: <code>module --ignore_cache load bhaskera/1.0.0</code>.</li>
 </ul>
-<h2 id="bhaskera-dashboard-command-not-found-or-module-avail-does-not-show-bhaskera"><code>bhaskera-dashboard: command not found</code>, or <code>module avail</code> does not show Bhaskera<a class="headerlink" href="#bhaskera-dashboard-command-not-found-or-module-avail-does-not-show-bhaskera" title="Permanent link">&para;</a></h2>
-<p>A login shell started by <code>ssh host "command"</code> does not load the module, so the command is not on the path. Load it in the same command:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ssh<span class="w"> </span>-p<span class="w"> </span><span class="m">4422</span><span class="w"> </span>-L<span class="w"> </span><span class="m">8265</span>:localhost:&lt;port&gt;<span class="w"> </span>&lt;user&gt;@paramrudra.cdacb.in<span class="w"> </span><span class="s2">"bash -lc 'module --ignore_cache load bhaskera/1.0.0 &amp;&amp; bhaskera-dashboard ray'"</span>
-</code></pre></div>
-<p><code>--ignore_cache</code> helps on a node whose module cache is out of date: the module exists, but <code>module avail</code> and <code>module load</code> fail to see it.</p>
-<h2 id="a-run-shows-no-gpu-energy">A run shows no GPU energy<a class="headerlink" href="#a-run-shows-no-gpu-energy" title="Permanent link">&para;</a></h2>
-<p>Only runs that recorded the GPU power show a GPU energy figure. Runs made before the default metric level kept it have none. A very short run has fewer than two power readings (they are ten steps apart) and shows none either.</p>
-<h2 id="there-is-not-enough-space-for-or-only-n-gb-free">"There is not enough space for ..." or "only N GB free"<a class="headerlink" href="#there-is-not-enough-space-for-or-only-n-gb-free" title="Permanent link">&para;</a></h2>
-<p>Bhaskera checks the free space of the disk before it writes anything large, and stops instead of failing half way. It checks new recipes (checkpoints), starting training, preparing data, downloads, and, before any job, that the run folder's disk has at least 1 GB.
-The message names the folder and the disk's free space. What to do: choose a folder on a disk with more room (<strong>Save them in</strong> under <em>Checkpoints</em>, or the folder of a download), keep fewer checkpoints (<code>keep_last_n</code>), turn checkpoints off for a trial run, or delete old checkpoints and runs (<strong>Clear failed and stalled</strong> on the Train page removes failed runs from the list; the checkpoint folders are in <code>checkpoints/</code> and are yours to delete).
-The figure is the disk's free space. A quota on your account can be lower and is not visible to Bhaskera, so a job can still run out of room on a quota-limited home folder: keep the run folder on <code>/scratch</code>.</p>
-<h2 id="this-page-runs-on-login0n-which-cannot-reach-the-internet">"this page runs on login0N, which cannot reach the internet"<a class="headerlink" href="#this-page-runs-on-login0n-which-cannot-reach-the-internet" title="Permanent link">&para;</a></h2>
-<p>Some login nodes have no internet, and your connection lands on a random one. Downloads, <code>evaluate prepare</code> and the Hugging Face names in a recipe need it.
-Downloads and recipe names are routed for you to a login node that has it, if the cluster profile lists one (<code>download_hosts</code>). If you see this message, either none is listed, or none could be reached: ask your administrator to set <code>download_hosts</code> in the cluster profile, or log in again until you land on a node with internet (on PARAM Rudra: login01, login02, login03 or login05; <code>curl -sI https://huggingface.co</code> on a node tells you).
-<code>python -m bhaskera.launcher.evaluate prepare</code> (the benchmark data) does not route yet: run it on a login node that has internet.</p>
-<h2 id="splitval-requested-but-dataval_path-is-not-set">"split='val' requested but data.val_path is not set"<a class="headerlink" href="#splitval-requested-but-dataval_path-is-not-set" title="Permanent link">&para;</a></h2>
-<p>This came from tokenising data with a training file only. It no longer fails: a recipe without <code>val_path</code> tokenises the training data and says so. If you see it, you are on an older Bhaskera: update, or set <code>val_path</code>.</p>
-<h2 id="unsupported-files-expected-one-of-or-mixed-formats-in-one-local-dataset-path">"unsupported file(s) ... expected one of ..." or "mixed formats in one local dataset path"<a class="headerlink" href="#unsupported-files-expected-one-of-or-mixed-formats-in-one-local-dataset-path" title="Permanent link">&para;</a></h2>
-<p>The tokenise step reads JSONL, JSON, CSV, TSV, Parquet and Arrow (optionally <code>.gz</code>), one format per path. Split a folder that mixes them, or convert one format to another. See <a href="../data/#what-data-formats-work">Downloads and Dataset Versions</a>.</p>
-<h2 id="module-load-bhaskera100-says-the-module-is-unknown-on-one-login-node"><code>module load bhaskera/1.0.0</code> says the module is unknown, on one login node<a class="headerlink" href="#module-load-bhaskera100-says-the-module-is-unknown-on-one-login-node" title="Permanent link">&para;</a></h2>
-<p>On PARAM Rudra the module is found on every login node except login04, whose <code>MODULEPATH</code> lacks <code>/home/apps/AIStack</code> (a setup difference on that node, not a Bhaskera fault). Use another login node, or add the path yourself: <code>module use /home/apps/AIStack</code>, then load it. If it is unknown elsewhere, the module cache may be out of date: <code>module --ignore_cache load bhaskera/1.0.0</code>.</p>
 
 
 
