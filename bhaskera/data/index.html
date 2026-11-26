@@ -1318,17 +1318,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#a-layout-that-is-not-listed" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        A layout that is not listed
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1444,7 +1433,7 @@
   <span class="md-ellipsis">
     
   
-    Troubleshooting & Reference
+    Troubleshooting
   
 
     
@@ -2672,17 +2661,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#a-layout-that-is-not-listed" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        A layout that is not listed
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2853,8 +2831,6 @@
 </ul>
 <h2 id="data-you-tokenised-yourself">Data you tokenised yourself<a class="headerlink" href="#data-you-tokenised-yourself" title="Permanent link">&para;</a></h2>
 <p>A folder of Parquet files with <code>input_ids</code> and <code>labels</code> (and <code>attention_mask</code>, or set <code>data.pack_sequences: true</code>) works as <code>data.tokenized_path</code>, without Bhaskera's tokenise step. Rename columns with <code>data.column_map</code>. Write a <code>metadata.json</code> (<code>{"model_name": "&lt;model folder&gt;", "seq_len": 4096}</code>) next to the files: without it Bhaskera cannot check that the length and tokenizer match, and the home page does not list the folder. Rows are never re-padded, so <code>data.seq_len</code> must equal their length.</p>
-<h2 id="a-layout-that-is-not-listed">A layout that is not listed<a class="headerlink" href="#a-layout-that-is-not-listed" title="Permanent link">&para;</a></h2>
-<p>Rename the columns into one of the layouts above (a few lines of Python or <code>pandas</code>). To add a layout instead, write a function that turns one row into one string, register it with <code>@register_format("my_format")</code> (see the top of <code>bhaskera/data/formats/__init__.py</code>) and set <code>data.format: my_format</code>. This route is not tested on the cluster.</p>
 <p>Getting data in from Hugging Face, and naming and versioning it: <a href="../downloads/">Downloads and Dataset Versions</a>.</p>
 
 
