@@ -2861,7 +2861,7 @@
 </tr>
 </tbody>
 </table>
-<p>One path must hold one format (JSON lines and JSON arrays may be mixed). What the <em>columns</em> must be is a separate choice, <code>data.format</code>. Four layouts are built in, and they cover most public datasets:</p>
+<p>One path must hold one format (JSON lines and JSON arrays may be mixed). What the <em>columns</em> must be is a separate choice, <code>data.format</code>. Nine layouts are built in, and they cover most public datasets:</p>
 <table>
 <thead>
 <tr>
@@ -2891,8 +2891,40 @@
 <td><code>prompt</code> and <code>completion</code>; <code>format_options: {prompt_field: ..., completion_field: ...}</code> names other columns</td>
 <td>Question and answer sets (<code>question</code>/<code>answer</code>), Dolly (<code>instruction</code>/<code>response</code>), OpenAI's older fine-tuning files</td>
 </tr>
+<tr>
+<td><code>dolly</code></td>
+<td><code>instruction</code>, optional <code>context</code>, <code>response</code> (<code>instruction_field</code>, <code>context_field</code>, <code>response_field</code> name other columns)</td>
+<td>Databricks Dolly and similar</td>
+</tr>
+<tr>
+<td><code>qa</code></td>
+<td><code>question</code>, <code>answer</code>, optional <code>context</code> (<code>question_field</code>, <code>answer_field</code>, <code>context_field</code>)</td>
+<td>SQuAD, TriviaQA and other question answering sets</td>
+</tr>
+<tr>
+<td><code>scored_response</code></td>
+<td><code>prompt</code>, <code>response</code>, <code>score</code>; <code>format_options: {min_score: 0.7}</code> keeps only rows scoring at least that</td>
+<td>Rated or reward-model-scored answers</td>
+</tr>
+<tr>
+<td><code>tool_calling</code></td>
+<td>chat <code>messages</code> where an assistant message can carry <code>tool_calls</code> and a tool's result has role <code>tool</code>, plus a <code>tools</code> column of schemas (a list, or JSON text)</td>
+<td>Glaive function calling, xLAM, Hermes function calling</td>
+</tr>
+<tr>
+<td><code>reasoning</code></td>
+<td>chat <code>messages</code> where an assistant message has <code>reasoning_content</code> (or <code>reasoning</code>, <code>thinking</code>), or one row with <code>prompt</code>, <code>reasoning</code> and <code>answer</code></td>
+<td>OpenThoughts, DeepSeek-R1 distilled sets</td>
+</tr>
 </tbody>
 </table>
+<p>Notes on the newer ones:</p>
+<ul>
+<li><strong><code>dolly</code>, <code>qa</code>, <code>prompt_completion</code></strong> write the pieces as plain labelled text (<code>### Instruction:</code> / <code>### Response:</code>, <code>Question:</code> / <code>Answer:</code>, or the two joined by a newline). Add <code>use_chat_template: true</code> under <code>format_options</code> to render them as a two-turn chat with the model's own chat template instead, which is the better choice for a chat model.</li>
+<li><strong><code>scored_response</code></strong> is fine-tuning on the good answers (rejection sampling, "best of n"). It is <strong>not</strong> reward-model training and not reinforcement learning, which Bhaskera does not do. Rows with a missing or low score are dropped.</li>
+<li><strong><code>tool_calling</code></strong> lets the model's own chat template lay out the tools and the calls, so it works for models whose template supports tools (Qwen3, Llama 3.1 and later, Mistral and others). Tool-call <code>arguments</code> may be an object or JSON text. If different rows have different tool schemas, store the <code>tools</code> column as JSON text, because a table column cannot hold shapes that differ.</li>
+<li><strong><code>reasoning</code></strong> writes the reasoning in front of the answer between <code>&lt;think&gt;</code> and <code>&lt;/think&gt;</code> (change them with <code>think_open</code> and <code>think_close</code>), the layout Qwen3 and most reasoning models use. An answer that already contains <code>&lt;/think&gt;</code> is left as it is. Use a generous <code>seq_len</code>: reasoning traces are long, and a row longer than <code>seq_len</code> is cut.</li>
+</ul>
 <p>Text with no columns at all (books, code, articles) needs no format: see <a href="#plain-text">Plain text</a>.</p>
 <p>A layout that is none of these can be added without changing Bhaskera: write a small Python function that turns one row into one string, register it with <code>@register_format("my_format")</code> (the example is at the top of <code>bhaskera/data/formats/__init__.py</code>), and set <code>data.format: my_format</code>. This route is not tested on the cluster, because the function must also be importable by the tokenising workers. A few lines of Python or <code>pandas</code> that rename the columns into one of the layouts above are enough.</p>
 <p>Verified on PARAM Rudra: the same 2,000 instruction rows as CSV, TSV and a JSON array each tokenised to the same cache (2,000 rows at sequence length 512, format <code>alpaca</code>).</p>
