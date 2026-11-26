@@ -7,13 +7,7 @@ icon: material/chef-hat
 ## Introduction
 
 A recipe is a ready Bhaskera configuration for one model, using the fastest strategy measured on PARAM Rudra.
-The recipes are in the `recipes/` folder of your run folder (copied from `$BHASKERA_KIT`). Each file lists its
-speed and memory use in the header.
 
-To make your own, press **New run** on the dashboard and choose **Create recipe**: it asks for the model, the data and how long, supports text and multimodal
-models with every strategy, and writes the file for you (see [The Bhaskera dashboard](homepage.md#create-a-recipe)).
-
-Every model that was benchmarked has a recipe for each method that fits it. "—" means that method ran out of memory in the benchmark, so there is no recipe for it.
 
 | Model | QLoRA + DDP | LoRA + DDP | Pipeline | HSDP | FSDP2 |
 |---|---|---|---|---|---|
@@ -44,20 +38,6 @@ Other recipes:
 A pipeline recipe splits the model into *stages* on different GPUs, so the number of GPUs (2 per node) must be
 a multiple of the number of stages. `submit.sh` checks this before it submits.
 
-## BharatGen Models
-
-The three BharatGen recipes use the models' own code (`trust_remote_code: true`), so the model folder must
-contain the Python files that come with the download.
-
-| Model | Type | Speed on 5 nodes (10 GPUs) | Memory per GPU |
-|---|---|---|---|
-| Param-1-2.9B-Instruct | dense, 2.9 B | 1.6 s per step, 11% MFU | 24 GiB |
-| Param-1-7B | MoE, 6.7 B (64 experts, top 8) | 10.1 s per step, 0.9% MFU | 12 GiB |
-| Param2-17B-A2.4B-Thinking | MoE, 17 B (64 experts, top 6) | 9.4 s per step, 1.6% MFU | 17 GiB |
-
-Param-1-2.9B supports neither flash-attention nor PyTorch attention, so its recipe uses `attn_impl: eager`
-and no sequence packing. The two MoE models run under FSDP, where experts are computed one at a time and MFU
-stays low; Pipeline does not support their custom code.
 
 ## Full Fine-tuning (Training Every Weight)
 
@@ -75,47 +55,6 @@ checkpoint:
 logging:
   mlflow_log_adapter: false       # there is no adapter to keep
 ```
-
-In the web page this is **What to train: the whole model**, which sets all of this for you. What it costs and what to expect:
-
-- **GPU memory.** Every weight, its gradient and the optimizer state live on the GPUs, several times more than LoRA. Use FSDP2 or HSDP over several nodes; plain DDP only for a model that fits on one GPU.
-- **Not with QLoRA or Pipeline.** QLoRA trains an add-on on a 4-bit model, and Pipeline trains a LoRA add-on only; both are refused for a full fine-tune.
-- **Disk.** A checkpoint holds every weight and the optimizer state: about five times the size of the model (an estimate; around 140 GB for a 14 B model), against about 1 GB for a LoRA run (measured: 449 MB of model and 493 MB of optimizer state for Qwen3-14B). Use `keep_last_n` to keep few, and a large disk.
-- **No adapter.** The result is the checkpoint, not an adapter: Chat, Benchmark and Register on the dashboard, which need an adapter, are not offered for it yet.
-- Measured on PARAM Rudra, Qwen3-14B on 10 GPUs, 60 steps, batch 2 × 4096 per GPU: FSDP2 took 24 s per step and HSDP 15 s per step (LoRA with DDP: 5 s per step). One run each, so treat the numbers as a rough guide.
-
-## Editing a Recipe
-
-A recipe needs only your paths. Replace every `<project>/<username>` and set the two cache paths printed by
-the tokenize job:
-
-```yaml
-model:
-  name: /scratch/<project>/<username>/models/Qwen3-14B
-data:
-  tokenized_path: /scratch/<project>/<username>/cache/local_train_<hash>
-  val_tokenized_path: /scratch/<project>/<username>/cache/local_val_<hash>
-training:
-  max_steps: 10            # a short first run; see "Full Runs" below
-  eval_steps: 200          # evaluate every 200 steps
-checkpoint:
-  save_dir: /scratch/<project>/<username>/bhaskera-runs/checkpoints/qwen3-14b-qlora
-```
-
-Leave the `training.distributed` block, `batch_size` and `grad_accum` as they are unless you know why you
-are changing them. In particular, `mistral-large-123b-qlora.yaml` uses `batch_size: 1` because batch size 2
-does not fit in 80 GB.
-
-## Full Runs
-
-The recipes run 10 steps so that a first job finishes in minutes and shows the speed. For a full run, read
-`tok/s` and `step_s` from a `[step ...]` line of that first job and set:
-
-```text
-max_steps = (tokens in your training set) / (tok/s × step_s)
-```
-
-The tokenize job prints the number of tokens in your training set.
 
 ## Choosing Nodes and Hours
 
@@ -139,11 +78,6 @@ Time for **one epoch of a 1.24-billion-token dataset** (scale it by your own tok
 | Mistral-Large-123B QLoRA | 4.1 days | 2.1 days | 24.9 h | 12.4 h | 6.4 h |
 | Mistral-Large-123B Pipeline | 5.2 days | 2.6 days | 31.3 h | 15.5 h | 7.8 h |
 | Qwen3-235B-A22B Pipeline | 2.6 days | 31.0 h | 17.8 h | 7.8 h | 4.3 h |
-
-The partition time limits are 24 h on `gpu-small` (5–25 nodes), 12 h on `gpu-large` (26–100 nodes) and 6 h on
-`gpu-massive` (101–200 nodes). An epoch fits in one job for Qwen3-14B QLoRA and Qwen3-30B-A3B Pipeline at
-every node count, for Llama-3.3-70B (QLoRA and Pipeline) and Qwen3-235B-A22B (Pipeline) from 64 nodes, and for
-no node count with Mistral-Large-123B. Everything else takes several jobs.
 
 ## Starter Configs for Other Models
 
