@@ -8,8 +8,7 @@ icon: material/speedometer
 
 
 All combinations of **5 models × 5 strategies × 5 node counts (8, 16, 32, 64, 128)** were run on
-PARAM Rudra in November 2026: **125 runs, 105 passed, 20 failed**. All 20 failures are memory
-limits: DDP with models larger than one GPU, and Qwen3-235B in QLoRA.
+PARAM Rudra in November 2026:
 
 !!! info "How these numbers were measured"
     - Each run trains for 10 steps with LoRA, then evaluates once on about 256 held-out
