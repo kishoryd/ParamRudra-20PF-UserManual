@@ -4,7 +4,7 @@ icon: material/cloud-download
 
 # Downloads and Dataset Versions
 
-Training machines have no internet, so models and data must be on disk first. This page covers getting them from Hugging Face (named in a recipe, from the terminal, or from the home page) and naming and versioning your data so you can say **which data made which model**. For what the data should look like, see [Data Format](data.md).
+This page covers getting data from Hugging Face (named in a recipe, from the terminal, or from the home page) and naming and versioning your data so you can say **which data made which model**. For what the data should look like, see [Data Format](data.md).
 
 ## Name Hugging Face repositories in a recipe
 
