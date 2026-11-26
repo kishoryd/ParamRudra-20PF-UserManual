@@ -17,7 +17,7 @@ The tokenise step (`./submit.sh tokenize`) reads your raw data in any of these, 
 | **Compressed** (`.gz`) | Any of the above with `.gz` added, for example `data.csv.gz`. |
 | **A Hugging Face dataset saved to disk** (a folder from `save_to_disk`) | One split per folder: point `train_path` at the split's folder. |
 
-One path must hold one format (JSON lines and JSON arrays may be mixed). What the *columns* must be is a separate choice, `data.format`. Four layouts are built in, and they cover most public datasets:
+One path must hold one format (JSON lines and JSON arrays may be mixed). What the *columns* must be is a separate choice, `data.format`. Nine layouts are built in, and they cover most public datasets:
 
 | `data.format` | The columns each row needs | Typical sources |
 |---|---|---|
@@ -25,6 +25,19 @@ One path must hold one format (JSON lines and JSON arrays may be mixed). What th
 | `alpaca` | `instruction`, `output`, and optionally `input` | Alpaca and its many copies |
 | `sharegpt` | `conversations`: a list of `{from, value}` turns | ShareGPT, Vicuna and OpenHermes style files |
 | `prompt_completion` | `prompt` and `completion`; `format_options: {prompt_field: ..., completion_field: ...}` names other columns | Question and answer sets (`question`/`answer`), Dolly (`instruction`/`response`), OpenAI's older fine-tuning files |
+| `dolly` | `instruction`, optional `context`, `response` (`instruction_field`, `context_field`, `response_field` name other columns) | Databricks Dolly and similar |
+| `qa` | `question`, `answer`, optional `context` (`question_field`, `answer_field`, `context_field`) | SQuAD, TriviaQA and other question answering sets |
+| `scored_response` | `prompt`, `response`, `score`; `format_options: {min_score: 0.7}` keeps only rows scoring at least that | Rated or reward-model-scored answers |
+| `tool_calling` | chat `messages` where an assistant message can carry `tool_calls` and a tool's result has role `tool`, plus a `tools` column of schemas (a list, or JSON text) | Glaive function calling, xLAM, Hermes function calling |
+| `reasoning` | chat `messages` where an assistant message has `reasoning_content` (or `reasoning`, `thinking`), or one row with `prompt`, `reasoning` and `answer` | OpenThoughts, DeepSeek-R1 distilled sets |
+
+
+Notes on the newer ones:
+
+- **`dolly`, `qa`, `prompt_completion`** write the pieces as plain labelled text (`### Instruction:` / `### Response:`, `Question:` / `Answer:`, or the two joined by a newline). Add `use_chat_template: true` under `format_options` to render them as a two-turn chat with the model's own chat template instead, which is the better choice for a chat model.
+- **`scored_response`** is fine-tuning on the good answers (rejection sampling, "best of n"). It is **not** reward-model training and not reinforcement learning, which Bhaskera does not do. Rows with a missing or low score are dropped.
+- **`tool_calling`** lets the model's own chat template lay out the tools and the calls, so it works for models whose template supports tools (Qwen3, Llama 3.1 and later, Mistral and others). Tool-call `arguments` may be an object or JSON text. If different rows have different tool schemas, store the `tools` column as JSON text, because a table column cannot hold shapes that differ.
+- **`reasoning`** writes the reasoning in front of the answer between `<think>` and `</think>` (change them with `think_open` and `think_close`), the layout Qwen3 and most reasoning models use. An answer that already contains `</think>` is left as it is. Use a generous `seq_len`: reasoning traces are long, and a row longer than `seq_len` is cut.
 
 Text with no columns at all (books, code, articles) needs no format: see [Plain text](#plain-text).
 
