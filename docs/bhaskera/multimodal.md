@@ -51,3 +51,43 @@ Put the two printed cache paths into the training config first. Important settin
 `image`, `video`, `audio`), `data.image_max_pixels` (about 1 million pixels is at most 1024 visual tokens per image) and
 `model.freeze_encoders` (the vision and audio towers are frozen by default). Every setting, and how the encoders are split
 across GPUs, is in the guide in the repository: `docs/multimodal/README.md`.
+
+## Full Configs
+
+The multimodal starters in full, for reference. Copy one to your run folder, replace `<project>/<username>` and the tokenised data paths, and run it as shown in the first comment lines. Tokenise first with one of the two `tokenize_*` configs, which print the two cache paths to paste in.
+
+??? example "tokenize_vision  (Tokenise images and video)"
+    ```yaml title="configs/multimodal/tokenize_vision.yaml"
+    --8<-- "docs/bhaskera/files/configs/multimodal/tokenize_vision.yaml"
+    ```
+
+??? example "tokenize_audio  (Tokenise audio)"
+    ```yaml title="configs/multimodal/tokenize_audio.yaml"
+    --8<-- "docs/bhaskera/files/configs/multimodal/tokenize_audio.yaml"
+    ```
+
+??? example "ddp  (Images, DDP)"
+    ```yaml title="configs/multimodal/ddp.yaml"
+    --8<-- "docs/bhaskera/files/configs/multimodal/ddp.yaml"
+    ```
+
+??? example "fsdp  (Images, FSDP2)"
+    ```yaml title="configs/multimodal/fsdp.yaml"
+    --8<-- "docs/bhaskera/files/configs/multimodal/fsdp.yaml"
+    ```
+
+??? example "hsdp  (Images, HSDP)"
+    ```yaml title="configs/multimodal/hsdp.yaml"
+    --8<-- "docs/bhaskera/files/configs/multimodal/hsdp.yaml"
+    ```
+
+??? example "video  (Video)"
+    ```yaml title="configs/multimodal/video.yaml"
+    --8<-- "docs/bhaskera/files/configs/multimodal/video.yaml"
+    ```
+
+??? example "audio  (Audio)"
+    ```yaml title="configs/multimodal/audio.yaml"
+    --8<-- "docs/bhaskera/files/configs/multimodal/audio.yaml"
+    ```
+

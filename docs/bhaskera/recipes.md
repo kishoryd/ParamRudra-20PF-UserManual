@@ -165,6 +165,10 @@ Every recipe in full, for reference. Open one, copy it to `recipes/<name>.yaml` 
     --8<-- "docs/bhaskera/files/recipes/qwen3-235b-a22b-fsdp.yaml"
     ```
 
+### Multimodal models
+
+The image, video and audio starters are on the [Multimodal](multimodal.md#full-configs) page.
+
 ### Other models
 
 ??? example "param-1-2.9b-ddp  (Param-1-2.9B, DDP)"
