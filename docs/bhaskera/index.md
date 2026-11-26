@@ -83,7 +83,7 @@ $ tail -f logs/qwen3-14b-qlora_<jobid>.out | grep --line-buffered -E '\[step|eva
 | [Parallelism Strategies](parallelism.md) | QLoRA, DDP, Pipeline, FSDP and HSDP: which to use |
 | [Benchmarks](benchmarks.md) | Measured speed, MFU, memory and accuracy for every model, strategy and node count |
 | [Home Page](homepage.md) | The web page: your jobs, runs, data and models, and the same actions with buttons |
-| [Troubleshooting & Reference](troubleshooting.md) | Common errors, limitations, command reference |
+| [Troubleshooting](troubleshooting.md) | Common errors, limitations, command reference |
 
 ## PARAM Rudra Environment
 

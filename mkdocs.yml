@@ -127,7 +127,7 @@ nav:
       - Downloads and Dataset Versions: bhaskera/downloads.md
       - Parallelism Strategies: bhaskera/parallelism.md
       - Benchmarks: bhaskera/benchmarks.md
-      - Troubleshooting & Reference: bhaskera/troubleshooting.md
+      - Troubleshooting: bhaskera/troubleshooting.md
 
   - Software:
       - Modules & Conda: modules.md

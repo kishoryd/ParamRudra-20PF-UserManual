@@ -293,7 +293,7 @@ The result is saved in the `--out` file. Add `--mlflow` to keep it in MLflow too
 | `not enough space for ...` | A disk is full or nearly full. Choose a folder on a bigger disk, keep fewer checkpoints. |
 | "cannot reach the internet" on a download | You are on a login node without internet and none was found to use. See [Troubleshooting](troubleshooting.md). |
 | The run stopped half way | `./submit.sh resume --run <run id>`. |
-| Anything else | [Troubleshooting & Reference](troubleshooting.md) lists the common errors, and a failed job ends with a plain explanation. |
+| Anything else | [Troubleshooting](troubleshooting.md) lists the common errors, and a failed job ends with a plain explanation. |
 
 ## Where next
 
