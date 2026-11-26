@@ -167,7 +167,42 @@ Every recipe in full, for reference. Open one, copy it to `recipes/<name>.yaml` 
 
 ### Multimodal models
 
-The image, video and audio starters are on the [Multimodal](multimodal.md#full-configs) page.
+The image, video and audio starters live in `configs/multimodal/` of the Bhaskera repository. Tokenise first with a `tokenize_*` config, which prints the two cache paths to paste in, then run the training config as its first comment lines show. See [Multimodal](multimodal.md) for the data and chat.
+
+??? example "multimodal/tokenize_vision  (Tokenise images and video)"
+    ```yaml title="configs/multimodal/tokenize_vision.yaml"
+    --8<-- "docs/bhaskera/files/configs/multimodal/tokenize_vision.yaml"
+    ```
+
+??? example "multimodal/tokenize_audio  (Tokenise audio)"
+    ```yaml title="configs/multimodal/tokenize_audio.yaml"
+    --8<-- "docs/bhaskera/files/configs/multimodal/tokenize_audio.yaml"
+    ```
+
+??? example "multimodal/ddp  (Images, DDP)"
+    ```yaml title="configs/multimodal/ddp.yaml"
+    --8<-- "docs/bhaskera/files/configs/multimodal/ddp.yaml"
+    ```
+
+??? example "multimodal/fsdp  (Images, FSDP2)"
+    ```yaml title="configs/multimodal/fsdp.yaml"
+    --8<-- "docs/bhaskera/files/configs/multimodal/fsdp.yaml"
+    ```
+
+??? example "multimodal/hsdp  (Images, HSDP)"
+    ```yaml title="configs/multimodal/hsdp.yaml"
+    --8<-- "docs/bhaskera/files/configs/multimodal/hsdp.yaml"
+    ```
+
+??? example "multimodal/video  (Video)"
+    ```yaml title="configs/multimodal/video.yaml"
+    --8<-- "docs/bhaskera/files/configs/multimodal/video.yaml"
+    ```
+
+??? example "multimodal/audio  (Audio)"
+    ```yaml title="configs/multimodal/audio.yaml"
+    --8<-- "docs/bhaskera/files/configs/multimodal/audio.yaml"
+    ```
 
 ### Other models
 
