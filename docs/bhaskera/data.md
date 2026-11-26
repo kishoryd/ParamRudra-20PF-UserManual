@@ -67,7 +67,7 @@ data:
 
 ## Data you tokenised yourself
 
-A folder of Parquet files with `input_ids` and `labels` (and `attention_mask`, or set `data.pack_sequences: true`) works as `data.tokenized_path`, without Bhaskera's tokenise step. Rename columns with `data.column_map`. Write a `metadata.json` (`{"model_name": "<model folder>", "seq_len": 4096}`) next to the files: without it Bhaskera cannot check that the length and tokenizer match, and the home page does not list the folder. Rows are never re-padded, so `data.seq_len` must equal their length.
+A folder of Parquet files with `input_ids` and `labels` (and `attention_mask`, or set `data.pack_sequences: true`) works as `data.tokenized_path`, without Bhaskera's tokenise step. Rename columns with `data.column_map`. Write a `metadata.json` (`{"model_name": "<model folder>", "seq_len": 4096}`) next to the files: without it Bhaskera cannot check that the length and tokenizer match, and the dashboard does not list the folder. Rows are never re-padded, so `data.seq_len` must equal their length.
 
 
 Getting data in from Hugging Face, and naming and versioning it: [Downloads and Dataset Versions](downloads.md).

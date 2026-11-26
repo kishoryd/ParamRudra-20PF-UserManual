@@ -30,7 +30,7 @@ Fine-tuning a large model on a cluster is not one hard step but many small ones,
 | Keep track | Every run, its curves, its settings, its adapter and its GPU energy in MLflow, a model registry with names, versions and hand-off notes, and a web page for all of it. |
 | Use it on your cluster | Everything that belongs to one cluster is a profile (partitions, GPUs, network), not code. See [Setting Up on Another Cluster](new-cluster.md). |
 
-Two ways to use it: the **command line** (this guide's focus: `./submit.sh`, a few small commands) and a **web page** that does the same things with buttons ([Home Page](homepage.md)). Everything the page does can be done from a terminal.
+Two ways to use it: the **command line** (this guide's focus: `./submit.sh`, a few small commands) and a **web page** that does the same things with buttons ([Bhaskera Dashboard](homepage.md)). Everything the page does can be done from a terminal.
 
 ## Pick your starting point
 
@@ -82,7 +82,7 @@ $ tail -f logs/qwen3-14b-qlora_<jobid>.out | grep --line-buffered -E '\[step|eva
 | [Resuming a Job](resume.md) | Checkpoints, continuing after a failure, going back after a loss spike |
 | [Parallelism Strategies](parallelism.md) | QLoRA, DDP, Pipeline, FSDP and HSDP: which to use |
 | [Benchmarks](benchmarks.md) | Measured speed, MFU, memory and accuracy for every model, strategy and node count |
-| [Home Page](homepage.md) | The web page: your jobs, runs, data and models, and the same actions with buttons |
+| [Bhaskera Dashboard](homepage.md) | The web page: your jobs, runs, data and models, and the same actions with buttons |
 | [Troubleshooting](troubleshooting.md) | Common errors, limitations, command reference |
 
 ## PARAM Rudra Environment

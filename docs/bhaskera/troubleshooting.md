@@ -61,7 +61,7 @@ $ ./submit.sh recipes/<recipe>.yaml 8 12
 | Follow the log | `tail -f logs/<recipe>_<jobid>.out \| grep -E '\[step\|eval\|exit code'` |
 | Check a recipe without submitting | `python -m bhaskera.launcher.preflight --config recipes/<recipe>.yaml --num-gpus 16` |
 | MLflow dashboard | `bhaskera-dashboard start --port 5055` / `status` / `tunnel` / `stop` |
-| Home page: jobs, start, chat | `bhaskera-dashboard ray` (see [Home Page](homepage.md)) |
+| Bhaskera Dashboard: jobs, start, chat | `bhaskera-dashboard ray` (see [Bhaskera Dashboard](homepage.md)) |
 | Chat with a trained run | `./submit.sh serve --run <run id>` |
 | Benchmark a trained run | `./submit.sh eval --run <run id> --tasks arc_easy,hellaswag --limit 200` |
 | Continue a run that stopped | `./submit.sh resume --run <run id>` (add `--step N` to go back) |
@@ -76,5 +76,5 @@ The page's links to MLflow and to each job's Ray Dashboard use addresses like `m
 - If the page opens but `mlflow.localhost` is refused, the browser may be trying the IPv6 address (`::1`) while your tunnel listens on IPv4 only. Add a second forward to the
   SSH command, `-L [::1]:8265:localhost:<port>`, or use Chrome or Firefox, which resolve `*.localhost` themselves.
 - If MLflow itself is not running on the login node, start it with `bhaskera-dashboard start`.
-- The home page's **Models** and **Runs** sections do not need MLflow's page: they read the same files directly.
+- The Bhaskera dashboard's **Models** and **Runs** sections do not need MLflow's page: they read the same files directly.
 On PARAM Rudra the module is found on every login node except login04, whose `MODULEPATH` lacks `/home/apps/AIStack` (a setup difference on that node, not a Bhaskera fault). Use another login node, or add the path yourself: `module use /home/apps/AIStack`, then load it. If it is unknown elsewhere, the module cache may be out of date: `module --ignore_cache load bhaskera/1.0.0`.

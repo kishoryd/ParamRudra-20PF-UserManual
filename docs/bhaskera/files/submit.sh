@@ -33,13 +33,23 @@ if [[ -n "$SKIP" ]]; then
     [[ "$SKIP" != "${BHASKERA_EXCLUDE:-}" ]] && echo "skipping nodes that failed before: ${SKIP}"
 fi
 
-# DRY_RUN=1 runs every check (partition limits, preflight) and stops before sbatch; the home page's "Check first" uses it.
+# DRY_RUN=1 runs every check (partition limits, preflight) and stops before sbatch; the dashboard's "Check first" uses it.
 sb() {
     if [[ "${DRY_RUN:-0}" == 1 ]]; then echo "dry run: every check passed; nothing was submitted" >&2; echo "dry"; else sbatch --parsable "$@"; fi
 }
 
+# A recipe may name a Hugging Face model or dataset (model.name: owner/name, data.train_path: hf://owner/name). They are downloaded here, on the
+# login node (compute nodes have no internet), and the job uses a resolved copy of the recipe. A dry run only says what would be downloaded.
+fetch_names() {                       # sets FETCHED to the recipe the job should use; ends the script itself for a dry run
+    local rc
+    FETCHED="$(BHASKERA_NO_FETCH=$([[ "${DRY_RUN:-0}" == 1 ]] && echo 1 || echo 0) python -m bhaskera.launcher.fetch "$1")"; rc=$?
+    if [[ $rc -eq 10 ]]; then echo "dry run: the recipe names Hugging Face repositories that would be downloaded (above); run without DRY_RUN to download and check the rest" >&2; exit 0; fi
+    [[ $rc -eq 0 ]] || exit 1
+}
+
 if [[ "${1:-}" == "tokenize" ]]; then
     cfg="${2:?usage: ./submit.sh tokenize <tokenize.yaml>}"
+    fetch_names "$cfg"; cfg="$FETCHED"
     sbatch -A "$SLURM_ACCOUNT" "${EXCL[@]}" tokenize.sbatch "$cfg"
     exit
 fi
@@ -77,7 +87,7 @@ if [[ "${1:-}" == "eval" || "${1:-}" == "serve" ]]; then
         echo "follow it:  tail -f logs/bhaskera-eval_${jid}.out"
     else
         echo "submitted job $jid: chat server, ${part:+$part, }${hours} h"
-        echo "Loading the model takes a few minutes. Then open the Bhaskera home page (bhaskera-dashboard ray): the chat window appears."
+        echo "Loading the model takes a few minutes. Then open the Bhaskera dashboard (bhaskera-dashboard ray): the chat window appears."
         echo "follow it:  tail -f logs/bhaskera-serve_${jid}.out"
     fi
     exit
@@ -88,6 +98,7 @@ nodes="${2:?usage: ./submit.sh <recipe.yaml> <nodes> [hours]}"
 hours="${3:-}"
 
 source "$BHASKERA_DIR/bhaskera-activate.sh"
+fetch_names "$cfg"; cfg="$FETCHED"
 
 # Where a job of this size goes, and what each node offers, come from the cluster profile
 # (slurm/clusters/*.yaml, found through $BHASKERA_CLUSTER_PROFILE or ~/.bhaskera/cluster.yaml).

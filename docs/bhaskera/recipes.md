@@ -10,8 +10,8 @@ A recipe is a ready Bhaskera configuration for one model, using the fastest stra
 The recipes are in the `recipes/` folder of your run folder (copied from `$BHASKERA_KIT`). Each file lists its
 speed and memory use in the header.
 
-To make your own, press **New run** on the home page and choose **Create recipe**: it asks for the model, the data and how long, supports text and multimodal
-models with every strategy, and writes the file for you (see [The Home Page](homepage.md#create-a-recipe)).
+To make your own, press **New run** on the dashboard and choose **Create recipe**: it asks for the model, the data and how long, supports text and multimodal
+models with every strategy, and writes the file for you (see [The Bhaskera dashboard](homepage.md#create-a-recipe)).
 
 Every model that was benchmarked has a recipe for each method that fits it. "—" means that method ran out of memory in the benchmark, so there is no recipe for it.
 
@@ -81,7 +81,7 @@ In the web page this is **What to train: the whole model**, which sets all of th
 - **GPU memory.** Every weight, its gradient and the optimizer state live on the GPUs, several times more than LoRA. Use FSDP2 or HSDP over several nodes; plain DDP only for a model that fits on one GPU.
 - **Not with QLoRA or Pipeline.** QLoRA trains an add-on on a 4-bit model, and Pipeline trains a LoRA add-on only; both are refused for a full fine-tune.
 - **Disk.** A checkpoint holds every weight and the optimizer state: about five times the size of the model (an estimate; around 140 GB for a 14 B model), against about 1 GB for a LoRA run (measured: 449 MB of model and 493 MB of optimizer state for Qwen3-14B). Use `keep_last_n` to keep few, and a large disk.
-- **No adapter.** The result is the checkpoint, not an adapter: Chat, Benchmark and Register on the home page, which need an adapter, are not offered for it yet.
+- **No adapter.** The result is the checkpoint, not an adapter: Chat, Benchmark and Register on the dashboard, which need an adapter, are not offered for it yet.
 - Measured on PARAM Rudra, Qwen3-14B on 10 GPUs, 60 steps, batch 2 × 4096 per GPU: FSDP2 took 24 s per step and HSDP 15 s per step (LoRA with DDP: 5 s per step). One run each, so treat the numbers as a rough guide.
 
 ## Editing a Recipe

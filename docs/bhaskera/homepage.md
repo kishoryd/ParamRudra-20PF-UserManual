@@ -2,7 +2,7 @@
 icon: material/view-dashboard
 ---
 
-# The Home Page: Train, Serve, Evaluate, Monitor
+# Bhaskera Dashboard: Train, Serve, Evaluate, Monitor
 
 `bhaskera-dashboard ray` serves one web page for everything you run. It lists your jobs and your recent runs, starts new
 jobs, and lets you talk to a model you have trained. It listens on the login node, is private to your user, and is opened
@@ -46,6 +46,18 @@ Your name at the top right opens the account menu, with the Guide and **Log out*
   Runs that were benchmarked show the result, and runs that recorded GPU power show the GPU energy they used (see [Monitoring](monitoring.md#gpu-energy-used)).
 - **Cluster limits and node health** (on Monitor): your job slots in each partition, and any node a job found faulty.
   New jobs keep away from those nodes for three days.
+
+## MLflow, the Ray Dashboard and Grafana
+
+The Bhaskera dashboard is the one address for three tools that each answer a different question. All three are reached through the same tunnel (see [Monitoring](monitoring.md#ray-dashboard-charts-and-mlflow-in-one-place)); you never open a second one.
+
+| Tool | Answers | Where on the dashboard | Needs |
+|---|---|---|---|
+| **MLflow** | How did the run go? Loss and evaluation curves, throughput, GPU energy, every run compared, the model registry | **MLflow** on Monitor, and **MLflow run** on each job | Nothing extra: every run is recorded in `~/mlflow-runs` and the dashboard starts MLflow itself |
+| **Ray Dashboard** | Is every node of the job healthy right now? CPU, memory and GPU load per node, workers and their logs | **Ray Dashboard** on Monitor and on each running job | A running job; one link per job |
+| **Grafana** | How did the GPUs and nodes behave over time? GPU, CPU and memory charts for every node | **GPU charts** on Monitor and on each running job | Prometheus and Grafana installed next to Bhaskera (the install step `WITH_CHARTS`); without them the node list still works and only the charts are missing |
+
+MLflow keeps its runs after a job ends; the Ray Dashboard and Grafana exist only while their job runs. Use MLflow to compare finished runs, and the Ray Dashboard and Grafana to find a slow or failing node in a running one.
 
 ## Starting things
 

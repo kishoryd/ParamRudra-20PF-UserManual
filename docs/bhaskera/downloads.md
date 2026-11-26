@@ -4,7 +4,7 @@ icon: material/cloud-download
 
 # Downloads and Dataset Versions
 
-This page covers getting data from Hugging Face (named in a recipe, from the terminal, or from the home page) and naming and versioning your data so you can say **which data made which model**. For what the data should look like, see [Data Format](data.md).
+This page covers getting data from Hugging Face (named in a recipe, from the terminal, or from the dashboard) and naming and versioning your data so you can say **which data made which model**. For what the data should look like, see [Data Format](data.md).
 
 ## Name Hugging Face repositories in a recipe
 
@@ -27,12 +27,12 @@ $ python -m bhaskera.downloads get --kind model --repo Qwen/Qwen3-14B --target /
 $ python -m bhaskera.downloads get --kind dataset --repo tatsu-lab/alpaca --target /scratch/<project>/<username>/data/alpaca
 ```
 
-Run `get` again to continue an interrupted download. A model that asks you to accept a licence (Llama, for example) needs a Hugging Face key: `huggingface-cli login`, or **Sign in** on the home page.
+Run `get` again to continue an interrupted download. A model that asks you to accept a licence (Llama, for example) needs a Hugging Face key: `huggingface-cli login`, or **Sign in** on the dashboard.
 
 !!! info "A login node with no internet"
-    On PARAM Rudra only login01, login02, login03 and login05 reach the internet, and you cannot choose which node you land on. If yours cannot, `get`, `preview`, the home page and `./submit.sh` run the work on one that can, over SSH, and say so (`downloading on login01 ...`). The nodes come from `download_hosts` in the cluster profile (or `BHASKERA_DOWNLOAD_HOSTS`, comma-separated). The target folder must be on the shared file system. A key set only as `HF_TOKEN` in your shell is not passed on: sign in once so the key is kept in a file every node can read. To work on login01 yourself, see [Monitoring](monitoring.md#land-on-a-login-node-you-choose-login01-has-internet).
+    On PARAM Rudra only login01, login02, login03 and login05 reach the internet, and you cannot choose which node you land on. If yours cannot, `get`, `preview`, the dashboard and `./submit.sh` run the work on one that can, over SSH, and say so (`downloading on login01 ...`). The nodes come from `download_hosts` in the cluster profile (or `BHASKERA_DOWNLOAD_HOSTS`, comma-separated). The target folder must be on the shared file system. A key set only as `HF_TOKEN` in your shell is not passed on: sign in once so the key is kept in a file every node can read. To work on login01 yourself, see [Monitoring](monitoring.md#land-on-a-login-node-you-choose-login01-has-internet).
 
-## From the home page
+## From the dashboard
 
 Open **Downloads** in the header, choose *Download a model* or *Download a dataset*, then:
 

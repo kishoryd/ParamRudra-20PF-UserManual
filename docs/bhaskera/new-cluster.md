@@ -80,7 +80,7 @@ $ cp $PREFIX/share/kit/clusters/example.yaml $PREFIX/share/kit/clusters/mycluste
 ```
 
 ```yaml
-name: My Cluster          # shown on the home page
+name: My Cluster          # shown on the dashboard
 gpus_per_node: 8
 gpu_mem_gb: 80            # memory of one GPU; the "will it fit" check before a job uses it
 cpus_per_node: 64         # CPUs asked for on each node
@@ -110,7 +110,7 @@ $ mkdir -p <a MODULEPATH folder>/bhaskera
 $ cp slurm/modulefiles/bhaskera/1.0.0.lua <a MODULEPATH folder>/bhaskera/1.0.0.lua
 ```
 
-Change `root` to your `PREFIX`, `BHASKERA_CLUSTER_PROFILE` to your profile, `BHASKERA_LOGIN_HOST` and `BHASKERA_LOGIN_PORT` to the address people use to log in over SSH (the home page prints the tunnel command for their laptop from them), and the manual link in `help`. If your cluster keeps software in a hierarchy, put the file where your other applications are.
+Change `root` to your `PREFIX`, `BHASKERA_CLUSTER_PROFILE` to your profile, `BHASKERA_LOGIN_HOST` and `BHASKERA_LOGIN_PORT` to the address people use to log in over SSH (the dashboard prints the tunnel command for their laptop from them), and the manual link in `help`. If your cluster keeps software in a hierarchy, put the file where your other applications are.
 
 **Without modules.** Users, or a small script you give them, set:
 
@@ -132,7 +132,7 @@ Compute nodes have no internet, so models and data must be on disk first. A shar
 $ mkdir -p $(dirname $PREFIX)/models $(dirname $PREFIX)/data
 ```
 
-The home page lists anything in `models/` and `data/` next to the install folder, or in the folders named by `BHASKERA_MODELS` and `BHASKERA_DATA`, under *Shared on this cluster*. Put Hugging Face model folders in `models/` (users can also fetch their own from the **Downloads** menu of the page). Put tokenised data in `data/` in folders named `<dataset>_<model>_seq<length>_train` and `…_val`: a tokenised folder only fits the model whose tokenizer made it. `chmod -R a+rX` both folders.
+The Bhaskera dashboard lists anything in `models/` and `data/` next to the install folder, or in the folders named by `BHASKERA_MODELS` and `BHASKERA_DATA`, under *Shared on this cluster*. Put Hugging Face model folders in `models/` (users can also fetch their own from the **Downloads** menu of the page). Put tokenised data in `data/` in folders named `<dataset>_<model>_seq<length>_train` and `…_val`: a tokenised folder only fits the model whose tokenizer made it. `chmod -R a+rX` both folders.
 
 ## Step 5: Tune what depends on your GPUs
 
@@ -188,4 +188,4 @@ A new version needs three things, in this order:
 2. **Copy the job scripts again.** The install copies `submit.sh`, the `*.sbatch` files, recipes and profiles into `share/kit/` as separate files, so updating the source does not update them. Rerun `install-bhaskera.sh`, or copy the files from `$PREFIX/src/slurm/` into `$PREFIX/share/kit/` yourself. Users who already copied the kit keep their own copy and have to copy the new scripts too.
 3. `chmod -R a+rX $PREFIX`.
 
-Restart the home page after an update: a page that is already running keeps the old code.
+Restart the dashboard after an update: a page that is already running keeps the old code.

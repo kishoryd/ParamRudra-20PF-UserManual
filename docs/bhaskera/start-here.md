@@ -10,7 +10,7 @@ This page is for someone who has never fine-tuned a model, or has never run one 
 2. **[I bring my own model and my own data](#case-2-i-bring-my-own-model-and-my-own-data)**, tokenised or not.
 3. **[I only want to benchmark a model I already have](#case-3-benchmark-a-model-you-already-have)**: no training.
 
-What was run on PARAM Rudra for this page: option B of Case 1 (tokenise and train, end to end, with the small examples shown), the tokenising of CSV, TSV and JSON data, the checks of option A, and the benchmark of Case 3. The 14 B training of option A and the "already tokenised" route in Case 2 follow the same code but were not repeated here. A web page does the same things with buttons ([Home Page](homepage.md)); this page uses the terminal because it shows exactly what happens.
+What was run on PARAM Rudra for this page: option B of Case 1 (tokenise and train, end to end, with the small examples shown), the tokenising of CSV, TSV and JSON data, the checks of option A, and the benchmark of Case 3. The 14 B training of option A and the "already tokenised" route in Case 2 follow the same code but were not repeated here. A web page does the same things with buttons ([Bhaskera Dashboard](homepage.md)); this page uses the terminal because it shows exactly what happens.
 
 ## The words you will meet
 
@@ -282,7 +282,7 @@ $ ./submit.sh eval --model <model folder> --tasks my_test --save-samples
 $ python -m bhaskera.launcher.evaluate review <samples folder>      # what is right, what is wrong, with the answers
 ```
 
-The result is saved in the `--out` file. Add `--mlflow` to keep it in MLflow too. Once you have trained a model, `--run <run id>` (or a registered name) benchmarks it *against its base model* in one go ([Home Page](homepage.md#test-the-model-on-your-own-questions-and-find-what-to-correct) and [Model Registry](registry.md)).
+The result is saved in the `--out` file. Add `--mlflow` to keep it in MLflow too. Once you have trained a model, `--run <run id>` (or a registered name) benchmarks it *against its base model* in one go ([Bhaskera Dashboard](homepage.md#test-the-model-on-your-own-questions-and-find-what-to-correct) and [Model Registry](registry.md)).
 
 ## When something goes wrong
 
@@ -301,5 +301,5 @@ The result is saved in the `--out` file. Add `--mlflow` to keep it in MLflow too
 - [Data Format](data.md): file types, column layouts and plain text.
 - [Downloads and Dataset Versions](downloads.md): downloading, and naming and versioning your data.
 - [Monitoring](monitoring.md): reading the step log, MLflow, and the GPU energy a run used.
-- [Home Page](homepage.md): the same things with buttons, plus chat with the model you trained.
+- [Bhaskera Dashboard](homepage.md): the same things with buttons, plus chat with the model you trained.
 - [Model Registry](registry.md): keep a trained model under a name, with a note.

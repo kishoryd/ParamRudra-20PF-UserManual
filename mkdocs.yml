@@ -120,7 +120,7 @@ nav:
       - Recipes: bhaskera/recipes.md
       - Multimodal: bhaskera/multimodal.md
       - Monitoring: bhaskera/monitoring.md
-      - Home Page: bhaskera/homepage.md
+      - Bhaskera Dashboard: bhaskera/homepage.md
       - Resuming a Job: bhaskera/resume.md
       - Model Registry: bhaskera/registry.md
       - Data Format: bhaskera/data.md

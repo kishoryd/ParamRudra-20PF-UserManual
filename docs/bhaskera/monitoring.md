@@ -59,7 +59,7 @@ A low minimum next to a high mean points at one GPU that is waiting for the othe
 ## GPU energy used
 
 Every run records the power its GPUs draw (summed over all the GPUs of the job, every ten steps). Bhaskera works out the energy from that curve: the area under it, in kWh.
-It shows on the Home page as **GPU energy used** (a total), as a **GPU energy** column in the runs table, and as **GPU energy so far** on a job that is running. The figure is the sum, over the readings, of the time between two readings multiplied by the average of the two power values.
+It shows on the Bhaskera Dashboard as **GPU energy used** (a total), as a **GPU energy** column in the runs table, and as **GPU energy so far** on a job that is running. The figure is the sum, over the readings, of the time between two readings multiplied by the average of the two power values.
 
 - It counts the GPUs only. CPUs, memory, fans, cooling and the network are not included, so the node's real use is higher.
 - It covers the time between the first and the last power reading, which is the training itself (not the minutes the model takes to load).
@@ -92,7 +92,7 @@ The command has two hops because `paramrudra.cdacb.in` hands out a different log
     `ssh -J <user>@paramrudra.cdacb.in:4422 <user>@login01` does not work: the login nodes refuse to pass a connection on to another machine. Use the two-hop command above.
 
 !!! warning "MLflow stops when you log out"
-    The MLflow started by `bhaskera-dashboard start` ends when the login session that started it ends (checked on PARAM Rudra: started over a one-line `ssh`, it was gone afterwards). Keep a session open for as long as you look at the charts: the tunnel command above leaves you in a shell on that node, so the simplest way is to run `bhaskera-dashboard start` in that shell, in a second terminal opened with the same `ssh ... login01` hop, or to use the home page (`bhaskera-dashboard ray`), which starts MLflow itself and keeps it while the page runs.
+    The MLflow started by `bhaskera-dashboard start` ends when the login session that started it ends (checked on PARAM Rudra: started over a one-line `ssh`, it was gone afterwards). Keep a session open for as long as you look at the charts: the tunnel command above leaves you in a shell on that node, so the simplest way is to run `bhaskera-dashboard start` in that shell, in a second terminal opened with the same `ssh ... login01` hop, or to use the dashboard (`bhaskera-dashboard ray`), which starts MLflow itself and keeps it while the page runs.
 
 !!! tip "Closing it"
     Press `Ctrl-C` in the laptop terminal, or type `exit`. The tunnel closes. Run `bhaskera-dashboard stop` on the login node if MLflow is still running.
@@ -164,7 +164,7 @@ Run the printed line on your laptop, as it is printed, and open <http://localhos
     The login nodes slow down when many connections arrive in a short time (several `ssh` and `scp` commands in a row, for example). Wait a minute and try again, and open one connection at a time. Nothing is wrong with your account.
 
 !!! tip "The same page starts jobs"
-    The page also starts jobs, opens a chat with a trained model and runs benchmarks: see [Home Page](homepage.md).
+    The page also starts jobs, opens a chat with a trained model and runs benchmarks: see [Bhaskera Dashboard](homepage.md).
 
 Run that command on your laptop, leave it open, and open <http://localhost:8265>. That page lists your running
 jobs, and for each one a link to its **Ray Dashboard** and its **Grafana charts**, and a link to **MLflow**.
