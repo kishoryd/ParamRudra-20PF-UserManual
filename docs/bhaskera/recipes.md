@@ -17,7 +17,7 @@ A recipe is a ready Bhaskera configuration for one model, using the fastest stra
 | `mistralai/Mistral-Large-Instruct-2411` | `mistral-large-123b-qlora` | — | `mistral-large-123b-pipeline` | `mistral-large-123b-hsdp` | `mistral-large-123b-fsdp` |
 | `Qwen/Qwen3-235B-A22B-Instruct-2507` (MoE) | — | — | `qwen3-235b-a22b-pipeline` | `qwen3-235b-a22b-hsdp` | `qwen3-235b-a22b-fsdp` |
 
-Each file is `recipes/<name>.yaml`. The fastest one for each model is in [Benchmarks](benchmarks.md); in short, QLoRA + DDP for the dense 14 B to 123 B models and Pipeline for the MoE models.
+Each file is `recipes/<name>.yaml`, shown in full under [Full Recipes](#full-recipes). The fastest one for each model is in [Benchmarks](benchmarks.md); in short, QLoRA + DDP for the dense 14 B to 123 B models and Pipeline for the MoE models.
 Node counts: any for DDP, QLoRA and FSDP2. Pipeline needs 2 GPUs per node to add up to a whole number of stages (4 stages: a multiple of 2 nodes, 8 stages: a multiple of 4, 16 stages: a multiple of 8). HSDP needs a whole number of shard groups (a group of 4 GPUs: a multiple of 2 nodes, a group of 16: a multiple of 8).
 
 Other recipes:
@@ -38,6 +38,154 @@ Other recipes:
 A pipeline recipe splits the model into *stages* on different GPUs, so the number of GPUs (2 per node) must be
 a multiple of the number of stages. `submit.sh` checks this before it submits.
 
+
+## Full Recipes
+
+Every recipe in full, for reference. Open one, copy it to `recipes/<name>.yaml` in your run folder (they are already there when you copy the kit), replace `<project>/<username>` and the two tokenised data paths, and run it. The comment lines at the top give the measured speed.
+
+!!! tip "Reading a recipe"
+    - `model`: the model folder, precision, attention and kernel choices, and `quantization: qlora` for 4-bit.
+    - `data`: the tokenised caches (`tokenized_path`, `val_tokenized_path`), `seq_len` and `runtime_packing`.
+    - `lora`: the adapter (`r`, `alpha`, which modules). `moe`: router settings for mixture-of-experts models.
+    - `training`: batch size, learning rate, `max_steps`, and `distributed.strategy` (`ddp`, `fsdp` or `pipeline`, with `hsdp_shard_size` for HSDP and `stages` / `microbatches` for pipeline).
+    - `checkpoint`, `logging`, `monitoring`: where checkpoints go and how often, the MLflow run name, and the metrics recorded.
+
+### Qwen3-14B
+
+??? example "qwen3-14b-qlora  (QLoRA + DDP)"
+    ```yaml title="recipes/qwen3-14b-qlora.yaml"
+    --8<-- "docs/bhaskera/files/recipes/qwen3-14b-qlora.yaml"
+    ```
+
+??? example "qwen3-14b-ddp  (LoRA + DDP)"
+    ```yaml title="recipes/qwen3-14b-ddp.yaml"
+    --8<-- "docs/bhaskera/files/recipes/qwen3-14b-ddp.yaml"
+    ```
+
+??? example "qwen3-14b-pipeline  (Pipeline)"
+    ```yaml title="recipes/qwen3-14b-pipeline.yaml"
+    --8<-- "docs/bhaskera/files/recipes/qwen3-14b-pipeline.yaml"
+    ```
+
+??? example "qwen3-14b-hsdp  (HSDP)"
+    ```yaml title="recipes/qwen3-14b-hsdp.yaml"
+    --8<-- "docs/bhaskera/files/recipes/qwen3-14b-hsdp.yaml"
+    ```
+
+??? example "qwen3-14b-fsdp  (FSDP2)"
+    ```yaml title="recipes/qwen3-14b-fsdp.yaml"
+    --8<-- "docs/bhaskera/files/recipes/qwen3-14b-fsdp.yaml"
+    ```
+
+### Qwen3-30B-A3B (MoE)
+
+??? example "qwen3-30b-a3b-qlora  (QLoRA + DDP)"
+    ```yaml title="recipes/qwen3-30b-a3b-qlora.yaml"
+    --8<-- "docs/bhaskera/files/recipes/qwen3-30b-a3b-qlora.yaml"
+    ```
+
+??? example "qwen3-30b-a3b-ddp  (LoRA + DDP)"
+    ```yaml title="recipes/qwen3-30b-a3b-ddp.yaml"
+    --8<-- "docs/bhaskera/files/recipes/qwen3-30b-a3b-ddp.yaml"
+    ```
+
+??? example "qwen3-30b-a3b-pipeline  (Pipeline)"
+    ```yaml title="recipes/qwen3-30b-a3b-pipeline.yaml"
+    --8<-- "docs/bhaskera/files/recipes/qwen3-30b-a3b-pipeline.yaml"
+    ```
+
+??? example "qwen3-30b-a3b-hsdp  (HSDP)"
+    ```yaml title="recipes/qwen3-30b-a3b-hsdp.yaml"
+    --8<-- "docs/bhaskera/files/recipes/qwen3-30b-a3b-hsdp.yaml"
+    ```
+
+??? example "qwen3-30b-a3b-fsdp  (FSDP2)"
+    ```yaml title="recipes/qwen3-30b-a3b-fsdp.yaml"
+    --8<-- "docs/bhaskera/files/recipes/qwen3-30b-a3b-fsdp.yaml"
+    ```
+
+### Llama-3.3-70B
+
+??? example "llama-3.3-70b-qlora  (QLoRA + DDP)"
+    ```yaml title="recipes/llama-3.3-70b-qlora.yaml"
+    --8<-- "docs/bhaskera/files/recipes/llama-3.3-70b-qlora.yaml"
+    ```
+
+??? example "llama-3.3-70b-pipeline  (Pipeline)"
+    ```yaml title="recipes/llama-3.3-70b-pipeline.yaml"
+    --8<-- "docs/bhaskera/files/recipes/llama-3.3-70b-pipeline.yaml"
+    ```
+
+??? example "llama-3.3-70b-hsdp  (HSDP)"
+    ```yaml title="recipes/llama-3.3-70b-hsdp.yaml"
+    --8<-- "docs/bhaskera/files/recipes/llama-3.3-70b-hsdp.yaml"
+    ```
+
+??? example "llama-3.3-70b-fsdp  (FSDP2)"
+    ```yaml title="recipes/llama-3.3-70b-fsdp.yaml"
+    --8<-- "docs/bhaskera/files/recipes/llama-3.3-70b-fsdp.yaml"
+    ```
+
+### Mistral-Large-123B
+
+??? example "mistral-large-123b-qlora  (QLoRA + DDP)"
+    ```yaml title="recipes/mistral-large-123b-qlora.yaml"
+    --8<-- "docs/bhaskera/files/recipes/mistral-large-123b-qlora.yaml"
+    ```
+
+??? example "mistral-large-123b-pipeline  (Pipeline)"
+    ```yaml title="recipes/mistral-large-123b-pipeline.yaml"
+    --8<-- "docs/bhaskera/files/recipes/mistral-large-123b-pipeline.yaml"
+    ```
+
+??? example "mistral-large-123b-hsdp  (HSDP)"
+    ```yaml title="recipes/mistral-large-123b-hsdp.yaml"
+    --8<-- "docs/bhaskera/files/recipes/mistral-large-123b-hsdp.yaml"
+    ```
+
+??? example "mistral-large-123b-fsdp  (FSDP2)"
+    ```yaml title="recipes/mistral-large-123b-fsdp.yaml"
+    --8<-- "docs/bhaskera/files/recipes/mistral-large-123b-fsdp.yaml"
+    ```
+
+### Qwen3-235B-A22B (MoE)
+
+??? example "qwen3-235b-a22b-pipeline  (Pipeline)"
+    ```yaml title="recipes/qwen3-235b-a22b-pipeline.yaml"
+    --8<-- "docs/bhaskera/files/recipes/qwen3-235b-a22b-pipeline.yaml"
+    ```
+
+??? example "qwen3-235b-a22b-hsdp  (HSDP)"
+    ```yaml title="recipes/qwen3-235b-a22b-hsdp.yaml"
+    --8<-- "docs/bhaskera/files/recipes/qwen3-235b-a22b-hsdp.yaml"
+    ```
+
+??? example "qwen3-235b-a22b-fsdp  (FSDP2)"
+    ```yaml title="recipes/qwen3-235b-a22b-fsdp.yaml"
+    --8<-- "docs/bhaskera/files/recipes/qwen3-235b-a22b-fsdp.yaml"
+    ```
+
+### Other models
+
+??? example "param-1-2.9b-ddp  (Param-1-2.9B, DDP)"
+    ```yaml title="recipes/param-1-2.9b-ddp.yaml"
+    --8<-- "docs/bhaskera/files/recipes/param-1-2.9b-ddp.yaml"
+    ```
+
+??? example "param-1-7b-moe-fsdp  (Param-1-7B, FSDP)"
+    ```yaml title="recipes/param-1-7b-moe-fsdp.yaml"
+    --8<-- "docs/bhaskera/files/recipes/param-1-7b-moe-fsdp.yaml"
+    ```
+
+??? example "param2-17b-moe-fsdp  (Param2-17B, FSDP)"
+    ```yaml title="recipes/param2-17b-moe-fsdp.yaml"
+    --8<-- "docs/bhaskera/files/recipes/param2-17b-moe-fsdp.yaml"
+    ```
+
+??? example "tokenize-chatml  (Tokenise your data)"
+    ```yaml title="recipes/tokenize-chatml.yaml"
+    --8<-- "docs/bhaskera/files/recipes/tokenize-chatml.yaml"
+    ```
 
 ## Full Fine-tuning (Training Every Weight)
 
