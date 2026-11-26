@@ -2,7 +2,7 @@
 icon: material/lifebuoy
 ---
 
-# Troubleshooting & Reference
+# Troubleshooting
 
 ## Troubleshooting
 
@@ -68,15 +68,6 @@ $ ./submit.sh recipes/<recipe>.yaml 8 12
 | Save a trained model in the registry | `python -m bhaskera.launcher.register add --run <run id> --name <model> --alias champion` (see [Model Registry](registry.md)) |
 | Hyperparameter sweep | `python -m bhaskera.launcher.sweep plan\|submit\|report sweep.yaml` |
 | Check and clean a data file | `python -m bhaskera.launcher.data_tools inspect\|dedupe\|filter\|split` |
-
-## References
-
-- Bhaskera source: <https://github.com/kishoryd/Bhaskera>
-- [GPU Computing](../gpu.md), [Machine Learning / DL](../machine-learning.md),
-  [Resource Management](../resource-management.md) on this site
-- LoRA: Hu et al., *LoRA: Low-Rank Adaptation of Large Language Models* (2021)
-- QLoRA: Dettmers et al., *QLoRA: Efficient Finetuning of Quantized LLMs* (2023)
-- Ray Train: <https://docs.ray.io/en/latest/train/train.html>
 
 ## The MLflow link says the site cannot be reached
 
