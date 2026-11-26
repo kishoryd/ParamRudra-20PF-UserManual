@@ -176,7 +176,7 @@ A model is a **Hugging Face model folder**: it has a `config.json`, the weight f
 
 ### Your data, not tokenised yet
 
-Raw data can be a file, a folder or a pattern, in **JSONL, JSON, CSV, TSV, Parquet, Arrow or plain text** (optionally `.gz`): see [what formats work](data.md#what-data-formats-work). What matters is the *columns*, set with `data.format`:
+Raw data can be a file, a folder or a pattern, in **JSONL, JSON, CSV, TSV, Parquet, Arrow or plain text** (optionally `.gz`): see [what formats work](data.md). What matters is the *columns*, set with `data.format`:
 
 | `data.format` | Each row needs | Example |
 |---|---|---|
@@ -298,7 +298,8 @@ The result is saved in the `--out` file. Add `--mlflow` to keep it in MLflow too
 ## Where next
 
 - [Recipes](recipes.md): ready recipes for each model, and how many nodes and hours to ask for.
-- [Downloads and Dataset Versions](data.md): data formats, downloading, and naming and versioning your data.
+- [Data Format](data.md): file types, column layouts and plain text.
+- [Downloads and Dataset Versions](downloads.md): downloading, and naming and versioning your data.
 - [Monitoring](monitoring.md): reading the step log, MLflow, and the GPU energy a run used.
 - [Home Page](homepage.md): the same things with buttons, plus chat with the model you trained.
 - [Model Registry](registry.md): keep a trained model under a name, with a note.

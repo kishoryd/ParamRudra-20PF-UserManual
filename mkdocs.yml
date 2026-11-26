@@ -123,7 +123,8 @@ nav:
       - Multimodal: bhaskera/multimodal.md
       - Resuming a Job: bhaskera/resume.md
       - Model Registry: bhaskera/registry.md
-      - Downloads and Dataset Versions: bhaskera/data.md
+      - Data Format: bhaskera/data.md
+      - Downloads and Dataset Versions: bhaskera/downloads.md
       - Parallelism Strategies: bhaskera/parallelism.md
       - Benchmarks: bhaskera/benchmarks.md
       - Troubleshooting & Reference: bhaskera/troubleshooting.md

@@ -33,7 +33,7 @@ Clicking the Bhaskera logo returns to Home.
 | **Evaluate** | Benchmark one or several models, test your own questions, and compare models side by side |
 | **Monitor** | MLflow, the Ray Dashboard while a job runs, cluster limits and node health |
 
-The **New run** button at the top right opens the same dialogs as the cards. **Downloads** in the header fetches a model or a dataset from Hugging Face into a folder you choose, and holds the Hugging Face sign-in (see [Downloads and Dataset Versions](data.md)). **Docs** lists the guides, including the **Guide** that explains the words used on the page.
+The **New run** button at the top right opens the same dialogs as the cards. **Downloads** in the header fetches a model or a dataset from Hugging Face into a folder you choose, and holds the Hugging Face sign-in (see [Downloads and Dataset Versions](downloads.md)). **Docs** lists the guides, including the **Guide** that explains the words used on the page.
 Your name at the top right opens the account menu, with the Guide and **Log out**. Log out asks first, then stops the page; jobs you already started keep running.
 
 ## What it shows

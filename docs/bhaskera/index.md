@@ -74,7 +74,8 @@ $ tail -f logs/qwen3-14b-qlora_<jobid>.out | grep --line-buffered -E '\[step|eva
 | [Setting Up on Another Cluster](new-cluster.md) | For an administrator: a first install on a cluster other than PARAM Rudra |
 | [End-to-end Example](workflow.md) | Model and data, tokenising, training, expected output, resuming |
 | [Recipes](recipes.md) | Ready configurations for each model, full fine-tuning, and how many nodes and hours to request |
-| [Downloads and Dataset Versions](data.md) | Data formats, Hugging Face names in a recipe, downloading, naming and versioning data |
+| [Data Format](data.md) | File types and column layouts the tokeniser reads, plain text, and data you tokenised yourself |
+| [Downloads and Dataset Versions](downloads.md) | Hugging Face names in a recipe, downloading, naming and versioning data |
 | [Monitoring](monitoring.md) | The step log, MLflow, GPU energy, and the Ray Dashboard with charts for every node |
 | [Multimodal](multimodal.md) | Fine-tuning with images, video and audio |
 | [Model Registry](registry.md) | Naming and versioning trained models, aliases such as champion, using them by name |
