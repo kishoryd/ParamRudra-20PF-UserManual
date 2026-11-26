@@ -5318,7 +5318,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </code></pre></div>
 </details>
 <h3 id="multimodal-models">Multimodal models<a class="headerlink" href="#multimodal-models" title="Permanent link">&para;</a></h3>
-<p>The image, video and audio starters live in <code>configs/multimodal/</code> of the Bhaskera repository. Tokenise first with a <code>tokenize_*</code> config, which prints the two cache paths to paste in, then run the training config as its first comment lines show. See <a href="../multimodal/">Multimodal</a> for the data and chat.</p>
+<p>The image, video and audio starters are in <code>configs/multimodal/</code> of your run folder (copied from the kit with <code>recipes/</code>). A run folder made earlier lacks them: <code>cp -r $BHASKERA_KIT/configs .</code>. Tokenise first with a <code>tokenize_*</code> config, which prints the two cache paths to paste in, then run the training config as its first comment lines show. See <a href="../multimodal/">Multimodal</a> for the data and chat.</p>
 <details class="example">
 <summary>multimodal/tokenize_vision  (Tokenise images and video)</summary>
 <div class="highlight"><span class="filename">configs/multimodal/tokenize_vision.yaml</span><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Tokenise chat data with images and video for a vision-language model (Qwen3-VL). Run once before training:</span>
