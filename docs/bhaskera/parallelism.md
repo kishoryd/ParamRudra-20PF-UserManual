@@ -4,8 +4,6 @@ icon: material/sitemap
 
 # Parallelism Strategies
 
-Set `training.distributed.strategy` in the config. HSDP is `fsdp` with
-`fsdp.sharding_strategy: HYBRID_SHARD`; QLoRA is `ddp` with `model.quantization: qlora`.
 
 | Strategy | In plain words | Use it for | Avoid when |
 |---|---|---|---|
