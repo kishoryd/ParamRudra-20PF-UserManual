@@ -111,6 +111,7 @@ nav:
       - Job Script Examples: examples.md
 
   - Bhaskera:
+      - Bhaskera Dashboard: bhaskera/homepage.md
       - Overview: bhaskera/index.md
       - Start Here (First Run): bhaskera/start-here.md
       - Why Bhaskera: bhaskera/why.md
@@ -120,7 +121,6 @@ nav:
       - Recipes: bhaskera/recipes.md
       - Multimodal: bhaskera/multimodal.md
       - Monitoring: bhaskera/monitoring.md
-      - Bhaskera Dashboard: bhaskera/homepage.md
       - Resuming a Job: bhaskera/resume.md
       - Model Registry: bhaskera/registry.md
       - Data Format: bhaskera/data.md
