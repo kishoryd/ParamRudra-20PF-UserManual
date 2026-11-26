@@ -104,11 +104,3 @@ that strategy on 80 GB GPUs.
   point or less between strategies and node counts, so the choice of strategy is about speed
   and memory, not quality.
 
-!!! note "gpt-oss-120b"
-    gpt-oss-120b is not included: its checkpoint is stored in MXFP4, which A100 GPUs cannot compute in.
-    Bhaskera includes `scripts/convert_mxfp4_to_bf16.py` to convert it to bf16; training on the converted
-    checkpoint has not been benchmarked yet.
-
-!!! warning "Scope of these benchmarks"
-    The runs are 10 steps long. They measure throughput and confirm that every strategy trains
-    correctly; they do not compare final model quality after a full fine-tune.
