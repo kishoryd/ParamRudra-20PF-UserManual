@@ -10,7 +10,7 @@ Bhaskera teaches a pre-trained language model something new, on a cluster of GPU
 
 This is called **fine-tuning**. A model such as Qwen3 or Llama has learned general language from a huge amount of text. Fine-tuning continues its training on your own examples (your support tickets, your documents, your question and answer pairs) so that it answers the way you need. Bhaskera is for people who want to do that on a shared Slurm cluster without writing the distributed-training code themselves.
 
-On PARAM Rudra it runs from 1 node up to 128 nodes (256 A100 GPUs). Most runs use **LoRA**: the pre-trained model stays as it is and only a small add-on (an *adapter*) is trained, which needs far less GPU memory and far less communication between nodes. **Full fine-tuning**, which trains every weight, is available too.
+On PARAM Rudra it is tested from 1 node up to 128 nodes (256 A100 GPUs). Most runs use **LoRA**: the pre-trained model stays as it is and only a small add-on (an *adapter*) is trained, which needs far less GPU memory and far less communication between nodes. **Full fine-tuning**, which trains every weight, is available too.
 
 Official site: <https://github.com/kishoryd/Bhaskera>. If you have never done this before, start with [Start Here: Your First Run](start-here.md).
 
@@ -20,7 +20,7 @@ Fine-tuning a large model on a cluster is not one hard step but many small ones,
 
 | You need to ... | What Bhaskera does |
 |---|---|
-| Describe a run | One YAML file: the model, the data, how to spread the work over the GPUs. The same file runs on 1 node or 128. |
+| Describe a run | One YAML file: the model, the data, how to spread the work over the GPUs. The same file runs on N nodes. |
 | Train at any size | LoRA and QLoRA (4-bit) with DDP, FSDP2, HSDP and Pipeline parallelism, measured on PARAM Rudra with five models from 14 B to 235 B parameters, including mixture-of-experts models, on 8 to 128 nodes ([Benchmarks](benchmarks.md)). Full fine-tuning of every weight with DDP, FSDP2 or HSDP, tried on a 14 B model ([Recipes](recipes.md#full-fine-tuning-training-every-weight)). |
 | Train models that see and hear | Images, video and audio (Qwen3-VL, Qwen2.5-Omni) with the same recipes and commands. |
 | Get your data in | Tokenising from JSONL, JSON, CSV, TSV, Parquet or Arrow; models and datasets named by their Hugging Face address and downloaded for you, even from a login node that has no internet; datasets with names, versions and fingerprints, so every run records exactly what it trained on. |
