@@ -13,12 +13,17 @@ This page takes one model, **Qwen3-14B**, from raw data to a trained LoRA adapte
 `qwen3-14b-qlora.yaml` recipe. Every other recipe works the same way; only the model and the node
 count change (see [Recipes](recipes.md)).
 
-The run has four steps, all started from a login node:
+The run has nine steps, all started from a login node. Steps 1 to 4 train the model; steps 5 to 9 are what you do with it afterwards.
 
-- Download the model and prepare the data
-- Tokenise the data (one CPU job, once per model and dataset)
-- Run a short first job (10 steps)
-- Run the full training job
+1. Download the model and prepare the data
+2. Tokenise the data (one CPU job, once per model and dataset)
+3. Run a short first job (10 steps)
+4. Run the full training job
+5. Watch it: MLflow, and optionally the Ray Dashboard and Grafana
+6. Chat with the trained model (serve)
+7. Evaluate it on your own questions
+8. Benchmark it against the base model
+9. Save it under a name (register)
 
 ## Input
 
@@ -242,3 +247,77 @@ $ ./submit.sh recipes/qwen3-14b-qlora.yaml 8 20
 
 A checkpoint with the trained LoRA weights and the optimizer state is written to `checkpoint.save_dir` when the
 run ends. Submitting the job again with the same `save_dir` and a larger `max_steps` continues from it.
+
+!!! note "Keep the adapter"
+    Steps 6 to 9 use the **adapter** the run stores, which needs `logging.mlflow_log_adapter: true`. The shipped recipes and the recipes the dashboard writes set it. A full fine-tune stores no adapter, so it has no Chat, Benchmark by run or Register.
+
+Steps 5 to 9 need the **run id** of the finished training run: the 32-character id in the **Runs** table of the dashboard (and in MLflow's run page). Every command below can also be done with a button on the [Bhaskera dashboard](homepage.md); the commands are shown because they work from any terminal.
+
+## Step 5: Watch It (MLflow, Ray Dashboard, Grafana)
+
+Open the dashboard on a login node. Run this on your laptop and leave it open (the command comes from `bhaskera-dashboard ray --info`; add `--node login01` to land on a login node of your choice, and see [Monitoring](monitoring.md#ray-dashboard-charts-and-mlflow-in-one-place)):
+
+```bash
+$ ssh -p 4422 -L 8265:localhost:<port> <user>@paramrudra.cdacb.in "bash -lc 'module load bhaskera/1.0.0 && bhaskera-dashboard ray'"
+```
+
+Then open `http://localhost:8265`.
+
+| Tool | Use it for | Needs |
+|---|---|---|
+| **MLflow** | The run's loss and evaluation curves, throughput, GPU energy and the model registry, kept after the job ends | Nothing extra (the dashboard starts it) |
+| **Ray Dashboard** *(optional)* | While the job runs: every node's CPU, memory and GPU load, the workers and their logs. Open it on the job's card | A running job |
+| **Grafana** *(optional)*, shown as **GPU charts** | GPU, CPU and memory over time for every node | Prometheus and Grafana installed next to Bhaskera; without them the other two still work |
+
+To look at MLflow alone, without the dashboard, run `bhaskera-dashboard start` on a login node and `bhaskera-dashboard tunnel` prints the command for your laptop. MLflow started this way stops when the login session that started it ends.
+
+## Step 6: Chat With the Trained Model
+
+```bash
+$ ./submit.sh serve --run <run id>                 # prints the job number
+$ tail -f logs/bhaskera-serve_<job>.out            # wait for: === serving on <node>:<port> ===
+```
+
+Loading takes 5 to 8 minutes for a 14 B model. On the dashboard, press **Chat** on the run instead: the window opens by itself when the model is ready, with **Tuned**, **Base** and **Compare** answers side by side. From a terminal, link to the node from the login node and ask:
+
+```bash
+$ ssh -N -L <port>:localhost:<port> <node> &
+$ curl -s localhost:<port>/v1/chat/completions -H 'Content-Type: application/json' \
+       -d '{"messages": [{"role": "user", "content": "What is HPC?"}], "max_tokens": 200}'
+```
+
+Add `"use_adapter": false` to get the base model's answer from the same weights. The server stops after two hours (`SERVE_HOURS` changes it) or with `scancel <job>`, which frees the GPU node.
+
+## Step 7: Evaluate on Your Own Questions
+
+Standard benchmarks say little about your own use, so test the model on examples from your work. Put them in a JSONL file, one `{"question": "...", "answer": "..."}` per line, then:
+
+```bash
+$ python -m bhaskera.launcher.evaluate init-task --name my_test --data /scratch/<project>/<username>/my.jsonl
+$ ./submit.sh eval --run <run id> --tasks my_test --save-samples
+$ python -m bhaskera.launcher.evaluate review <folder>        # fixed by tuning, broken by tuning, still wrong
+```
+
+`review` sorts every example into **fixed by tuning**, **broken by tuning** (the base model had it right), **still wrong** and **still right**. Fix or add training examples for what is still wrong, tokenise again, train again and run the same test: the numbers show whether it helped. More in [The Bhaskera Dashboard](homepage.md#test-the-model-on-your-own-questions-and-find-what-to-correct).
+
+## Step 8: Benchmark Against the Base Model
+
+Training loss does not say what the model can still do. Download the test data once on a login node (compute nodes have no internet), then run the standard tests on the base and the tuned model:
+
+```bash
+$ python -m bhaskera.launcher.evaluate prepare --tasks arc_easy,hellaswag
+$ ./submit.sh eval --run <run id> --tasks arc_easy,hellaswag --limit 200      # --limit: a quick check; leave it out for the real score
+```
+
+The result shows the change per task and counts as *better* or *worse* only when it is larger than twice the standard error. It is stored with the run and shown in the **Runs** table; **Compare models** puts several side by side. Use the same tests and the same number of examples for every model you compare.
+
+## Step 9: Save the Model
+
+Give the trained model a name, a version and a note, so a colleague can find it without a run id:
+
+```bash
+$ python -m bhaskera.launcher.register add --run <run id> --name my-assistant --alias champion
+$ python -m bhaskera.launcher.register list
+```
+
+Chat, benchmark and compare accept the registered name in place of a run id (`my-assistant`, `my-assistant:2`, `my-assistant@champion`). On the dashboard this is **Register**. See [Model Registry](registry.md) for versions, aliases and notes. A run that stopped early can be continued with `./submit.sh resume --run <run id>` ([Resuming a Job](resume.md)).
