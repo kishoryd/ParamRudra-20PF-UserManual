@@ -1367,39 +1367,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#where-your-files-go" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where your files go
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#shared-models-and-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Shared models and data
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#for-administrators-central-installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        For Administrators: Central Installation
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2672,39 +2639,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#where-your-files-go" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Where your files go
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#shared-models-and-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Shared models and data
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#for-administrators-central-installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        For Administrators: Central Installation
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2814,30 +2748,6 @@ not available, or if you want to change Bhaskera's code.</p>
 <h2 id="verify">Verify<a class="headerlink" href="#verify" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import torch, flash_attn, bitsandbytes, bhaskera; print('OK', torch.__version__, torch.version.cuda)"</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>OK<span class="w"> </span><span class="m">2</span>.6.0+cu124<span class="w"> </span><span class="m">12</span>.4
-</code></pre></div>
-<h2 id="where-your-files-go">Where your files go<a class="headerlink" href="#where-your-files-go" title="Permanent link">&para;</a></h2>
-<p>Everything you create stays in your <strong>run folder</strong>, the one that holds <code>submit.sh</code>: the MLflow store (<code>mlflow-runs/</code>, with the model registry), your small settings
-(<code>.bhaskera/</code>), the benchmark data cache (<code>.cache/huggingface/</code>), recipes, checkpoints, logs and caches. Nothing is written to the home folder any more. If you already have
-a store in your home folder it is still used until a copy or a link exists in the run folder, so no earlier run disappears. To keep an old store, link it:
-<code>ln -s ~/mlflow-runs mlflow-runs</code>.</p>
-<h2 id="shared-models-and-data">Shared models and data<a class="headerlink" href="#shared-models-and-data" title="Permanent link">&para;</a></h2>
-<p>If the administrators keep models and tokenised data in <code>/home/apps/bhaskera/models</code> and <code>/home/apps/bhaskera/data</code>, the page offers them under <em>Shared on this cluster</em>
-in the model and data lists. You can always type the path of your own folder instead.</p>
-<h2 id="for-administrators-central-installation">For Administrators: Central Installation<a class="headerlink" href="#for-administrators-central-installation" title="Permanent link">&para;</a></h2>
-<p>On a cluster other than PARAM Rudra, follow <a href="../new-cluster/">Setting Up on Another Cluster</a> instead: it covers the cluster profile, the modulefile and a first check.</p>
-<p><code>install-bhaskera.sh</code> builds Bhaskera for all users and <code>bhaskera/1.0.0.lua</code> is the matching Lmod
-modulefile. Both are in the Bhaskera repository under <code>slurm/</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>bash<span class="w"> </span>slurm/install-bhaskera.sh<span class="w">                       </span><span class="c1"># installs to /home/apps/bhaskera/1.0.0</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>$<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/home/apps/AIStack/bhaskera
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>$<span class="w"> </span>cp<span class="w"> </span>slurm/modulefiles/bhaskera/1.0.0.lua<span class="w"> </span>/home/apps/AIStack/bhaskera/1.0.0.lua
-</code></pre></div>
-<p>The installer must be run with the final path (<code>PREFIX=...</code> to change it), because a Python
-environment cannot be moved after it is built. It also installs Prometheus and Grafana under
-<code>/home/apps/bhaskera/1.0.0/observability</code> (for the charts in the Ray Dashboard); this step needs internet
-access, and <code>WITH_CHARTS=0</code> skips it. It also installs the lm-evaluation-harness for benchmarks (<code>WITH_EVAL=0</code> skips it).
-The modulefile sets <code>BHASKERA_CLUSTER_PROFILE</code> to the PARAM Rudra profile, which holds the partitions, GPUs per node and network
-interface; another site writes its own profile (<code>clusters/example.yaml</code>). It ends by printing the installed versions:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>OK  torch 2.6.0+cu124 (CUDA 12.4)  flash-attn 2.7.3  bitsandbytes 0.50.2  transformers 4.57.6  ray 2.56.1  peft 0.20.0
 </code></pre></div>
 
 
