@@ -4,6 +4,9 @@ icon: material/play-circle
 
 # End-to-end Example
 
+!!! tip "New to this?"
+    [Start Here: Your First Run](start-here.md) explains the words and walks through three cases (no model and no data, your own model and data, benchmarking a model you have). This page is the longer example with the 14 B model.
+
 ## Introduction
 
 This page takes one model, **Qwen3-14B**, from raw data to a trained LoRA adapter, using the

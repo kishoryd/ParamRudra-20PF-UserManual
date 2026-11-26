@@ -109,3 +109,21 @@ Only runs that recorded the GPU power show a GPU energy figure. Runs made before
 Bhaskera checks the free space of the disk before it writes anything large, and stops instead of failing half way. It checks new recipes (checkpoints), starting training, preparing data, downloads, and, before any job, that the run folder's disk has at least 1 GB.
 The message names the folder and the disk's free space. What to do: choose a folder on a disk with more room (**Save them in** under *Checkpoints*, or the folder of a download), keep fewer checkpoints (`keep_last_n`), turn checkpoints off for a trial run, or delete old checkpoints and runs (**Clear failed and stalled** on the Train page removes failed runs from the list; the checkpoint folders are in `checkpoints/` and are yours to delete).
 The figure is the disk's free space. A quota on your account can be lower and is not visible to Bhaskera, so a job can still run out of room on a quota-limited home folder: keep the run folder on `/scratch`.
+
+## "this page runs on login0N, which cannot reach the internet"
+
+Some login nodes have no internet, and your connection lands on a random one. Downloads, `evaluate prepare` and the Hugging Face names in a recipe need it.
+Downloads and recipe names are routed for you to a login node that has it, if the cluster profile lists one (`download_hosts`). If you see this message, either none is listed, or none could be reached: ask your administrator to set `download_hosts` in the cluster profile, or log in again until you land on a node with internet (on PARAM Rudra: login01, login02, login03 or login05; `curl -sI https://huggingface.co` on a node tells you).
+`python -m bhaskera.launcher.evaluate prepare` (the benchmark data) does not route yet: run it on a login node that has internet.
+
+## "split='val' requested but data.val_path is not set"
+
+This came from tokenising data with a training file only. It no longer fails: a recipe without `val_path` tokenises the training data and says so. If you see it, you are on an older Bhaskera: update, or set `val_path`.
+
+## "unsupported file(s) ... expected one of ..." or "mixed formats in one local dataset path"
+
+The tokenise step reads JSONL, JSON, CSV, TSV, Parquet and Arrow (optionally `.gz`), one format per path. Split a folder that mixes them, or convert one format to another. See [Downloads and Dataset Versions](data.md#what-data-formats-work).
+
+## `module load bhaskera/1.0.0` says the module is unknown, on one login node
+
+On PARAM Rudra the module is found on every login node except login04, whose `MODULEPATH` lacks `/home/apps/AIStack` (a setup difference on that node, not a Bhaskera fault). Use another login node, or add the path yourself: `module use /home/apps/AIStack`, then load it. If it is unknown elsewhere, the module cache may be out of date: `module --ignore_cache load bhaskera/1.0.0`.

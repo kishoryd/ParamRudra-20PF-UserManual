@@ -112,6 +112,7 @@ nav:
 
   - Bhaskera:
       - Overview: bhaskera/index.md
+      - Start Here (First Run): bhaskera/start-here.md
       - Why Bhaskera: bhaskera/why.md
       - Installation: bhaskera/installation.md
       - Setting Up on Another Cluster: bhaskera/new-cluster.md
