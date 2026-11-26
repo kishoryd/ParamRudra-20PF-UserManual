@@ -1,4 +1,4 @@
-# Downloads and Dataset Versions
+# Data Format
 
 Before a model can be trained, the model and the data have to be on disk (the machines that run training have no internet), and later you should be able to say which data a model was trained on. This page covers getting data in, in the formats you have; naming Hugging Face models and datasets in a recipe; downloading from the terminal or the home page; and giving data names and versions.
 
