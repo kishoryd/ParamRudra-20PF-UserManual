@@ -39,7 +39,7 @@ Files are checked by their own content and size before the model sees them.
 
 ## Run
 
-Start from the multimodal starters in the Bhaskera repository (`configs/multimodal/`): one for DDP, FSDP2 and HSDP, and a
+Start from the multimodal starters in `configs/multimodal/` of your run folder (a run folder made before this was added needs `cp -r $BHASKERA_KIT/configs .`): one for DDP, FSDP2 and HSDP, and a
 tokenizer config for vision (`tokenize_vision.yaml`, image and video) and one for audio (`tokenize_audio.yaml`).
 
 ```bash

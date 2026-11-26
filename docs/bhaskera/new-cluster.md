@@ -58,7 +58,7 @@ The script makes, under `PREFIX`:
 | `src/` | The Bhaskera source, at `REF` |
 | `python/`, `venv/` | A Python 3.11 interpreter and an environment with PyTorch 2.6 (CUDA 12.4), flash-attention 2.7.3, bitsandbytes, Ray, PEFT and the pinned versions below |
 | `observability/` | Prometheus and Grafana, unless skipped |
-| `share/kit/` | The job scripts (`submit.sh`, `*.sbatch`), ready recipes and cluster profiles that users copy |
+| `share/kit/` | The job scripts (`submit.sh`, `*.sbatch`), ready recipes, the text and multimodal starter configs (`configs/`) and cluster profiles, which users copy |
 
 !!! note "Why the versions are pinned"
     `slurm/requirements-paramrudra.lock` is the exact set of package versions used for every benchmark. With newer Ray and grpcio releases, multi-node jobs fail at start-up (`InvalidAuthToken`, or workers timing out while they wait for the first node). The file's name says PARAM Rudra, but it is simply the tested set. Keep it.

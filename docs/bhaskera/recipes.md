@@ -167,7 +167,7 @@ Every recipe in full, for reference. Open one, copy it to `recipes/<name>.yaml` 
 
 ### Multimodal models
 
-The image, video and audio starters live in `configs/multimodal/` of the Bhaskera repository. Tokenise first with a `tokenize_*` config, which prints the two cache paths to paste in, then run the training config as its first comment lines show. See [Multimodal](multimodal.md) for the data and chat.
+The image, video and audio starters are in `configs/multimodal/` of your run folder (copied from the kit with `recipes/`). A run folder made earlier lacks them: `cp -r $BHASKERA_KIT/configs .`. Tokenise first with a `tokenize_*` config, which prints the two cache paths to paste in, then run the training config as its first comment lines show. See [Multimodal](multimodal.md) for the data and chat.
 
 ??? example "multimodal/tokenize_vision  (Tokenise images and video)"
     ```yaml title="configs/multimodal/tokenize_vision.yaml"
