@@ -1177,6 +1177,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Ray Dashboard, Charts and MLflow in One Place">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#land-on-a-login-node-you-choose-login01-has-internet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Land on a login node you choose (login01 has internet)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2649,6 +2666,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Ray Dashboard, Charts and MLflow in One Place">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#land-on-a-login-node-you-choose-login01-has-internet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Land on a login node you choose (login01 has internet)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2805,14 +2839,25 @@ The Ray Dashboard command below starts MLflow for you. To run MLflow on its own,
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>status
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>tunnel<span class="w">                 </span><span class="c1"># prints the SSH command for your laptop</span>
 </code></pre></div>
-<p><code>bhaskera-dashboard tunnel</code> prints the command for the login node you are on, for example:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>  From your laptop:
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    ssh -L 5055:localhost:5055 login02
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    open http://localhost:5055
+<p><code>bhaskera-dashboard tunnel</code> prints the command for the login node you are on. Run it <strong>on your laptop</strong> and leave that terminal open:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>  From your laptop (leave it open):
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    ssh -p 4422 -t -t -L 5055:localhost:15055 &lt;user&gt;@paramrudra.cdacb.in "ssh -t -t -L 15055:localhost:5055 login01"
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    then open http://localhost:5055
 </code></pre></div>
-<p>On your laptop, run that command through your usual connection to PARAM Rudra (see
-<a href="../../access/">Getting Access</a>) so that it ends on the same login node, and open <a href="http://localhost:5055">http://localhost:5055</a>, then
-the experiment <strong>bhaskera</strong>. A multi-node job is one run. It has these curves:</p>
+<p>The command has two hops because <code>paramrudra.cdacb.in</code> hands out a different login node each time you connect (login01, login03, login05 and so on), and MLflow runs only on the node where you started it. The first <code>ssh</code> logs in, and the second one, inside it, goes on to the node that runs MLflow (<code>login01</code> here; the command always names the node you started it on). Then open <a href="http://localhost:5055">http://localhost:5055</a> and choose the experiment <strong>bhaskera</strong>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Do not use <code>ssh -J</code></p>
+<p><code>ssh -J &lt;user&gt;@paramrudra.cdacb.in:4422 &lt;user&gt;@login01</code> does not work: the login nodes refuse to pass a connection on to another machine. Use the two-hop command above.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">MLflow stops when you log out</p>
+<p>The MLflow started by <code>bhaskera-dashboard start</code> ends when the login session that started it ends (checked on PARAM Rudra: started over a one-line <code>ssh</code>, it was gone afterwards). Keep a session open for as long as you look at the charts: the tunnel command above leaves you in a shell on that node, so the simplest way is to run <code>bhaskera-dashboard start</code> in that shell, in a second terminal opened with the same <code>ssh ... login01</code> hop, or to use the home page (<code>bhaskera-dashboard ray</code>), which starts MLflow itself and keeps it while the page runs.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Closing it</p>
+<p>Press <code>Ctrl-C</code> in the laptop terminal, or type <code>exit</code>. The tunnel closes. Run <code>bhaskera-dashboard stop</code> on the login node if MLflow is still running.</p>
+</div>
+<p>A multi-node job is one run. It has these curves:</p>
 <table>
 <thead>
 <tr>
@@ -2881,6 +2926,17 @@ them, and puts everything behind one address.</p>
 <a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>Then<span class="w"> </span>open<span class="w"> </span>http://localhost:8265<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>browser:<span class="w"> </span>your<span class="w"> </span>running<span class="w"> </span>jobs,<span class="w"> </span>with<span class="w"> </span>their<span class="w"> </span>Ray<span class="w"> </span>Dashboards,
 <a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>charts<span class="w"> </span>and<span class="w"> </span>MLflow,<span class="w"> </span>are<span class="w"> </span>linked<span class="w"> </span>from<span class="w"> </span>that<span class="w"> </span>page.
 </code></pre></div>
+<p>The port in the command (20029 here) is your own: <code>bhaskera-dashboard ray --info</code> prints the command with the right one.</p>
+<h3 id="land-on-a-login-node-you-choose-login01-has-internet">Land on a login node you choose (login01 has internet)<a class="headerlink" href="#land-on-a-login-node-you-choose-login01-has-internet" title="Permanent link">&para;</a></h3>
+<p>The command above starts the page on whichever login node you are given. That is fine for everything except downloads from Hugging Face, which need internet, and on PARAM Rudra only login01, login02, login03 and login05 have it. (The page already sends a download to a node that has internet when it runs on one that does not, so this is only needed if you want to be on login01 yourself.) To start the page on a given node, add <code>--node</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>bhaskera-dashboard<span class="w"> </span>ray<span class="w"> </span>--info<span class="w"> </span>--node<span class="w"> </span>login01
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span>ssh<span class="w"> </span>-p<span class="w"> </span><span class="m">4422</span><span class="w"> </span>-t<span class="w"> </span>-t<span class="w"> </span>-L<span class="w"> </span><span class="m">8265</span>:localhost:18265<span class="w"> </span>&lt;user&gt;@paramrudra.cdacb.in<span class="w"> </span><span class="s2">"ssh -t -t -L 18265:localhost:20029 login01 \"bash -lc 'module load bhaskera/1.0.0 &amp;&amp; bhaskera-dashboard ray'\""</span>
+</code></pre></div>
+<p>Run the printed line on your laptop, as it is printed, and open <a href="http://localhost:8265">http://localhost:8265</a>. Only one copy of the page can run per user on a node: if it says the port is in use, stop the old one (<code>Ctrl-C</code> in its terminal).</p>
+<div class="admonition note">
+<p class="admonition-title">If the connection hangs: \"timed out during banner exchange\"</p>
+<p>The login nodes slow down when many connections arrive in a short time (several <code>ssh</code> and <code>scp</code> commands in a row, for example). Wait a minute and try again, and open one connection at a time. Nothing is wrong with your account.</p>
+</div>
 <div class="admonition tip">
 <p class="admonition-title">The same page starts jobs</p>
 <p>The page also starts jobs, opens a chat with a trained model and runs benchmarks: see <a href="../homepage/">Home Page</a>.</p>
@@ -2892,7 +2948,7 @@ a job that ends is removed. The number after <code>-L</code> on the login-node s
 differs from user to user and stays the same for you.</p>
 <p>To avoid typing the command, run <code>bhaskera-dashboard ssh-config</code> on the login node and paste the block it
 prints into <code>~/.ssh/config</code> on your laptop (once). From then on:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>ssh<span class="w"> </span>bhaskera-ray
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$<span class="w"> </span>ssh<span class="w"> </span>bhaskera-ray
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Laptops</p>

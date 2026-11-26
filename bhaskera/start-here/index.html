@@ -3113,6 +3113,11 @@
 <td><code>conversations</code>: a list of <code>{from, value}</code></td>
 <td><code>{"conversations": [{"from": "human", "value": "..."}, {"from": "gpt", "value": "..."}]}</code></td>
 </tr>
+<tr>
+<td><code>prompt_completion</code></td>
+<td><code>prompt</code> and <code>completion</code> (other column names: <code>format_options: {prompt_field: question, completion_field: answer}</code>)</td>
+<td><code>{"prompt": "...", "completion": "..."}</code></td>
+</tr>
 </tbody>
 </table>
 <p>Put a few hundred examples aside as a validation file; the run uses it to show whether the model is really improving. Then copy the tokenise recipe, fill in your paths, and run it:</p>

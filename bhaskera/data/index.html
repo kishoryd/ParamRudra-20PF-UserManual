@@ -2861,29 +2861,40 @@
 </tr>
 </tbody>
 </table>
-<p>One path must hold one format (JSON lines and JSON arrays may be mixed). What the <em>columns</em> must be is a separate choice, <code>data.format</code>:</p>
+<p>One path must hold one format (JSON lines and JSON arrays may be mixed). What the <em>columns</em> must be is a separate choice, <code>data.format</code>. Four layouts are built in, and they cover most public datasets:</p>
 <table>
 <thead>
 <tr>
 <th><code>data.format</code></th>
 <th>The columns each row needs</th>
+<th>Typical sources</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>chatml</code></td>
 <td><code>messages</code>: a list of <code>{role, content}</code> turns (<code>data.format_options.messages_field</code> names another column)</td>
+<td>OpenAI-style chat files, UltraChat, Nemotron chat, most chat datasets on Hugging Face</td>
 </tr>
 <tr>
 <td><code>alpaca</code></td>
 <td><code>instruction</code>, <code>output</code>, and optionally <code>input</code></td>
+<td>Alpaca and its many copies</td>
 </tr>
 <tr>
 <td><code>sharegpt</code></td>
 <td><code>conversations</code>: a list of <code>{from, value}</code> turns</td>
+<td>ShareGPT, Vicuna and OpenHermes style files</td>
+</tr>
+<tr>
+<td><code>prompt_completion</code></td>
+<td><code>prompt</code> and <code>completion</code>; <code>format_options: {prompt_field: ..., completion_field: ...}</code> names other columns</td>
+<td>Question and answer sets (<code>question</code>/<code>answer</code>), Dolly (<code>instruction</code>/<code>response</code>), OpenAI's older fine-tuning files</td>
 </tr>
 </tbody>
 </table>
+<p>Text with no columns at all (books, code, articles) needs no format: see <a href="#plain-text">Plain text</a>.</p>
+<p>A layout that is none of these can be added without changing Bhaskera: write a small Python function that turns one row into one string, register it with <code>@register_format("my_format")</code> (the example is at the top of <code>bhaskera/data/formats/__init__.py</code>), and set <code>data.format: my_format</code>. This route is not tested on the cluster, because the function must also be importable by the tokenising workers. A few lines of Python or <code>pandas</code> that rename the columns into one of the layouts above are enough.</p>
 <p>Verified on PARAM Rudra: the same 2,000 instruction rows as CSV, TSV and a JSON array each tokenised to the same cache (2,000 rows at sequence length 512, format <code>alpaca</code>).</p>
 <div class="admonition note">
 <p class="admonition-title">No validation file</p>

@@ -2946,7 +2946,7 @@ The run folder holds recipes, logs and checkpoints (large for big models), so a 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>/scratch/&lt;project&gt;/&lt;username&gt;/data/train.jsonl
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>/scratch/&lt;project&gt;/&lt;username&gt;/data/val.jsonl
 </code></pre></div>
-<p><code>alpaca</code> (<code>instruction</code>, <code>input</code>, <code>output</code>) and <code>sharegpt</code> (<code>conversations</code> with <code>from</code> / <code>value</code>) files
+<p><code>alpaca</code> (<code>instruction</code>, <code>input</code>, <code>output</code>), <code>sharegpt</code> (<code>conversations</code> with <code>from</code> / <code>value</code>) and <code>prompt_completion</code> (<code>prompt</code>, <code>completion</code>) files
 also work: set <code>data.format</code> in the tokenize recipe.</p>
 <h2 id="step-1-tokenise">Step 1: Tokenise<a class="headerlink" href="#step-1-tokenise" title="Permanent link">&para;</a></h2>
 <p>Tokenising turns text into the numbers the model reads. It is done once; every training run reuses
