@@ -1130,7 +1130,7 @@
   <span class="md-ellipsis">
     
   
-    Home Page
+    Bhaskera Dashboard
   
 
     
@@ -1327,10 +1327,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#from-the-home-page" class="md-nav__link">
+  <a href="#from-the-dashboard" class="md-nav__link">
     <span class="md-ellipsis">
       
-        From the home page
+        From the dashboard
       
     </span>
   </a>
@@ -2640,10 +2640,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#from-the-home-page" class="md-nav__link">
+  <a href="#from-the-dashboard" class="md-nav__link">
     <span class="md-ellipsis">
       
-        From the home page
+        From the dashboard
       
     </span>
   </a>
@@ -2704,7 +2704,7 @@
 
 
 <h1 id="downloads-and-dataset-versions">Downloads and Dataset Versions<a class="headerlink" href="#downloads-and-dataset-versions" title="Permanent link">&para;</a></h1>
-<p>This page covers getting data from Hugging Face (named in a recipe, from the terminal, or from the home page) and naming and versioning your data so you can say <strong>which data made which model</strong>. For what the data should look like, see <a href="../data/">Data Format</a>.</p>
+<p>This page covers getting data from Hugging Face (named in a recipe, from the terminal, or from the dashboard) and naming and versioning your data so you can say <strong>which data made which model</strong>. For what the data should look like, see <a href="../data/">Data Format</a>.</p>
 <h2 id="name-hugging-face-repositories-in-a-recipe">Name Hugging Face repositories in a recipe<a class="headerlink" href="#name-hugging-face-repositories-in-a-recipe" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">model</span><span class="p">:</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Qwen/Qwen3-1.7B</span><span class="w">                  </span><span class="c1"># a Hugging Face model</span>
@@ -2719,12 +2719,12 @@
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>bhaskera.downloads<span class="w"> </span>get<span class="w"> </span>--kind<span class="w"> </span>model<span class="w"> </span>--repo<span class="w"> </span>Qwen/Qwen3-14B<span class="w"> </span>--target<span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-14B
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>bhaskera.downloads<span class="w"> </span>get<span class="w"> </span>--kind<span class="w"> </span>dataset<span class="w"> </span>--repo<span class="w"> </span>tatsu-lab/alpaca<span class="w"> </span>--target<span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/data/alpaca
 </code></pre></div>
-<p>Run <code>get</code> again to continue an interrupted download. A model that asks you to accept a licence (Llama, for example) needs a Hugging Face key: <code>huggingface-cli login</code>, or <strong>Sign in</strong> on the home page.</p>
+<p>Run <code>get</code> again to continue an interrupted download. A model that asks you to accept a licence (Llama, for example) needs a Hugging Face key: <code>huggingface-cli login</code>, or <strong>Sign in</strong> on the dashboard.</p>
 <div class="admonition info">
 <p class="admonition-title">A login node with no internet</p>
-<p>On PARAM Rudra only login01, login02, login03 and login05 reach the internet, and you cannot choose which node you land on. If yours cannot, <code>get</code>, <code>preview</code>, the home page and <code>./submit.sh</code> run the work on one that can, over SSH, and say so (<code>downloading on login01 ...</code>). The nodes come from <code>download_hosts</code> in the cluster profile (or <code>BHASKERA_DOWNLOAD_HOSTS</code>, comma-separated). The target folder must be on the shared file system. A key set only as <code>HF_TOKEN</code> in your shell is not passed on: sign in once so the key is kept in a file every node can read. To work on login01 yourself, see <a href="../monitoring/#land-on-a-login-node-you-choose-login01-has-internet">Monitoring</a>.</p>
+<p>On PARAM Rudra only login01, login02, login03 and login05 reach the internet, and you cannot choose which node you land on. If yours cannot, <code>get</code>, <code>preview</code>, the dashboard and <code>./submit.sh</code> run the work on one that can, over SSH, and say so (<code>downloading on login01 ...</code>). The nodes come from <code>download_hosts</code> in the cluster profile (or <code>BHASKERA_DOWNLOAD_HOSTS</code>, comma-separated). The target folder must be on the shared file system. A key set only as <code>HF_TOKEN</code> in your shell is not passed on: sign in once so the key is kept in a file every node can read. To work on login01 yourself, see <a href="../monitoring/#land-on-a-login-node-you-choose-login01-has-internet">Monitoring</a>.</p>
 </div>
-<h2 id="from-the-home-page">From the home page<a class="headerlink" href="#from-the-home-page" title="Permanent link">&para;</a></h2>
+<h2 id="from-the-dashboard">From the dashboard<a class="headerlink" href="#from-the-dashboard" title="Permanent link">&para;</a></h2>
 <p>Open <strong>Downloads</strong> in the header, choose <em>Download a model</em> or <em>Download a dataset</em>, then:</p>
 <ol>
 <li>Type the repository as on huggingface.co (for example <code>Qwen/Qwen3-14B</code>); a revision is optional.</li>

@@ -1289,7 +1289,7 @@
   <span class="md-ellipsis">
     
   
-    Home Page
+    Bhaskera Dashboard
   
 
     
@@ -2974,7 +2974,7 @@ Compute nodes without internet are fine, and are the usual case: Bhaskera switch
 <p>The profile tells Bhaskera what your nodes and partitions are. Copy the example and edit it:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>cp<span class="w"> </span><span class="nv">$PREFIX</span>/share/kit/clusters/example.yaml<span class="w"> </span><span class="nv">$PREFIX</span>/share/kit/clusters/mycluster.yaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">My Cluster</span><span class="w">          </span><span class="c1"># shown on the home page</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">My Cluster</span><span class="w">          </span><span class="c1"># shown on the dashboard</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">gpus_per_node</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nt">gpu_mem_gb</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span><span class="w">            </span><span class="c1"># memory of one GPU; the "will it fit" check before a job uses it</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nt">cpus_per_node</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span><span class="w">         </span><span class="c1"># CPUs asked for on each node</span>
@@ -2996,7 +2996,7 @@ Check what Bhaskera reads from it:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>&lt;a<span class="w"> </span>MODULEPATH<span class="w"> </span>folder&gt;/bhaskera
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>$<span class="w"> </span>cp<span class="w"> </span>slurm/modulefiles/bhaskera/1.0.0.lua<span class="w"> </span>&lt;a<span class="w"> </span>MODULEPATH<span class="w"> </span>folder&gt;/bhaskera/1.0.0.lua
 </code></pre></div>
-<p>Change <code>root</code> to your <code>PREFIX</code>, <code>BHASKERA_CLUSTER_PROFILE</code> to your profile, <code>BHASKERA_LOGIN_HOST</code> and <code>BHASKERA_LOGIN_PORT</code> to the address people use to log in over SSH (the home page prints the tunnel command for their laptop from them), and the manual link in <code>help</code>. If your cluster keeps software in a hierarchy, put the file where your other applications are.</p>
+<p>Change <code>root</code> to your <code>PREFIX</code>, <code>BHASKERA_CLUSTER_PROFILE</code> to your profile, <code>BHASKERA_LOGIN_HOST</code> and <code>BHASKERA_LOGIN_PORT</code> to the address people use to log in over SSH (the dashboard prints the tunnel command for their laptop from them), and the manual link in <code>help</code>. If your cluster keeps software in a hierarchy, put the file where your other applications are.</p>
 <p><strong>Without modules.</strong> Users, or a small script you give them, set:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">BHASKERA_DIR</span><span class="o">=</span><span class="nv">$PREFIX</span>/src
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">BHASKERA_KIT</span><span class="o">=</span><span class="nv">$PREFIX</span>/share/kit
@@ -3009,7 +3009,7 @@ Check what Bhaskera reads from it:</p>
 <p>Compute nodes have no internet, so models and data must be on disk first. A shared place saves every user a download:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>dirname<span class="w"> </span><span class="nv">$PREFIX</span><span class="k">)</span>/models<span class="w"> </span><span class="k">$(</span>dirname<span class="w"> </span><span class="nv">$PREFIX</span><span class="k">)</span>/data
 </code></pre></div>
-<p>The home page lists anything in <code>models/</code> and <code>data/</code> next to the install folder, or in the folders named by <code>BHASKERA_MODELS</code> and <code>BHASKERA_DATA</code>, under <em>Shared on this cluster</em>. Put Hugging Face model folders in <code>models/</code> (users can also fetch their own from the <strong>Downloads</strong> menu of the page). Put tokenised data in <code>data/</code> in folders named <code>&lt;dataset&gt;_&lt;model&gt;_seq&lt;length&gt;_train</code> and <code>…_val</code>: a tokenised folder only fits the model whose tokenizer made it. <code>chmod -R a+rX</code> both folders.</p>
+<p>The Bhaskera dashboard lists anything in <code>models/</code> and <code>data/</code> next to the install folder, or in the folders named by <code>BHASKERA_MODELS</code> and <code>BHASKERA_DATA</code>, under <em>Shared on this cluster</em>. Put Hugging Face model folders in <code>models/</code> (users can also fetch their own from the <strong>Downloads</strong> menu of the page). Put tokenised data in <code>data/</code> in folders named <code>&lt;dataset&gt;_&lt;model&gt;_seq&lt;length&gt;_train</code> and <code>…_val</code>: a tokenised folder only fits the model whose tokenizer made it. <code>chmod -R a+rX</code> both folders.</p>
 <h2 id="step-5-tune-what-depends-on-your-gpus">Step 5: Tune what depends on your GPUs<a class="headerlink" href="#step-5-tune-what-depends-on-your-gpus" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -3123,7 +3123,7 @@ Check what Bhaskera reads from it:</p>
 <li><strong>Copy the job scripts again.</strong> The install copies <code>submit.sh</code>, the <code>*.sbatch</code> files, recipes and profiles into <code>share/kit/</code> as separate files, so updating the source does not update them. Rerun <code>install-bhaskera.sh</code>, or copy the files from <code>$PREFIX/src/slurm/</code> into <code>$PREFIX/share/kit/</code> yourself. Users who already copied the kit keep their own copy and have to copy the new scripts too.</li>
 <li><code>chmod -R a+rX $PREFIX</code>.</li>
 </ol>
-<p>Restart the home page after an update: a page that is already running keeps the old code.</p>
+<p>Restart the dashboard after an update: a page that is already running keeps the old code.</p>
 
 
 

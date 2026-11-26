@@ -1251,7 +1251,7 @@
   <span class="md-ellipsis">
     
   
-    Home Page
+    Bhaskera Dashboard
   
 
     
@@ -2856,7 +2856,7 @@
 </div>
 <h2 id="gpu-energy-used">GPU energy used<a class="headerlink" href="#gpu-energy-used" title="Permanent link">&para;</a></h2>
 <p>Every run records the power its GPUs draw (summed over all the GPUs of the job, every ten steps). Bhaskera works out the energy from that curve: the area under it, in kWh.
-It shows on the Home page as <strong>GPU energy used</strong> (a total), as a <strong>GPU energy</strong> column in the runs table, and as <strong>GPU energy so far</strong> on a job that is running. The figure is the sum, over the readings, of the time between two readings multiplied by the average of the two power values.</p>
+It shows on the Bhaskera Dashboard as <strong>GPU energy used</strong> (a total), as a <strong>GPU energy</strong> column in the runs table, and as <strong>GPU energy so far</strong> on a job that is running. The figure is the sum, over the readings, of the time between two readings multiplied by the average of the two power values.</p>
 <ul>
 <li>It counts the GPUs only. CPUs, memory, fans, cooling and the network are not included, so the node's real use is higher.</li>
 <li>It covers the time between the first and the last power reading, which is the training itself (not the minutes the model takes to load).</li>
@@ -2883,7 +2883,7 @@ The Ray Dashboard command below starts MLflow for you. To run MLflow on its own,
 </div>
 <div class="admonition warning">
 <p class="admonition-title">MLflow stops when you log out</p>
-<p>The MLflow started by <code>bhaskera-dashboard start</code> ends when the login session that started it ends (checked on PARAM Rudra: started over a one-line <code>ssh</code>, it was gone afterwards). Keep a session open for as long as you look at the charts: the tunnel command above leaves you in a shell on that node, so the simplest way is to run <code>bhaskera-dashboard start</code> in that shell, in a second terminal opened with the same <code>ssh ... login01</code> hop, or to use the home page (<code>bhaskera-dashboard ray</code>), which starts MLflow itself and keeps it while the page runs.</p>
+<p>The MLflow started by <code>bhaskera-dashboard start</code> ends when the login session that started it ends (checked on PARAM Rudra: started over a one-line <code>ssh</code>, it was gone afterwards). Keep a session open for as long as you look at the charts: the tunnel command above leaves you in a shell on that node, so the simplest way is to run <code>bhaskera-dashboard start</code> in that shell, in a second terminal opened with the same <code>ssh ... login01</code> hop, or to use the dashboard (<code>bhaskera-dashboard ray</code>), which starts MLflow itself and keeps it while the page runs.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Closing it</p>
@@ -2971,7 +2971,7 @@ them, and puts everything behind one address.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">The same page starts jobs</p>
-<p>The page also starts jobs, opens a chat with a trained model and runs benchmarks: see <a href="../homepage/">Home Page</a>.</p>
+<p>The page also starts jobs, opens a chat with a trained model and runs benchmarks: see <a href="../homepage/">Bhaskera Dashboard</a>.</p>
 </div>
 <p>Run that command on your laptop, leave it open, and open <a href="http://localhost:8265">http://localhost:8265</a>. That page lists your running
 jobs, and for each one a link to its <strong>Ray Dashboard</strong> and its <strong>Grafana charts</strong>, and a link to <strong>MLflow</strong>.
@@ -3078,13 +3078,13 @@ whose job was killed (time limit, failed node) is marked <strong>KILLED</strong>
         
         
           
-          <a href="../homepage/" class="md-footer__link md-footer__link--next" aria-label="Next: Home Page">
+          <a href="../homepage/" class="md-footer__link md-footer__link--next" aria-label="Next: Bhaskera Dashboard">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Home Page
+                Bhaskera Dashboard
               </div>
             </div>
             <div class="md-footer__button md-icon">

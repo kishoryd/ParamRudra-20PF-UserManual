@@ -1130,7 +1130,7 @@
   <span class="md-ellipsis">
     
   
-    Home Page
+    Bhaskera Dashboard
   
 
     
@@ -2761,13 +2761,13 @@ recipe decide what a failure costs:</p>
 LoRA run is under a gigabyte, so saving often is cheap. A full fine-tune checkpoint is tens of gigabytes: save less often there. A
 checkpoint is also written when the run ends. A checkpoint that was still being written when the job died is ignored.</p>
 <h2 id="resuming">Resuming<a class="headerlink" href="#resuming" title="Permanent link">&para;</a></h2>
-<p>From the home page, a run that failed, was killed, ran out of time or stopped writing has a <strong>Resume</strong> button. In the terminal:</p>
+<p>From the dashboard, a run that failed, was killed, ran out of time or stopped writing has a <strong>Resume</strong> button. In the terminal:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>./submit.sh<span class="w"> </span>resume<span class="w"> </span>--run<span class="w"> </span>&lt;run<span class="w"> </span>id&gt;<span class="w">                  </span><span class="c1"># the same recipe, nodes and time, from the latest checkpoint</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>./submit.sh<span class="w"> </span>resume<span class="w"> </span>--run<span class="w"> </span>&lt;run<span class="w"> </span>id&gt;<span class="w"> </span>--step<span class="w"> </span><span class="m">1000</span><span class="w">      </span><span class="c1"># from an earlier checkpoint</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>./submit.sh<span class="w"> </span>resume<span class="w"> </span>--run<span class="w"> </span>&lt;run<span class="w"> </span>id&gt;<span class="w"> </span>--nodes<span class="w"> </span><span class="m">8</span><span class="w"> </span>--hours<span class="w"> </span><span class="m">6</span>
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>python<span class="w"> </span>-m<span class="w"> </span>bhaskera.launcher.resume<span class="w"> </span>show<span class="w"> </span>--run<span class="w"> </span>&lt;run<span class="w"> </span>id&gt;<span class="w">      </span><span class="c1"># what the run left behind, without submitting</span>
 </code></pre></div>
-<p>The run id is in MLflow and on the home page. Bhaskera takes the recipe, the number of nodes and the time limit from the job that stopped,
+<p>The run id is in MLflow and on the dashboard. Bhaskera takes the recipe, the number of nodes and the time limit from the job that stopped,
 looks for checkpoints in the folder the run saved to, and submits the job again. The job loads the checkpoint, rebuilds the learning-rate
 schedule at that step, and skips the training data that the earlier steps already used.</p>
 <p><strong>Restored:</strong> the adapter weights, the optimizer state, the position in the schedule, and the position in the training data (exactly in the
@@ -2868,7 +2868,7 @@ a relative folder means a different place from anywhere else. An absolute path a
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../homepage/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Home Page">
+          <a href="../homepage/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Bhaskera Dashboard">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -2878,7 +2878,7 @@ a relative folder means a different place from anywhere else. An absolute path a
                 Previous
               </span>
               <div class="md-ellipsis">
-                Home Page
+                Bhaskera Dashboard
               </div>
             </div>
           </a>

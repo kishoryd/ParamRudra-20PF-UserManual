@@ -29,7 +29,7 @@
     
     
       
-        <title>Home Page - C-DAC PARAM Rudra - 20 PetaFlop HPC System</title>
+        <title>Bhaskera Dashboard - C-DAC PARAM Rudra - 20 PetaFlop HPC System</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#the-home-page-train-serve-evaluate-monitor" class="md-skip">
+        <a href="#bhaskera-dashboard-train-serve-evaluate-monitor" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home Page
+              Bhaskera Dashboard
             
           </span>
         </div>
@@ -1139,7 +1139,7 @@
   <span class="md-ellipsis">
     
   
-    Home Page
+    Bhaskera Dashboard
   
 
     
@@ -1159,7 +1159,7 @@
   <span class="md-ellipsis">
     
   
-    Home Page
+    Bhaskera Dashboard
   
 
     
@@ -1211,6 +1211,17 @@
     <span class="md-ellipsis">
       
         What it shows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mlflow-the-ray-dashboard-and-grafana" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLflow, the Ray Dashboard and Grafana
       
     </span>
   </a>
@@ -2762,6 +2773,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#mlflow-the-ray-dashboard-and-grafana" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MLflow, the Ray Dashboard and Grafana
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#starting-things" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2925,7 +2947,7 @@
   
 
 
-<h1 id="the-home-page-train-serve-evaluate-monitor">The Home Page: Train, Serve, Evaluate, Monitor<a class="headerlink" href="#the-home-page-train-serve-evaluate-monitor" title="Permanent link">&para;</a></h1>
+<h1 id="bhaskera-dashboard-train-serve-evaluate-monitor">Bhaskera Dashboard: Train, Serve, Evaluate, Monitor<a class="headerlink" href="#bhaskera-dashboard-train-serve-evaluate-monitor" title="Permanent link">&para;</a></h1>
 <p><code>bhaskera-dashboard ray</code> serves one web page for everything you run. It lists your jobs and your recent runs, starts new
 jobs, and lets you talk to a model you have trained. It listens on the login node, is private to your user, and is opened
 from your laptop with the one SSH command described under <a href="../monitoring/#ray-dashboard-charts-and-mlflow-in-one-place">Monitoring</a>.</p>
@@ -2982,6 +3004,39 @@ Your name at the top right opens the account menu, with the Guide and <strong>Lo
 <li><strong>Cluster limits and node health</strong> (on Monitor): your job slots in each partition, and any node a job found faulty.
   New jobs keep away from those nodes for three days.</li>
 </ul>
+<h2 id="mlflow-the-ray-dashboard-and-grafana">MLflow, the Ray Dashboard and Grafana<a class="headerlink" href="#mlflow-the-ray-dashboard-and-grafana" title="Permanent link">&para;</a></h2>
+<p>The Bhaskera dashboard is the one address for three tools that each answer a different question. All three are reached through the same tunnel (see <a href="../monitoring/#ray-dashboard-charts-and-mlflow-in-one-place">Monitoring</a>); you never open a second one.</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Answers</th>
+<th>Where on the dashboard</th>
+<th>Needs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MLflow</strong></td>
+<td>How did the run go? Loss and evaluation curves, throughput, GPU energy, every run compared, the model registry</td>
+<td><strong>MLflow</strong> on Monitor, and <strong>MLflow run</strong> on each job</td>
+<td>Nothing extra: every run is recorded in <code>~/mlflow-runs</code> and the dashboard starts MLflow itself</td>
+</tr>
+<tr>
+<td><strong>Ray Dashboard</strong></td>
+<td>Is every node of the job healthy right now? CPU, memory and GPU load per node, workers and their logs</td>
+<td><strong>Ray Dashboard</strong> on Monitor and on each running job</td>
+<td>A running job; one link per job</td>
+</tr>
+<tr>
+<td><strong>Grafana</strong></td>
+<td>How did the GPUs and nodes behave over time? GPU, CPU and memory charts for every node</td>
+<td><strong>GPU charts</strong> on Monitor and on each running job</td>
+<td>Prometheus and Grafana installed next to Bhaskera (the install step <code>WITH_CHARTS</code>); without them the node list still works and only the charts are missing</td>
+</tr>
+</tbody>
+</table>
+<p>MLflow keeps its runs after a job ends; the Ray Dashboard and Grafana exist only while their job runs. Use MLflow to compare finished runs, and the Ray Dashboard and Grafana to find a slow or failing node in a running one.</p>
 <h2 id="starting-things">Starting things<a class="headerlink" href="#starting-things" title="Permanent link">&para;</a></h2>
 <p>Every card and menu entry opens one of these dialogs:</p>
 <table>

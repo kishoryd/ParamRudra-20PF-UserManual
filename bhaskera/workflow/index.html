@@ -1340,7 +1340,7 @@
   <span class="md-ellipsis">
     
   
-    Home Page
+    Bhaskera Dashboard
   
 
     
@@ -2960,7 +2960,7 @@ count change (see <a href="../recipes/">Recipes</a>).</p>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs
 </code></pre></div>
 <p>Jobs are charged to your login name, which is your Slurm account on PARAM Rudra, so there is nothing to set. If you work under another account, <code>export SLURM_ACCOUNT=&lt;account&gt;</code> first.
-The run folder holds recipes, logs and checkpoints (large for big models), so a folder on <code>/scratch</code> is the usual choice. If you make none, the home page creates <code>~/bhaskera-runs</code> from the shared kit the first time it starts.</p>
+The run folder holds recipes, logs and checkpoints (large for big models), so a folder on <code>/scratch</code> is the usual choice. If you make none, the dashboard creates <code>~/bhaskera-runs</code> from the shared kit the first time it starts.</p>
 <h3 id="model">Model<a class="headerlink" href="#model" title="Permanent link">&para;</a></h3>
 <p>Compute nodes have no internet access, so download the model on a <strong>login node</strong>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>huggingface-cli<span class="w"> </span>download<span class="w"> </span>Qwen/Qwen3-14B<span class="w"> </span>--local-dir<span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-14B

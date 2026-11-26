@@ -1130,7 +1130,7 @@
   <span class="md-ellipsis">
     
   
-    Home Page
+    Bhaskera Dashboard
   
 
     
@@ -2728,13 +2728,13 @@
 <h1 id="saving-and-finding-your-models">Saving and Finding Your Models<a class="headerlink" href="#saving-and-finding-your-models" title="Permanent link">&para;</a></h1>
 <p>A trained model is an adapter: a folder of a few hundred megabytes that sits on top of the base model. The <strong>model registry</strong> gives each
 adapter you want to keep a name and a version, so that "the one we use" is a name and not a run id you have to remember. It is part of
-MLflow, which Bhaskera already writes to, so there is nothing to set up. The home page's <strong>Models</strong> section lists every version with its alias and note.</p>
+MLflow, which Bhaskera already writes to, so there is nothing to set up. The Bhaskera dashboard's <strong>Models</strong> section lists every version with its alias and note.</p>
 <h2 id="what-gets-saved-and-when">What gets saved, and when<a class="headerlink" href="#what-gets-saved-and-when" title="Permanent link">&para;</a></h2>
 <p>During training, set <code>logging.mlflow_log_adapter: true</code> in the recipe. When the run ends, the adapter is exported in the standard PEFT
 format and stored with the MLflow run. Without it there is nothing to register, and neither Chat nor Benchmark can use the run.</p>
 <p>To register at the end of training, add <code>logging.mlflow_register_model: &lt;name&gt;</code> too. Most people prefer to look at the results first:</p>
 <h2 id="register-after-you-have-looked-at-the-results">Register after you have looked at the results<a class="headerlink" href="#register-after-you-have-looked-at-the-results" title="Permanent link">&para;</a></h2>
-<p>On the home page press <strong>New run</strong> and choose <strong>Register</strong>: pick the run, give it a name (or pick a name that exists to add a
+<p>On the dashboard press <strong>New run</strong> and choose <strong>Register</strong>: pick the run, give it a name (or pick a name that exists to add a
 new version) and, if you like, an alias of your choice and a hand-off note. In the terminal:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-m<span class="w"> </span>bhaskera.launcher.register<span class="w"> </span>add<span class="w"> </span>--run<span class="w"> </span>&lt;run<span class="w"> </span>id&gt;<span class="w"> </span>--name<span class="w"> </span>my-assistant<span class="w"> </span>--alias<span class="w"> </span>champion<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span>--note<span class="w"> </span><span class="s2">"For support questions. Weak on legal text."</span>
@@ -2747,7 +2747,7 @@ register it with <code>--alias champion</code> again and the alias moves; the ol
 <h2 id="the-hand-off-note">The hand-off note<a class="headerlink" href="#the-hand-off-note" title="Permanent link">&para;</a></h2>
 <p>Each version also keeps a note for whoever picks it up next: the text you wrote (what it is for, which data, what it gets wrong), followed by what Bhaskera fills in from the run:
 the base model, the run, the LoRA settings, steps, learning rate, batch and sequence length, the training data, the results (evaluation loss and accuracy, benchmark scores), and how to use
-the adapter. The adapter needs the base model at the same path, so the note says where it was. <code>register show &lt;name&gt;:&lt;version&gt;</code> prints it, and the home page shows it when you hover over the row.</p>
+the adapter. The adapter needs the base model at the same path, so the note says where it was. <code>register show &lt;name&gt;:&lt;version&gt;</code> prints it, and the dashboard shows it when you hover over the row.</p>
 <h2 id="using-a-registered-model">Using a registered model<a class="headerlink" href="#using-a-registered-model" title="Permanent link">&para;</a></h2>
 <p>Everywhere a run id is accepted, a registry name works too:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>./submit.sh<span class="w"> </span>serve<span class="w"> </span>--run<span class="w"> </span>my-assistant@champion<span class="w">      </span><span class="c1"># chat with the champion</span>
@@ -2762,7 +2762,7 @@ the adapter. The adapter needs the base model at the same path, so the note says
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">model</span> <span class="o">=</span> <span class="n">PeftModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">base_model</span><span class="p">,</span> <span class="n">folder</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="a-workflow-that-works">A workflow that works<a class="headerlink" href="#a-workflow-that-works" title="Permanent link">&para;</a></h2>
-<p>Train with <code>mlflow_log_adapter: true</code>, benchmark it and test it on your own questions (see <a href="../homepage/">Home Page</a>), correct the data
+<p>Train with <code>mlflow_log_adapter: true</code>, benchmark it and test it on your own questions (see <a href="../homepage/">Bhaskera Dashboard</a>), correct the data
 where it is wrong, train again, and register the version that is better as <code>champion</code>. Anyone on the project then chats with, or builds on,
 <code>my-assistant@champion</code> and never needs to know which run it was.</p>
 <p>The registry is stored in your MLflow folder (<code>~/mlflow-runs</code>), so on an account that several people share, everyone sees the same models.</p>
