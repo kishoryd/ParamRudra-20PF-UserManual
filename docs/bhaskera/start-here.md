@@ -62,14 +62,22 @@ Two ways. Option A needs no download at all; option B shows how to use any publi
 
 ### Option A: use what is already on the cluster
 
-Copy a ready recipe and point it at the shared model and data:
+Copy a ready recipe, then change the lines below in your copy (open it with any editor, for example `nano`):
 
 ```bash
-$ sed -e 's#/scratch/<project>/<username>/models/Qwen3-14B#/home/apps/bhaskera/models/Qwen3-14B#' \
-      -e 's#/scratch/<project>/<username>/cache/REPLACE_local_train_<hash>#/home/apps/bhaskera/data/nemotron-chat_qwen3-14b_seq4096_train#' \
-      -e 's#/scratch/<project>/<username>/cache/REPLACE_local_val_<hash>#/home/apps/bhaskera/data/nemotron-chat_qwen3-14b_seq4096_val#' \
-      -e "s#/scratch/<project>/<username>/bhaskera-runs#$PWD#" \
-      recipes/qwen3-14b-qlora.yaml > recipes/my-first-run.yaml
+$ cp recipes/qwen3-14b-qlora.yaml recipes/my-first-run.yaml
+```
+
+```yaml
+model:
+  name: /home/apps/bhaskera/models/Qwen3-14B                                       # the shared model
+data:
+  tokenized_path: /home/apps/bhaskera/data/nemotron-chat_qwen3-14b_seq4096_train   # the shared, already tokenised data
+  val_tokenized_path: /home/apps/bhaskera/data/nemotron-chat_qwen3-14b_seq4096_val
+checkpoint:
+  save_dir: /scratch/<project>/<username>/bhaskera-runs/checkpoints/my-first-run   # your own folder
+logging:
+  run_name: my-first-run                                                           # how the run is named in MLflow
 ```
 
 Check it first. This runs every check and submits nothing:
@@ -133,21 +141,26 @@ $ grep -a "tokenized_path" logs/bhaskera-tokenize_<id>.out
 
 Alpaca has a training part only, so this tokenises training data (52,002 examples) and says that no validation file was set.
 
-**2. Make the training recipe** from a ready one, with the model name, the cache path and a new name:
+**2. Make the training recipe** from a ready one: copy it, then change these lines in your copy:
 
 ```bash
-$ CACHE=/scratch/<project>/<username>/cache/local_train_<hash>        # the path printed above
-$ sed -e 's#/scratch/<project>/<username>/models/Qwen3-14B#Qwen/Qwen3-0.6B#' \
-      -e 's#seq_len: 4096#seq_len: 512#' \
-      -e "s#/scratch/<project>/<username>/cache/REPLACE_local_train_<hash>#$CACHE#" \
-      -e '/val_tokenized_path/d' \
-      -e 's#eval_steps: 200#eval_steps: 0#' \
-      -e "s#/scratch/<project>/<username>/bhaskera-runs#$PWD#" \
-      -e 's#qwen3-14b-qlora#alpaca-small#g' \
-      recipes/qwen3-14b-qlora.yaml > recipes/alpaca-small.yaml
+$ cp recipes/qwen3-14b-qlora.yaml recipes/alpaca-small.yaml
 ```
 
-(The model name in the training recipe is the Hugging Face name again: it was downloaded in step 1 and is found, not downloaded twice. No validation data means `eval_steps: 0`.)
+```yaml
+model:
+  name: Qwen/Qwen3-0.6B                       # the Hugging Face name again; it was downloaded in step 1
+data:
+  seq_len: 512
+  tokenized_path: /scratch/<project>/<username>/cache/local_train_<hash>    # the path printed above
+  # delete the val_tokenized_path line: Alpaca has no validation part
+training:
+  eval_steps: 0                               # no validation data, so no evaluation
+checkpoint:
+  save_dir: /scratch/<project>/<username>/bhaskera-runs/checkpoints/alpaca-small
+logging:
+  run_name: alpaca-small
+```
 
 **3. Check, then run:**
 
