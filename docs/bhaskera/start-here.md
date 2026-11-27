@@ -107,20 +107,14 @@ You will see one line per step with the loss (how wrong the model still is: it s
 
 Here the model and the dataset live on Hugging Face. You do not download them yourself: name them, and Bhaskera fetches them first. This example uses a small model (Qwen3-0.6B) and the public Alpaca instruction dataset, so it is quick.
 
-**1. Tokenise.** Save this as `recipes/alpaca-tokenize.yaml`:
+**1. Tokenise.** Copy the ready recipe, which already names the model and the dataset:
 
-```yaml
-model:
-  name: Qwen/Qwen3-0.6B                     # a Hugging Face model, by name
-data:
-  name: local
-  format: alpaca                            # the dataset has instruction / input / output columns
-  train_path: hf://tatsu-lab/alpaca         # a Hugging Face dataset, by name
-  seq_len: 512                              # longest example, in tokens
-  cache_dir: /scratch/<project>/<username>/cache
-  num_workers: 8
-  tokenize_batch_size: 64
+```bash
+$ cp recipes/tokenize-hf-name.yaml recipes/alpaca-tokenize.yaml
+$ nano recipes/alpaca-tokenize.yaml       # only cache_dir: replace <project>/<username>
 ```
+
+Its lines, for reference: `model.name: Qwen/Qwen3-0.6B` and `data.train_path: hf://tatsu-lab/alpaca` (both by Hugging Face name), `data.format: alpaca` (the dataset has instruction / input / output columns), `seq_len: 512` (longest example, in tokens).
 
 ```bash
 $ ./submit.sh tokenize recipes/alpaca-tokenize.yaml
@@ -201,7 +195,7 @@ Raw data can be a file, a folder or a pattern, in **JSONL, JSON, CSV, TSV, Parqu
 Put a few hundred examples aside as a validation file; the run uses it to show whether the model is really improving. Then copy the tokenise recipe, fill in your paths, and run it:
 
 ```bash
-$ cp recipes/tokenize-chatml.yaml recipes/my-tokenize.yaml
+$ cp recipes/tokenize-chatml.yaml recipes/my-tokenize.yaml      # or tokenize-alpaca, tokenize-prompt-completion, tokenize-plaintext
 $ nano recipes/my-tokenize.yaml          # model.name, data.format, train_path, val_path, seq_len, cache_dir
 $ ./submit.sh tokenize recipes/my-tokenize.yaml
 ```

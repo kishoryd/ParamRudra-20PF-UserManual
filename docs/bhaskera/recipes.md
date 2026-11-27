@@ -27,7 +27,18 @@ Other recipes:
 | `param-1-2.9b-ddp.yaml` | `bharatgenai/Param-1-2.9B-Instruct` | DDP, eager attention | any |
 | `param-1-7b-moe-fsdp.yaml` | `bharatgenai/Param-1-7B` | FSDP | any |
 | `param2-17b-moe-fsdp.yaml` | `bharatgenai/Param2-17B-A2.4B-Thinking` | FSDP | any |
-| `tokenize-chatml.yaml` | the model you train | tokenising | 1 CPU node |
+
+Tokenise recipes (run once per model and dataset, on one CPU node; use the same model and `seq_len` as the training recipe):
+
+| Recipe | For data that is | Command |
+|---|---|---|
+| `tokenize-chatml.yaml` | Chat: a `messages` column (also ShareGPT, Dolly, Q&A: change `data.format`) | `./submit.sh tokenize recipes/tokenize-chatml.yaml` |
+| `tokenize-alpaca.yaml` | Alpaca: `instruction`, optional `input`, `output` | `./submit.sh tokenize recipes/tokenize-alpaca.yaml` |
+| `tokenize-prompt-completion.yaml` | A prompt column and a completion column (any names) | `./submit.sh tokenize recipes/tokenize-prompt-completion.yaml` |
+| `tokenize-plaintext.yaml` | Plain text files: books, code, articles | `./submit.sh tokenize recipes/tokenize-plaintext.yaml` |
+| `tokenize-hf-name.yaml` | A Hugging Face model and dataset, named in the recipe and downloaded first | `./submit.sh tokenize recipes/tokenize-hf-name.yaml` |
+
+Copy one, replace `<project>/<username>` and the model and data paths, and run it. The layouts are in [Data Format](data.md).
 
 !!! note "How the recipes relate to the benchmark"
     The speed and memory in each header are the measured benchmark numbers for that model and method. The recipes were written
@@ -165,6 +176,33 @@ Every recipe in full, for reference. Open one, copy it to `recipes/<name>.yaml` 
     --8<-- "docs/bhaskera/files/recipes/qwen3-235b-a22b-fsdp.yaml"
     ```
 
+### Tokenise recipes
+
+??? example "tokenize-chatml  (Chat data)"
+    ```yaml title="recipes/tokenize-chatml.yaml"
+    --8<-- "docs/bhaskera/files/recipes/tokenize-chatml.yaml"
+    ```
+
+??? example "tokenize-alpaca  (Alpaca data)"
+    ```yaml title="recipes/tokenize-alpaca.yaml"
+    --8<-- "docs/bhaskera/files/recipes/tokenize-alpaca.yaml"
+    ```
+
+??? example "tokenize-prompt-completion  (Prompt and completion)"
+    ```yaml title="recipes/tokenize-prompt-completion.yaml"
+    --8<-- "docs/bhaskera/files/recipes/tokenize-prompt-completion.yaml"
+    ```
+
+??? example "tokenize-plaintext  (Plain text)"
+    ```yaml title="recipes/tokenize-plaintext.yaml"
+    --8<-- "docs/bhaskera/files/recipes/tokenize-plaintext.yaml"
+    ```
+
+??? example "tokenize-hf-name  (Hugging Face names)"
+    ```yaml title="recipes/tokenize-hf-name.yaml"
+    --8<-- "docs/bhaskera/files/recipes/tokenize-hf-name.yaml"
+    ```
+
 ### Multimodal models
 
 The image, video and audio starters are in `configs/multimodal/` of your run folder (copied from the kit with `recipes/`). A run folder made earlier lacks them: `cp -r $BHASKERA_KIT/configs .`. Tokenise first with a `tokenize_*` config, which prints the two cache paths to paste in, then run the training config as its first comment lines show. See [Multimodal](multimodal.md) for the data and chat.
@@ -219,11 +257,6 @@ The image, video and audio starters are in `configs/multimodal/` of your run fol
 ??? example "param2-17b-moe-fsdp  (Param2-17B, FSDP)"
     ```yaml title="recipes/param2-17b-moe-fsdp.yaml"
     --8<-- "docs/bhaskera/files/recipes/param2-17b-moe-fsdp.yaml"
-    ```
-
-??? example "tokenize-chatml  (Tokenise your data)"
-    ```yaml title="recipes/tokenize-chatml.yaml"
-    --8<-- "docs/bhaskera/files/recipes/tokenize-chatml.yaml"
     ```
 
 ## Full Fine-tuning (Training Every Weight)
