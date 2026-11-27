@@ -150,7 +150,7 @@ Do this from a normal user account, not the one that installed. Each step names 
 $ module load bhaskera/1.0.0                         # or the exports above
 $ python -c "import torch, flash_attn, bitsandbytes, bhaskera; print('OK', torch.__version__, torch.version.cuda)"
 OK 2.6.0+cu124 12.4
-$ cp -r $BHASKERA_KIT ~/bhaskera-runs && cd ~/bhaskera-runs   # or any folder you choose
+$ mkdir -p ~/bhaskera-runs && cp -r $BHASKERA_KIT/. ~/bhaskera-runs/ && cd ~/bhaskera-runs   # or any folder you choose
 $ DRY_RUN=1 ./submit.sh recipes/qwen3-14b-qlora.yaml 1 1      # every check, nothing submitted
 ```
 
@@ -163,7 +163,7 @@ The dry run should end with `RESULT: OK`, or fail only on the placeholders in th
 
 Then try 2 nodes. A single node working does not prove the network settings: most multi-node problems show up only here.
 
-Users need to set nothing: jobs are charged to their login name, and the page makes `~/bhaskera-runs` for them on first start. If your Slurm accounts are not the login names, tell users to `export SLURM_ACCOUNT=<account>`. Bhaskera checks the free space of a disk before it writes anything large (checkpoints, prepared data, downloads) and refuses a job on a disk with under 1 GB free, and the page warns on Home below 20 GB; a per-user quota is not visible to it. If home folders have small quotas, tell users to keep their run folder on the large file system (`cp -r $BHASKERA_KIT <big folder>/bhaskera-runs`, then start the page from it): checkpoints are large.
+Users need to set nothing: jobs are charged to their login name, and the page makes `~/bhaskera-runs` for them on first start. If your Slurm accounts are not the login names, tell users to `export SLURM_ACCOUNT=<account>`. Bhaskera checks the free space of a disk before it writes anything large (checkpoints, prepared data, downloads) and refuses a job on a disk with under 1 GB free, and the page warns on Home below 20 GB; a per-user quota is not visible to it. If home folders have small quotas, tell users to keep their run folder on the large file system (`mkdir -p <big && cp -r $BHASKERA_KIT/. <big/ folder>/bhaskera-runs`, then start the page from it): checkpoints are large.
 
 ## Where it breaks on a new cluster
 

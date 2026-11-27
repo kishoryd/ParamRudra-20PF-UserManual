@@ -24,7 +24,7 @@ The module provides:
 Copy the job scripts and recipes into your own folder on `/scratch`:
 
 ```bash
-$ cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs
+$ mkdir -p /scratch/<project>/<username>/bhaskera-runs && cp -r $BHASKERA_KIT/. /scratch/<project>/<username>/bhaskera-runs/
 $ cd /scratch/<project>/<username>/bhaskera-runs
 $ ls
 clusters  eval.sbatch  recipes  serve.sbatch  submit.sh  tokenize.sbatch  train.sbatch

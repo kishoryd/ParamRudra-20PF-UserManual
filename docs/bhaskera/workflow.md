@@ -31,7 +31,7 @@ The run has nine steps, all started from a login node. Steps 1 to 4 train the mo
 
 ```bash
 $ module load bhaskera/1.0.0
-$ cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs
+$ mkdir -p /scratch/<project>/<username>/bhaskera-runs && cp -r $BHASKERA_KIT/. /scratch/<project>/<username>/bhaskera-runs/
 $ cd /scratch/<project>/<username>/bhaskera-runs
 ```
 

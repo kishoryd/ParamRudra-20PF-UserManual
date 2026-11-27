@@ -47,7 +47,7 @@ Log in, load Bhaskera and make your **run folder**: the one place where your rec
 ```bash
 $ ssh -p 4422 <user>@paramrudra.cdacb.in
 $ module load bhaskera/1.0.0
-$ cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs
+$ mkdir -p /scratch/<project>/<username>/bhaskera-runs && cp -r $BHASKERA_KIT/. /scratch/<project>/<username>/bhaskera-runs/
 $ cd /scratch/<project>/<username>/bhaskera-runs
 ```
 

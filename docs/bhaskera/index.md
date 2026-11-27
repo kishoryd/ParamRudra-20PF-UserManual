@@ -52,7 +52,7 @@ Two ways to use it: the **command line** (this guide's focus: `./submit.sh`, a f
 
 ```bash
 $ module load bhaskera/1.0.0
-$ cp -r $BHASKERA_KIT /scratch/<project>/<username>/bhaskera-runs     # your run folder: any folder you choose
+$ mkdir -p /scratch/<project>/<username>/bhaskera-runs && cp -r $BHASKERA_KIT/. /scratch/<project>/<username>/bhaskera-runs/     # your run folder: any folder you choose
 $ cd /scratch/<project>/<username>/bhaskera-runs
 
 $ ./submit.sh tokenize recipes/tokenize-chatml.yaml        # once: tokenise your data
