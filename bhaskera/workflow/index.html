@@ -3071,7 +3071,7 @@ count change (see <a href="../recipes/">Recipes</a>).</p>
 <h2 id="input">Input<a class="headerlink" href="#input" title="Permanent link">&para;</a></h2>
 <h3 id="run-folder">Run folder<a class="headerlink" href="#run-folder" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/1.0.0
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span>cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$BHASKERA_KIT</span><span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$BHASKERA_KIT</span>/.<span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs/
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs
 </code></pre></div>
 <p>Jobs are charged to your login name, which is your Slurm account on PARAM Rudra, so there is nothing to set. If you work under another account, <code>export SLURM_ACCOUNT=&lt;account&gt;</code> first.
