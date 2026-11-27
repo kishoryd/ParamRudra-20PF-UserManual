@@ -110,11 +110,11 @@ nav:
       - Batch System (SLURM): batch.md
       - Job Script Examples: examples.md
 
-  - Bhaskera:
+  - ExaAI:
       - Overview: bhaskera/index.md
-      - Why Bhaskera: bhaskera/why.md
+      - Why ExaAI: bhaskera/why.md
       - Start Here (First Run): bhaskera/start-here.md
-      - Bhaskera Dashboard: bhaskera/homepage.md
+      - ExaAI Dashboard: bhaskera/homepage.md
       - End-to-end Example: bhaskera/workflow.md
       - Data Format: bhaskera/data.md
       - Downloads and Dataset Versions: bhaskera/downloads.md

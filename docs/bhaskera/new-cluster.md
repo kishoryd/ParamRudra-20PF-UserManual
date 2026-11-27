@@ -2,13 +2,13 @@
 icon: material/server-network
 ---
 
-# Setting Up Bhaskera on Another Cluster
+# Setting Up ExaAI on Another Cluster
 
-This page is for the person who installs Bhaskera on a cluster for the first time: an administrator, or an engineer with a few Slurm GPU nodes. It takes about an hour, most of it waiting for downloads.
-The other pages of this guide describe PARAM Rudra, where Bhaskera has been built and tested. Everything that is specific to a cluster lives in two places you will edit (a cluster profile and a modulefile), so no code needs to change.
+This page is for the person who installs ExaAI on a cluster for the first time: an administrator, or an engineer with a few Slurm GPU nodes. It takes about an hour, most of it waiting for downloads.
+The other pages of this guide describe PARAM Rudra, where ExaAI has been built and tested. Everything that is specific to a cluster lives in two places you will edit (a cluster profile and a modulefile), so no code needs to change.
 
 !!! warning "What has been tested"
-    Bhaskera has been run end to end only on PARAM Rudra: A100 80 GB GPUs, 2 GPUs per node, InfiniBand, Slurm, Lmod, and compute nodes without internet. On any other cluster, treat your first job as a test and follow the check at the end of this page before you tell users it works.
+    ExaAI has been run end to end only on PARAM Rudra: A100 80 GB GPUs, 2 GPUs per node, InfiniBand, Slurm, Lmod, and compute nodes without internet. On any other cluster, treat your first job as a test and follow the check at the end of this page before you tell users it works.
     GPUs other than the A100 80 GB, CPUs other than x86-64, and CUDA versions other than 12.x have not been tried.
 
 ## What your cluster needs
@@ -24,7 +24,7 @@ The other pages of this guide describe PARAM Rudra, where Bhaskera has been buil
 | Permission to give users read access to the install folder | One central install serves everyone | You can write the folder and `chmod a+rX` it |
 
 Helpful but optional: Lmod or Environment Modules (users then run `module load bhaskera`), `sacctmgr` (so the page can show each user's job limits), and a place to keep shared models and data.
-Compute nodes without internet are fine, and are the usual case: Bhaskera switches Hugging Face to offline mode inside jobs.
+Compute nodes without internet are fine, and are the usual case: ExaAI switches Hugging Face to offline mode inside jobs.
 
 ## Decide these first
 
@@ -55,7 +55,7 @@ The script makes, under `PREFIX`:
 
 | Folder | What it holds |
 |---|---|
-| `src/` | The Bhaskera source, at `REF` |
+| `src/` | The ExaAI source, at `REF` |
 | `python/`, `venv/` | A Python 3.11 interpreter and an environment with PyTorch 2.6 (CUDA 12.4), flash-attention 2.7.3, bitsandbytes, Ray, PEFT and the pinned versions below |
 | `observability/` | Prometheus and Grafana, unless skipped |
 | `share/kit/` | The job scripts (`submit.sh`, `*.sbatch`), ready recipes, the text and multimodal starter configs (`configs/`) and cluster profiles, which users copy |
@@ -73,7 +73,7 @@ If the login node cannot reach the internet, the installer cannot run as it is: 
 
 ## Step 2: Write the cluster profile
 
-The profile tells Bhaskera what your nodes and partitions are. Copy the example and edit it:
+The profile tells ExaAI what your nodes and partitions are. Copy the example and edit it:
 
 ```bash
 $ cp $PREFIX/share/kit/clusters/example.yaml $PREFIX/share/kit/clusters/mycluster.yaml
@@ -93,7 +93,7 @@ partitions:               # smallest jobs first; max_hours is the partition's ti
 ```
 
 Every line is optional. A job of up to `max_nodes` nodes goes to the first partition that fits it, with that partition's time limit. Delete `param-rudra.yaml` from the copy users get if you do not want it there.
-Check what Bhaskera reads from it:
+Check what ExaAI reads from it:
 
 ```bash
 $ BHASKERA_CLUSTER_PROFILE=$PREFIX/share/kit/clusters/mycluster.yaml \
@@ -101,7 +101,7 @@ $ BHASKERA_CLUSTER_PROFILE=$PREFIX/share/kit/clusters/mycluster.yaml \
 debug 1 8 64 ib0 400G       # partition, hours, GPUs per node, CPUs, interface, memory: here for a job of 2 nodes
 ```
 
-## Step 3: Make Bhaskera easy to start
+## Step 3: Make ExaAI easy to start
 
 **With Lmod.** Copy the modulefile and edit its first lines:
 
@@ -132,7 +132,7 @@ Compute nodes have no internet, so models and data must be on disk first. A shar
 $ mkdir -p $(dirname $PREFIX)/models $(dirname $PREFIX)/data
 ```
 
-The Bhaskera dashboard lists anything in `models/` and `data/` next to the install folder, or in the folders named by `BHASKERA_MODELS` and `BHASKERA_DATA`, under *Shared on this cluster*. Put Hugging Face model folders in `models/` (users can also fetch their own from the **Downloads** menu of the page). Put tokenised data in `data/` in folders named `<dataset>_<model>_seq<length>_train` and `…_val`: a tokenised folder only fits the model whose tokenizer made it. `chmod -R a+rX` both folders.
+The ExaAI dashboard lists anything in `models/` and `data/` next to the install folder, or in the folders named by `BHASKERA_MODELS` and `BHASKERA_DATA`, under *Shared on this cluster*. Put Hugging Face model folders in `models/` (users can also fetch their own from the **Downloads** menu of the page). Put tokenised data in `data/` in folders named `<dataset>_<model>_seq<length>_train` and `…_val`: a tokenised folder only fits the model whose tokenizer made it. `chmod -R a+rX` both folders.
 
 ## Step 5: Tune what depends on your GPUs
 
@@ -163,7 +163,7 @@ The dry run should end with `RESULT: OK`, or fail only on the placeholders in th
 
 Then try 2 nodes. A single node working does not prove the network settings: most multi-node problems show up only here.
 
-Users need to set nothing: jobs are charged to their login name, and the page makes `~/bhaskera-runs` for them on first start. If your Slurm accounts are not the login names, tell users to `export SLURM_ACCOUNT=<account>`. Bhaskera checks the free space of a disk before it writes anything large (checkpoints, prepared data, downloads) and refuses a job on a disk with under 1 GB free, and the page warns on Home below 20 GB; a per-user quota is not visible to it. If home folders have small quotas, tell users to keep their run folder on the large file system (`mkdir -p <big && cp -r $BHASKERA_KIT/. <big/ folder>/bhaskera-runs`, then start the page from it): checkpoints are large.
+Users need to set nothing: jobs are charged to their login name, and the page makes `~/bhaskera-runs` for them on first start. If your Slurm accounts are not the login names, tell users to `export SLURM_ACCOUNT=<account>`. ExaAI checks the free space of a disk before it writes anything large (checkpoints, prepared data, downloads) and refuses a job on a disk with under 1 GB free, and the page warns on Home below 20 GB; a per-user quota is not visible to it. If home folders have small quotas, tell users to keep their run folder on the large file system (`mkdir -p <big && cp -r $BHASKERA_KIT/. <big/ folder>/bhaskera-runs`, then start the page from it): checkpoints are large.
 
 ## Where it breaks on a new cluster
 

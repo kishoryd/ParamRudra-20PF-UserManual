@@ -2,13 +2,13 @@
 icon: material/star-four-points
 ---
 
-# Why Bhaskera
+# Why ExaAI
 
 ## Introduction
 
 Fine-tuning a large language model on many GPU nodes usually means writing your own launch scripts,
 choosing a parallelism strategy by trial and error, and finding out about memory limits after the job
-has waited in the queue. Bhaskera packages all of that for PARAM Rudra: you pick a recipe, give it your
+has waited in the queue. ExaAI packages all of that for PARAM Rudra: you pick a recipe, give it your
 data and a node count, and it runs. Every recipe in this guide has been run on PARAM Rudra, and the
 numbers below come from those runs.
 
@@ -65,7 +65,7 @@ on 128 nodes) by the ratios above:
 
 ### Other measured effects
 
-| What Bhaskera does | Effect, measured | Why |
+| What ExaAI does | Effect, measured | Why |
 |---|---|---|
 | **Choosing the right strategy** | Qwen3-30B-A3B (MoE), 128 nodes: **33.4 h with FSDP → 53 min with Pipeline (38× faster)** | FSDP moves model weights between nodes every step; Pipeline and QLoRA move only small adapter updates |
 | **Fast MoE experts (Pipeline)** | Qwen3-30B-A3B: **71.3 → 37.3 s per step (1.9×)**; Qwen3-235B: **88.3 → 47.0 s (1.9×)** | Frozen experts are computed as a few large matrix multiplications instead of one small one per expert |
@@ -78,16 +78,16 @@ on 128 nodes) by the ratios above:
 
 ## How It Is Built
 
-![Bhaskera architecture on PARAM Rudra](../assets/bhaskera-architecture.svg)
+![ExaAI architecture on PARAM Rudra](../assets/bhaskera-architecture.svg)
 
-Bhaskera is a Python package built on PyTorch, Hugging Face Transformers and PEFT, with Ray for
+ExaAI is a Python package built on PyTorch, Hugging Face Transformers and PEFT, with Ray for
 starting and coordinating the processes across nodes.
 
 | Layer | What it does |
 |---|---|
 | **Job scripts** | `submit.sh` checks the recipe and picks the partition; `train.sbatch` starts one Ray cluster across the job's nodes over InfiniBand |
 | **Data** | Text is tokenised once into a Parquet cache; each GPU reads its own share, and sequences are packed on the fly |
-| **Model** | Any Hugging Face causal language model; Bhaskera inspects it to find its layers, experts, routers and LoRA targets, so no model-specific code is needed |
+| **Model** | Any Hugging Face causal language model; ExaAI inspects it to find its layers, experts, routers and LoRA targets, so no model-specific code is needed |
 | **Parallelism** | QLoRA + DDP, DDP, Pipeline (1F1B / GPipe), FSDP2 and HSDP, chosen with one line in the recipe |
 | **Training loop** | LoRA training with evaluation (loss and next-token accuracy), MoE load-balancing losses, checkpoints, and one metrics line per step |
 

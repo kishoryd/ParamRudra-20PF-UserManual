@@ -39,7 +39,7 @@ Other column names are set under `data.format_options`: `messages_field`, and `<
     A chat model: use a chat layout (`chatml`, `sharegpt`, `tool_calling`, `reasoning`), or add `use_chat_template: true` to `dolly`, `qa` or `prompt_completion` so the model's own chat template is used. Otherwise those three write plain labelled text (`### Instruction:`, `Question:` / `Answer:`).
 
 !!! warning "Good to know"
-    - **`scored_response`** keeps only rows with `score >= min_score` (`format_options: {min_score: 0.7}`): fine-tuning on the good answers. It is **not** reward-model training or reinforcement learning; Bhaskera does neither.
+    - **`scored_response`** keeps only rows with `score >= min_score` (`format_options: {min_score: 0.7}`): fine-tuning on the good answers. It is **not** reward-model training or reinforcement learning; ExaAI does neither.
     - **`tool_calling`** needs a model whose chat template supports tools (Qwen3, Llama 3.1+, Mistral and others). If tool schemas differ between rows, store `tools` as JSON text.
     - **`reasoning`** writes `<think>…</think>` before the answer (`think_open` / `think_close` change the markers). Reasoning is long: use a generous `seq_len`, since longer rows are cut.
     - **No `val_path`:** only the training data is tokenised and training runs without an evaluation set.
@@ -67,7 +67,7 @@ data:
 
 ## Data you tokenised yourself
 
-A folder of Parquet files with `input_ids` and `labels` (and `attention_mask`, or set `data.pack_sequences: true`) works as `data.tokenized_path`, without Bhaskera's tokenise step. Rename columns with `data.column_map`. Write a `metadata.json` (`{"model_name": "<model folder>", "seq_len": 4096}`) next to the files: without it Bhaskera cannot check that the length and tokenizer match, and the dashboard does not list the folder. Rows are never re-padded, so `data.seq_len` must equal their length.
+A folder of Parquet files with `input_ids` and `labels` (and `attention_mask`, or set `data.pack_sequences: true`) works as `data.tokenized_path`, without ExaAI's tokenise step. Rename columns with `data.column_map`. Write a `metadata.json` (`{"model_name": "<model folder>", "seq_len": 4096}`) next to the files: without it ExaAI cannot check that the length and tokenizer match, and the dashboard does not list the folder. Rows are never re-padded, so `data.seq_len` must equal their length.
 
 
 Getting data in from Hugging Face, and naming and versioning it: [Downloads and Dataset Versions](downloads.md).

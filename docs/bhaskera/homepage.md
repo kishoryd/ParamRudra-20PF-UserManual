@@ -2,7 +2,7 @@
 icon: material/view-dashboard
 ---
 
-# Bhaskera Dashboard: Train, Serve, Evaluate, Monitor
+# ExaAI Dashboard: Train, Serve, Evaluate, Monitor
 
 `bhaskera-dashboard ray` serves one web page for everything you run. It lists your jobs and your recent runs, starts new
 jobs, and lets you talk to a model you have trained. It listens on the login node, is private to your user, and is opened
@@ -23,7 +23,7 @@ Jobs are charged to your login name. `module load` is needed because a login she
 ## The pages
 
 The page has five pages, each with its own set of cards. The names across the top are links; point at a name to see a menu of what it holds, or click it to open the page.
-Clicking the Bhaskera logo returns to Home.
+Clicking the ExaAI logo returns to Home.
 
 | Page | What is on it |
 |---|---|
@@ -41,21 +41,21 @@ Your name at the top right opens the account menu, with the Guide and **Log out*
 - **Jobs**: state, partition, nodes and GPUs, progress and time left, and the live numbers from the job log (loss,
   evaluation loss and accuracy, MFU, tokens per second, step time, and the GPU energy used so far). The GPU load of each node is one click away. Buttons
   open the Ray Dashboard, the GPU charts, the log, and the run in MLflow.
-- **Runs**: your recent MLflow runs that Bhaskera made, including finished and failed ones. The table shows the latest 10; **Show 10 more**, **Show all** and **Show fewer** change that.
-  **Remove** on a row takes a finished, failed or stalled run off the list, and **Clear failed and stalled** does that for all of them at once; both ask first. Removing only marks the run deleted in MLflow, so it can be brought back with `mlflow runs restore --run-id <id>`. Only your own Bhaskera runs can be removed, and never one that is still running. Runs that other tools wrote into the same MLflow store are not listed. A run that stopped writing is marked *stalled*.
+- **Runs**: your recent MLflow runs that ExaAI made, including finished and failed ones. The table shows the latest 10; **Show 10 more**, **Show all** and **Show fewer** change that.
+  **Remove** on a row takes a finished, failed or stalled run off the list, and **Clear failed and stalled** does that for all of them at once; both ask first. Removing only marks the run deleted in MLflow, so it can be brought back with `mlflow runs restore --run-id <id>`. Only your own ExaAI runs can be removed, and never one that is still running. Runs that other tools wrote into the same MLflow store are not listed. A run that stopped writing is marked *stalled*.
   Runs that were benchmarked show the result, and runs that recorded GPU power show the GPU energy they used (see [Monitoring](monitoring.md#gpu-energy-used)).
 - **Cluster limits and node health** (on Monitor): your job slots in each partition, and any node a job found faulty.
   New jobs keep away from those nodes for three days.
 
 ## MLflow, the Ray Dashboard and Grafana
 
-The Bhaskera dashboard is the one address for three tools that each answer a different question. All three are reached through the same tunnel (see [Monitoring](monitoring.md#ray-dashboard-charts-and-mlflow-in-one-place)); you never open a second one.
+The ExaAI dashboard is the one address for three tools that each answer a different question. All three are reached through the same tunnel (see [Monitoring](monitoring.md#ray-dashboard-charts-and-mlflow-in-one-place)); you never open a second one.
 
 | Tool | Answers | Where on the dashboard | Needs |
 |---|---|---|---|
 | **MLflow** | How did the run go? Loss and evaluation curves, throughput, GPU energy, every run compared, the model registry | **MLflow** on Monitor, and **MLflow run** on each job | Nothing extra: every run is recorded in `~/mlflow-runs` and the dashboard starts MLflow itself |
 | **Ray Dashboard** | Is every node of the job healthy right now? CPU, memory and GPU load per node, workers and their logs | **Ray Dashboard** on Monitor and on each running job | A running job; one link per job |
-| **Grafana** | How did the GPUs and nodes behave over time? GPU, CPU and memory charts for every node | **GPU charts** on Monitor and on each running job | Prometheus and Grafana installed next to Bhaskera (the install step `WITH_CHARTS`); without them the node list still works and only the charts are missing |
+| **Grafana** | How did the GPUs and nodes behave over time? GPU, CPU and memory charts for every node | **GPU charts** on Monitor and on each running job | Prometheus and Grafana installed next to ExaAI (the install step `WITH_CHARTS`); without them the node list still works and only the charts are missing |
 
 MLflow keeps its runs after a job ends; the Ray Dashboard and Grafana exist only while their job runs. Use MLflow to compare finished runs, and the Ray Dashboard and Grafana to find a slow or failing node in a running one.
 
@@ -104,7 +104,7 @@ With checkpoints off, a run that stops cannot be resumed; it has to start again.
 **All settings** lists every option a recipe has (about 160), grouped as in the config file, searchable, each with what it does. Anything you type there wins over the choices above. A name that is not a
 recipe option is refused with the closest real name.
 
-**Custom** is for people who already know the settings: paste or write a whole recipe as YAML, or load one of the starters shipped with Bhaskera (the files in `configs/`) or one of your recipes and edit it.
+**Custom** is for people who already know the settings: paste or write a whole recipe as YAML, or load one of the starters shipped with ExaAI (the files in `configs/`) or one of your recipes and edit it.
 A copy is saved under your name with its own run name and checkpoint folder, so it never writes over the original run's checkpoints. The Ray Dashboard host stays on the local machine whatever the YAML says.
 
 ## Chat with a trained model
@@ -186,7 +186,7 @@ you skip all of this: the chat window opens by itself when the model is loaded.
 The standard benchmarks say little about your own use. Test the model on examples from your own work:
 
 1. Put them in a JSONL file on `/scratch`, one per line: `{"question": "...", "answer": "..."}`.
-2. Turn the file into a test (it goes into a `tasks` folder next to `submit.sh`, which Bhaskera picks up by itself):
+2. Turn the file into a test (it goes into a `tasks` folder next to `submit.sh`, which ExaAI picks up by itself):
    `python -m bhaskera.launcher.evaluate init-task --name my_test --data /scratch/<project>/<username>/my.jsonl`
 3. Run it. On the page, open **Benchmark**, then *Add a test of your own* (the file, the names of the question and answer fields): it runs the command above for you and ticks the test. In the terminal:
    `./submit.sh eval --run <run id> --tasks my_test --save-samples`
@@ -205,14 +205,14 @@ During training, `logging.mlflow_eval_samples: <n>` also stores example predicti
 ## Models
 
 The **Models** section (on the Serve page) lists every registered model version: the model, its version, the run it came from, its aliases and its evaluation loss, with **Chat** and **Benchmark**
-buttons. Only versions that Bhaskera registered are listed. It is read from the registry directly, so it works with no job running and does not need MLflow's own page. A pencil next to the name means a hand-off note is kept with the
+buttons. Only versions that ExaAI registered are listed. It is read from the registry directly, so it works with no job running and does not need MLflow's own page. A pencil next to the name means a hand-off note is kept with the
 version; hover over the row to read it. See [Saving and Finding Your Models](registry.md).
 
 ## What "job slots" means
 
-The page shows, for example, *0 of 4 job slots used in gpu-debug*. This is a cluster rule, not a Bhaskera setting: the batch system allows
+The page shows, for example, *0 of 4 job slots used in gpu-debug*. This is a cluster rule, not an ExaAI setting: the batch system allows
 each user a fixed number of jobs submitted at once in a partition (on PARAM Rudra, `gpu-debug` allows 4 submitted and 2 running, at most
-1 hour each). Bhaskera reads the limit from Slurm, shows how much of it you use, and checks it before submitting, so a job that would be
+1 hour each). ExaAI reads the limit from Slurm, shows how much of it you use, and checks it before submitting, so a job that would be
 refused is stopped with a clear message. On an account that several people share, everyone's jobs count together.
 
 !!! note "Shared accounts"

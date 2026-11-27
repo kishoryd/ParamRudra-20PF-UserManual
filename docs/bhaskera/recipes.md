@@ -6,7 +6,7 @@ icon: material/chef-hat
 
 ## Introduction
 
-A recipe is a ready Bhaskera configuration for one model, using the fastest strategy measured on PARAM Rudra.
+A recipe is a ready ExaAI configuration for one model, using the fastest strategy measured on PARAM Rudra.
 
 
 | Model | QLoRA + DDP | LoRA + DDP | Pipeline | HSDP | FSDP2 |
@@ -43,7 +43,7 @@ Copy one, replace `<project>/<username>` and the model and data paths, and run i
 !!! note "How the recipes relate to the benchmark"
     The speed and memory in each header are the measured benchmark numbers for that model and method. The recipes were written
     to the same settings (LoRA rank 16, sequence length 4096, the shard group sizes above) and every one loads cleanly in
-    Bhaskera's configuration check, but a recipe is a starting point: run `DRY_RUN=1 ./submit.sh recipes/<name>.yaml <nodes> 1`
+    ExaAI's configuration check, but a recipe is a starting point: run `DRY_RUN=1 ./submit.sh recipes/<name>.yaml <nodes> 1`
     first, which checks the model, data, GPU memory estimate and node count without submitting.
 
 A pipeline recipe splits the model into *stages* on different GPUs, so the number of GPUs (2 per node) must be
@@ -302,7 +302,7 @@ Time for **one epoch of a 1.24-billion-token dataset** (scale it by your own tok
 ## Starter Configs for Other Models
 
 The recipes above are tested for the models in the table. For another model, copy a starter from `configs/` in the
-Bhaskera repository, replace the `<project>/<username>` paths, and run it like a recipe. There is one starter per parallelism
+ExaAI repository, replace the `<project>/<username>` paths, and run it like a recipe. There is one starter per parallelism
 for text and for multimodal models, and a tokenizer config for each model type:
 
 | | Text | Multimodal |

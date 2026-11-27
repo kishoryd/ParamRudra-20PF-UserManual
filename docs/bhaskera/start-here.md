@@ -10,7 +10,7 @@ This page is for someone who has never fine-tuned a model, or has never run one 
 2. **[I bring my own model and my own data](#case-2-i-bring-my-own-model-and-my-own-data)**, tokenised or not.
 3. **[I only want to benchmark a model I already have](#case-3-benchmark-a-model-you-already-have)**: no training.
 
-What was run on PARAM Rudra for this page: option B of Case 1 (tokenise and train, end to end, with the small examples shown), the tokenising of CSV, TSV and JSON data, the checks of option A, and the benchmark of Case 3. The 14 B training of option A and the "already tokenised" route in Case 2 follow the same code but were not repeated here. A web page does the same things with buttons ([Bhaskera Dashboard](homepage.md)); this page uses the terminal because it shows exactly what happens.
+What was run on PARAM Rudra for this page: option B of Case 1 (tokenise and train, end to end, with the small examples shown), the tokenising of CSV, TSV and JSON data, the checks of option A, and the benchmark of Case 3. The 14 B training of option A and the "already tokenised" route in Case 2 follow the same code but were not repeated here. A web page does the same things with buttons ([ExaAI Dashboard](homepage.md)); this page uses the terminal because it shows exactly what happens.
 
 ## The words you will meet
 
@@ -42,7 +42,7 @@ You supply a **model** and **data**. Tokenising turns the data into numbers (a f
 
 ## Before you start
 
-Log in, load Bhaskera and make your **run folder**: the one place where your recipes, logs and checkpoints go.
+Log in, load ExaAI and make your **run folder**: the one place where your recipes, logs and checkpoints go.
 
 ```bash
 $ ssh -p 4422 <user>@paramrudra.cdacb.in
@@ -105,7 +105,7 @@ You will see one line per step with the loss (how wrong the model still is: it s
 
 ### Option B: a public model and dataset, by name
 
-Here the model and the dataset live on Hugging Face. You do not download them yourself: name them, and Bhaskera fetches them first. This example uses a small model (Qwen3-0.6B) and the public Alpaca instruction dataset, so it is quick.
+Here the model and the dataset live on Hugging Face. You do not download them yourself: name them, and ExaAI fetches them first. This example uses a small model (Qwen3-0.6B) and the public Alpaca instruction dataset, so it is quick.
 
 **1. Tokenise.** Copy the ready recipe, which already names the model and the dataset:
 
@@ -207,7 +207,7 @@ Before tokenising, `python -m bhaskera.launcher.data_tools inspect <file.jsonl> 
 
 ### Your data, already tokenised
 
-If your data is already tokenised, skip the step above. Bhaskera trains from a **folder of Parquet files** with these columns:
+If your data is already tokenised, skip the step above. ExaAI trains from a **folder of Parquet files** with these columns:
 
 | Column | What |
 |---|---|
@@ -225,7 +225,7 @@ data:
   val_tokenized_path: /scratch/<project>/<username>/mydata/val_tokenised     # optional
 ```
 
-Write a small `metadata.json` next to the Parquet files if you can (`{"model_name": "<model folder>", "seq_len": 4096}`): without it Bhaskera cannot check the length and tokenizer against your model, and warns instead. Data you tokenised yourself works from the command line; the web page lists only caches that have a `metadata.json`.
+Write a small `metadata.json` next to the Parquet files if you can (`{"model_name": "<model folder>", "seq_len": 4096}`): without it ExaAI cannot check the length and tokenizer against your model, and warns instead. Data you tokenised yourself works from the command line; the web page lists only caches that have a `metadata.json`.
 
 ### Train
 
@@ -289,7 +289,7 @@ $ ./submit.sh eval --model <model folder> --tasks my_test --save-samples
 $ python -m bhaskera.launcher.evaluate review <samples folder>      # what is right, what is wrong, with the answers
 ```
 
-The result is saved in the `--out` file. Add `--mlflow` to keep it in MLflow too. Once you have trained a model, `--run <run id>` (or a registered name) benchmarks it *against its base model* in one go ([Bhaskera Dashboard](homepage.md#test-the-model-on-your-own-questions-and-find-what-to-correct) and [Model Registry](registry.md)).
+The result is saved in the `--out` file. Add `--mlflow` to keep it in MLflow too. Once you have trained a model, `--run <run id>` (or a registered name) benchmarks it *against its base model* in one go ([ExaAI Dashboard](homepage.md#test-the-model-on-your-own-questions-and-find-what-to-correct) and [Model Registry](registry.md)).
 
 ## When something goes wrong
 
@@ -308,5 +308,5 @@ The result is saved in the `--out` file. Add `--mlflow` to keep it in MLflow too
 - [Data Format](data.md): file types, column layouts and plain text.
 - [Downloads and Dataset Versions](downloads.md): downloading, and naming and versioning your data.
 - [Monitoring](monitoring.md): reading the step log, MLflow, and the GPU energy a run used.
-- [Bhaskera Dashboard](homepage.md): the same things with buttons, plus chat with the model you trained.
+- [ExaAI Dashboard](homepage.md): the same things with buttons, plus chat with the model you trained.
 - [Model Registry](registry.md): keep a trained model under a name, with a note.

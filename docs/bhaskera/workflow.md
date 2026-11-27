@@ -95,7 +95,7 @@ $ ./submit.sh tokenize recipes/tokenize-chatml.yaml
 
 set -uo pipefail
 CONFIG="${1:?usage: sbatch tokenize.sbatch <tokenize-config.yaml>}"
-: "${BHASKERA_DIR:?export BHASKERA_DIR=/scratch/<project>/<username>/Bhaskera before submitting}"
+: "${BHASKERA_DIR:?export BHASKERA_DIR=/scratch/<project>/<username>/ExaAI before submitting}"
 export HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1
 source "$BHASKERA_DIR/bhaskera-activate.sh"
 export RAY_TMPDIR="/tmp/ray_${SLURM_JOB_ID}"
@@ -182,7 +182,7 @@ per GPU:
 
 set -uo pipefail
 CONFIG="${1:?usage: sbatch train.sbatch <config.yaml>}"
-: "${BHASKERA_DIR:?export BHASKERA_DIR=/scratch/<project>/<username>/Bhaskera before submitting}"
+: "${BHASKERA_DIR:?export BHASKERA_DIR=/scratch/<project>/<username>/ExaAI before submitting}"
 
 export HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 TRANSFORMERS_OFFLINE=1
 export MLFLOW_ALLOW_FILE_STORE=true
@@ -251,7 +251,7 @@ run ends. Submitting the job again with the same `save_dir` and a larger `max_st
 !!! note "Keep the adapter"
     Steps 6 to 9 use the **adapter** the run stores, which needs `logging.mlflow_log_adapter: true`. The shipped recipes and the recipes the dashboard writes set it. A full fine-tune stores no adapter, so it has no Chat, Benchmark by run or Register.
 
-Steps 5 to 9 need the **run id** of the finished training run: the 32-character id in the **Runs** table of the dashboard (and in MLflow's run page). Every command below can also be done with a button on the [Bhaskera dashboard](homepage.md); the commands are shown because they work from any terminal.
+Steps 5 to 9 need the **run id** of the finished training run: the 32-character id in the **Runs** table of the dashboard (and in MLflow's run page). Every command below can also be done with a button on the [ExaAI dashboard](homepage.md); the commands are shown because they work from any terminal.
 
 ## Step 5: Watch It (MLflow, Ray Dashboard, Grafana)
 
@@ -267,7 +267,7 @@ Then open `http://localhost:8265`.
 |---|---|---|
 | **MLflow** | The run's loss and evaluation curves, throughput, GPU energy and the model registry, kept after the job ends | Nothing extra (the dashboard starts it) |
 | **Ray Dashboard** *(optional)* | While the job runs: every node's CPU, memory and GPU load, the workers and their logs. Open it on the job's card | A running job |
-| **Grafana** *(optional)*, shown as **GPU charts** | GPU, CPU and memory over time for every node | Prometheus and Grafana installed next to Bhaskera; without them the other two still work |
+| **Grafana** *(optional)*, shown as **GPU charts** | GPU, CPU and memory over time for every node | Prometheus and Grafana installed next to ExaAI; without them the other two still work |
 
 To look at MLflow alone, without the dashboard, run `bhaskera-dashboard start` on a login node and `bhaskera-dashboard tunnel` prints the command for your laptop. MLflow started this way stops when the login session that started it ends.
 
@@ -298,7 +298,7 @@ $ ./submit.sh eval --run <run id> --tasks my_test --save-samples
 $ python -m bhaskera.launcher.evaluate review <folder>        # fixed by tuning, broken by tuning, still wrong
 ```
 
-`review` sorts every example into **fixed by tuning**, **broken by tuning** (the base model had it right), **still wrong** and **still right**. Fix or add training examples for what is still wrong, tokenise again, train again and run the same test: the numbers show whether it helped. More in [The Bhaskera Dashboard](homepage.md#test-the-model-on-your-own-questions-and-find-what-to-correct).
+`review` sorts every example into **fixed by tuning**, **broken by tuning** (the base model had it right), **still wrong** and **still right**. Fix or add training examples for what is still wrong, tokenise again, train again and run the same test: the numbers show whether it helped. More in [The ExaAI Dashboard](homepage.md#test-the-model-on-your-own-questions-and-find-what-to-correct).
 
 ## Step 8: Benchmark Against the Base Model
 

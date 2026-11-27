@@ -33,7 +33,7 @@ From the dashboard, a run that failed, was killed, ran out of time or stopped wr
 python -m bhaskera.launcher.resume show --run <run id>      # what the run left behind, without submitting
 ```
 
-The run id is in MLflow and on the dashboard. Bhaskera takes the recipe, the number of nodes and the time limit from the job that stopped,
+The run id is in MLflow and on the dashboard. ExaAI takes the recipe, the number of nodes and the time limit from the job that stopped,
 looks for checkpoints in the folder the run saved to, and submits the job again. The job loads the checkpoint, rebuilds the learning-rate
 schedule at that step, and skips the training data that the earlier steps already used.
 

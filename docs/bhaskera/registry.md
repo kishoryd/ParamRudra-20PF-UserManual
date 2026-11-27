@@ -6,7 +6,7 @@ icon: material/package-variant
 
 A trained model is an adapter: a folder of a few hundred megabytes that sits on top of the base model. The **model registry** gives each
 adapter you want to keep a name and a version, so that "the one we use" is a name and not a run id you have to remember. It is part of
-MLflow, which Bhaskera already writes to, so there is nothing to set up. The Bhaskera dashboard's **Models** section lists every version with its alias and note.
+MLflow, which ExaAI already writes to, so there is nothing to set up. The ExaAI dashboard's **Models** section lists every version with its alias and note.
 
 ## What gets saved, and when
 
@@ -33,7 +33,7 @@ register it with `--alias champion` again and the alias moves; the old version s
 
 ## The hand-off note
 
-Each version also keeps a note for whoever picks it up next: the text you wrote (what it is for, which data, what it gets wrong), followed by what Bhaskera fills in from the run:
+Each version also keeps a note for whoever picks it up next: the text you wrote (what it is for, which data, what it gets wrong), followed by what ExaAI fills in from the run:
 the base model, the run, the LoRA settings, steps, learning rate, batch and sequence length, the training data, the results (evaluation loss and accuracy, benchmark scores), and how to use
 the adapter. The adapter needs the base model at the same path, so the note says where it was. `register show <name>:<version>` prints it, and the dashboard shows it when you hover over the row.
 
@@ -59,7 +59,7 @@ model = PeftModel.from_pretrained(base_model, folder)
 
 ## A workflow that works
 
-Train with `mlflow_log_adapter: true`, benchmark it and test it on your own questions (see [Bhaskera Dashboard](homepage.md)), correct the data
+Train with `mlflow_log_adapter: true`, benchmark it and test it on your own questions (see [ExaAI Dashboard](homepage.md)), correct the data
 where it is wrong, train again, and register the version that is better as `champion`. Anyone on the project then chats with, or builds on,
 `my-assistant@champion` and never needs to know which run it was.
 

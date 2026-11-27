@@ -4,7 +4,7 @@ icon: material/download
 
 # Installation
 
-There are two ways to use Bhaskera on PARAM Rudra. Most users should load the module.
+There are two ways to use ExaAI on PARAM Rudra. Most users should load the module.
 
 ## Option A: Module (recommended)
 
@@ -19,7 +19,7 @@ The module provides:
 |---|---|
 | Commands `bhaskera-tokenize`, `bhaskera-train`, `bhaskera-dashboard` and the Python environment | on `PATH` |
 | Job scripts (`submit.sh`, `train.sbatch`, `tokenize.sbatch`, `eval.sbatch`, `serve.sbatch`), tested recipes and the PARAM Rudra cluster profile | `$BHASKERA_KIT` |
-| Bhaskera source | `$BHASKERA_DIR` |
+| ExaAI source | `$BHASKERA_DIR` |
 
 Copy the job scripts and recipes into your own folder on `/scratch`:
 
@@ -35,7 +35,7 @@ Continue with the [End-to-end Example](workflow.md).
 ## Option B: Your Own Installation
 
 Install once from a login node into your `/scratch` area (5 to 15 minutes, depending on file-system load). Use this if the module is
-not available, or if you want to change Bhaskera's code.
+not available, or if you want to change ExaAI's code.
 
 ```bash
 $ cd /scratch/<project>/<username>
@@ -57,10 +57,10 @@ $ uv pip install -r slurm/requirements-paramrudra.lock
       With newer Ray and grpcio releases, multi-node jobs fail at start-up (`InvalidAuthToken`, or the
       worker nodes time out waiting for the first node).
 
-Then tell the job scripts where Bhaskera is, and copy the job scripts and recipes:
+Then tell the job scripts where ExaAI is, and copy the job scripts and recipes:
 
 ```bash
-$ export BHASKERA_DIR=/scratch/<project>/<username>/Bhaskera      # add this line to ~/.bashrc
+$ export BHASKERA_DIR=/scratch/<project>/<username>/ExaAI      # add this line to ~/.bashrc
 $ cp -r $BHASKERA_DIR/slurm /scratch/<project>/<username>/bhaskera-runs
 ```
 

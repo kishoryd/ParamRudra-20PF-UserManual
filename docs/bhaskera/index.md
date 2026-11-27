@@ -2,23 +2,25 @@
 icon: material/brain
 ---
 
-# Bhaskera
+# ExaAI
+
+![ExaAI, powered by Bhaskera](assets/exaai-logo.svg){ width="330" }
 
 ## Introduction
 
-Bhaskera teaches a pre-trained language model something new, on a cluster of GPUs, from the command line. You give it three things: a **model** to start from, **data** to learn from, and one small file (a *recipe*) that says how. It does the rest: it checks that everything is in place, asks Slurm for the GPUs, starts the training across all of them, saves progress as it goes, and keeps a record of every run. It handles text models, and models that also read images, video and audio.
+ExaAI teaches a pre-trained language model something new, on a cluster of GPUs, from the command line. You give it three things: a **model** to start from, **data** to learn from, and one small file (a *recipe*) that says how. It does the rest: it checks that everything is in place, asks Slurm for the GPUs, starts the training across all of them, saves progress as it goes, and keeps a record of every run. It handles text models, and models that also read images, video and audio.
 
-This is called **fine-tuning**. A model such as Qwen3 or Llama has learned general language from a huge amount of text. Fine-tuning continues its training on your own examples (your support tickets, your documents, your question and answer pairs) so that it answers the way you need. Bhaskera is for people who want to do that on a shared Slurm cluster without writing the distributed-training code themselves.
+This is called **fine-tuning**. A model such as Qwen3 or Llama has learned general language from a huge amount of text. Fine-tuning continues its training on your own examples (your support tickets, your documents, your question and answer pairs) so that it answers the way you need. ExaAI is for people who want to do that on a shared Slurm cluster without writing the distributed-training code themselves.
 
 On PARAM Rudra it is tested from 1 node up to 128 nodes (256 A100 GPUs). Most runs use **LoRA**: the pre-trained model stays as it is and only a small add-on (an *adapter*) is trained, which needs far less GPU memory and far less communication between nodes. **Full fine-tuning**, which trains every weight, is available too.
 
 Official site: <https://github.com/kishoryd/Bhaskera>. If you have never done this before, start with [Start Here: Your First Run](start-here.md).
 
-## What Bhaskera brings to the table
+## What ExaAI brings to the table
 
-Fine-tuning a large model on a cluster is not one hard step but many small ones, and each can fail in its own way. Bhaskera is the work around the training, as well as the training itself.
+Fine-tuning a large model on a cluster is not one hard step but many small ones, and each can fail in its own way. ExaAI is the work around the training, as well as the training itself.
 
-| You need to ... | What Bhaskera does |
+| You need to ... | What ExaAI does |
 |---|---|
 | Describe a run | One YAML file: the model, the data, how to spread the work over the GPUs. The same file runs on N nodes. |
 | Train at any size | LoRA and QLoRA (4-bit) with DDP, FSDP2, HSDP and Pipeline parallelism, measured on PARAM Rudra with five models from 14 B to 235 B parameters, including mixture-of-experts models, on 8 to 128 nodes ([Benchmarks](benchmarks.md)). Full fine-tuning of every weight with DDP, FSDP2 or HSDP, tried on a 14 B model ([Recipes](recipes.md#full-fine-tuning-training-every-weight)). |
@@ -30,7 +32,7 @@ Fine-tuning a large model on a cluster is not one hard step but many small ones,
 | Keep track | Every run, its curves, its settings, its adapter and its GPU energy in MLflow, a model registry with names, versions and hand-off notes, and a web page for all of it. |
 | Use it on your cluster | Everything that belongs to one cluster is a profile (partitions, GPUs, network), not code. See [Setting Up on Another Cluster](new-cluster.md). |
 
-Two ways to use it: the **command line** (this guide's focus: `./submit.sh`, a few small commands) and a **web page** that does the same things with buttons ([Bhaskera Dashboard](homepage.md)). Everything the page does can be done from a terminal.
+Two ways to use it: the **command line** (this guide's focus: `./submit.sh`, a few small commands) and a **web page** that does the same things with buttons ([ExaAI Dashboard](homepage.md)). Everything the page does can be done from a terminal.
 
 ## Pick your starting point
 
@@ -69,7 +71,7 @@ $ tail -f logs/qwen3-14b-qlora_<jobid>.out | grep --line-buffered -E '\[step|eva
 | Page | What it covers |
 |---|---|
 | [Start Here: Your First Run](start-here.md) | The words, the idea, and three step-by-step cases: no model and no data, your own model and data, benchmarking a model you have |
-| [Why Bhaskera](why.md) | Features, measured benefits, and how it is built |
+| [Why ExaAI](why.md) | Features, measured benefits, and how it is built |
 | [Installation](installation.md) | Loading the module, or installing your own copy |
 | [Setting Up on Another Cluster](new-cluster.md) | For an administrator: a first install on a cluster other than PARAM Rudra |
 | [End-to-end Example](workflow.md) | Model and data, tokenising, training, expected output, resuming |
@@ -82,12 +84,12 @@ $ tail -f logs/qwen3-14b-qlora_<jobid>.out | grep --line-buffered -E '\[step|eva
 | [Resuming a Job](resume.md) | Checkpoints, continuing after a failure, going back after a loss spike |
 | [Parallelism Strategies](parallelism.md) | QLoRA, DDP, Pipeline, FSDP and HSDP: which to use |
 | [Benchmarks](benchmarks.md) | Measured speed, MFU, memory and accuracy for every model, strategy and node count |
-| [Bhaskera Dashboard](homepage.md) | The web page: your jobs, runs, data and models, and the same actions with buttons |
+| [ExaAI Dashboard](homepage.md) | The web page: your jobs, runs, data and models, and the same actions with buttons |
 | [Troubleshooting](troubleshooting.md) | Common errors, limitations, command reference |
 
 ## PARAM Rudra Environment
 
-| Item | Value | Why it matters for Bhaskera |
+| Item | Value | Why it matters for ExaAI |
 |---|---|---|
 | GPUs per node | 2 × NVIDIA A100 80 GB | Training workers = 2 × nodes |
 | Interconnect | InfiniBand (`ib0`) | Ray and NCCL communicate over `ib0` |
@@ -104,3 +106,7 @@ $ tail -f logs/qwen3-14b-qlora_<jobid>.out | grep --line-buffered -E '\[step|eva
 
 `submit.sh` chooses the partition from the node count you ask for. Full policy:
 [Resource Management](../resource-management.md).
+
+---
+
+© 2026 C-DAC. All rights reserved.

@@ -6,7 +6,7 @@ icon: material/monitor-dashboard
 
 ## Introduction
 
-A Bhaskera job can be followed in three places:
+An ExaAI job can be followed in three places:
 
 | Where | What it shows | Best for |
 |---|---|---|
@@ -58,12 +58,12 @@ A low minimum next to a high mean points at one GPU that is waiting for the othe
 
 ## GPU energy used
 
-Every run records the power its GPUs draw (summed over all the GPUs of the job, every ten steps). Bhaskera works out the energy from that curve: the area under it, in kWh.
-It shows on the Bhaskera Dashboard as **GPU energy used** (a total), as a **GPU energy** column in the runs table, and as **GPU energy so far** on a job that is running. The figure is the sum, over the readings, of the time between two readings multiplied by the average of the two power values.
+Every run records the power its GPUs draw (summed over all the GPUs of the job, every ten steps). ExaAI works out the energy from that curve: the area under it, in kWh.
+It shows on the ExaAI Dashboard as **GPU energy used** (a total), as a **GPU energy** column in the runs table, and as **GPU energy so far** on a job that is running. The figure is the sum, over the readings, of the time between two readings multiplied by the average of the two power values.
 
 - It counts the GPUs only. CPUs, memory, fans, cooling and the network are not included, so the node's real use is higher.
 - It covers the time between the first and the last power reading, which is the training itself (not the minutes the model takes to load).
-- A run made with an older Bhaskera has no figure and shows a dash, because the default metric level used to drop the power reading. Nothing is estimated for it.
+- A run made with an older ExaAI has no figure and shows a dash, because the default metric level used to drop the power reading. Nothing is estimated for it.
 - It is a measurement of what a run used. It is not a comparison with another method or another tool.
 
 ## MLflow Dashboard
@@ -164,7 +164,7 @@ Run the printed line on your laptop, as it is printed, and open <http://localhos
     The login nodes slow down when many connections arrive in a short time (several `ssh` and `scp` commands in a row, for example). Wait a minute and try again, and open one connection at a time. Nothing is wrong with your account.
 
 !!! tip "The same page starts jobs"
-    The page also starts jobs, opens a chat with a trained model and runs benchmarks: see [Bhaskera Dashboard](homepage.md).
+    The page also starts jobs, opens a chat with a trained model and runs benchmarks: see [ExaAI Dashboard](homepage.md).
 
 Run that command on your laptop, leave it open, and open <http://localhost:8265>. That page lists your running
 jobs, and for each one a link to its **Ray Dashboard** and its **Grafana charts**, and a link to **MLflow**.
@@ -191,7 +191,7 @@ In the Ray Dashboard of a job:
   or full stands out here.
 - **Cluster utilization** (on the Overview page) and **Metrics** draw GPU, CPU and memory over time for
   every node. They are Grafana charts, also reached from the page under **Grafana charts**. They are there when
-  Prometheus and Grafana are installed next to Bhaskera (the module sets `BHASKERA_OBSERVABILITY`); the
+  Prometheus and Grafana are installed next to ExaAI (the module sets `BHASKERA_OBSERVABILITY`); the
   job log says `charts: Prometheus and Grafana started` when they run. Without them the node list still
   works, only the charts are missing.
 - **Jobs** shows the training job and its workers; **Logs** has the output of each worker, which helps when

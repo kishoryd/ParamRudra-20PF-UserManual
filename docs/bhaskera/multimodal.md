@@ -4,7 +4,7 @@ icon: material/image-multiple
 
 # Multimodal Fine-tuning
 
-Bhaskera also fine-tunes models that read **images, video and audio** next to text, with the same strategies, recipes
+ExaAI also fine-tunes models that read **images, video and audio** next to text, with the same strategies, recipes
 and cluster setup as text models. The output is text.
 
 | Input | Model family | Tested with |

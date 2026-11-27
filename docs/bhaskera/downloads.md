@@ -49,7 +49,7 @@ A finished **model** appears under *Yours* in the recipe form. A finished **data
 
 A dataset version is a **name, a number and a fingerprint of the content**, so you can say exactly which data made a model, even after the files were edited.
 
-In **Data** on the Train page press **Register data**, give a name, and choose a tokenised cache or your raw data. Bhaskera reads the files once (in the background) and records the fingerprint, row count, size, source, an optional note and, for a tokenised cache, the sequence length and tokenizer.
+In **Data** on the Train page press **Register data**, give a name, and choose a tokenised cache or your raw data. ExaAI reads the files once (in the background) and records the fingerprint, row count, size, source, an optional note and, for a tokenised cache, the sequence length and tokenizer.
 
 - Same content keeps its version; changed content becomes the next number (**New version** prefills the dialog). Old versions stay.
 - A version shows **unchanged**, **changed** or **folder missing**, checked without reading the files; **Verify** reads them and compares the fingerprint.
