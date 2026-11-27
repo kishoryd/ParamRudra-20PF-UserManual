@@ -295,7 +295,7 @@
           
   
   
-  Bhaskera
+  ExaAI
 
         </a>
       </li>
@@ -822,7 +822,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera
+    ExaAI
   
 
     
@@ -838,7 +838,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Bhaskera
+    ExaAI
   
 
           </label>
@@ -890,7 +890,7 @@
   <span class="md-ellipsis">
     
   
-    Why Bhaskera
+    Why ExaAI
   
 
     
@@ -950,7 +950,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera Dashboard
+    ExaAI Dashboard
   
 
     
@@ -2761,7 +2761,7 @@
 
 <h1 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>A Bhaskera job can be followed in three places:</p>
+<p>An ExaAI job can be followed in three places:</p>
 <table>
 <thead>
 <tr>
@@ -2855,12 +2855,12 @@
 <code>=== training exit code: 0 ===</code>.</p>
 </div>
 <h2 id="gpu-energy-used">GPU energy used<a class="headerlink" href="#gpu-energy-used" title="Permanent link">&para;</a></h2>
-<p>Every run records the power its GPUs draw (summed over all the GPUs of the job, every ten steps). Bhaskera works out the energy from that curve: the area under it, in kWh.
-It shows on the Bhaskera Dashboard as <strong>GPU energy used</strong> (a total), as a <strong>GPU energy</strong> column in the runs table, and as <strong>GPU energy so far</strong> on a job that is running. The figure is the sum, over the readings, of the time between two readings multiplied by the average of the two power values.</p>
+<p>Every run records the power its GPUs draw (summed over all the GPUs of the job, every ten steps). ExaAI works out the energy from that curve: the area under it, in kWh.
+It shows on the ExaAI Dashboard as <strong>GPU energy used</strong> (a total), as a <strong>GPU energy</strong> column in the runs table, and as <strong>GPU energy so far</strong> on a job that is running. The figure is the sum, over the readings, of the time between two readings multiplied by the average of the two power values.</p>
 <ul>
 <li>It counts the GPUs only. CPUs, memory, fans, cooling and the network are not included, so the node's real use is higher.</li>
 <li>It covers the time between the first and the last power reading, which is the training itself (not the minutes the model takes to load).</li>
-<li>A run made with an older Bhaskera has no figure and shows a dash, because the default metric level used to drop the power reading. Nothing is estimated for it.</li>
+<li>A run made with an older ExaAI has no figure and shows a dash, because the default metric level used to drop the power reading. Nothing is estimated for it.</li>
 <li>It is a measurement of what a run used. It is not a comparison with another method or another tool.</li>
 </ul>
 <h2 id="mlflow-dashboard">MLflow Dashboard<a class="headerlink" href="#mlflow-dashboard" title="Permanent link">&para;</a></h2>
@@ -2971,7 +2971,7 @@ them, and puts everything behind one address.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">The same page starts jobs</p>
-<p>The page also starts jobs, opens a chat with a trained model and runs benchmarks: see <a href="../homepage/">Bhaskera Dashboard</a>.</p>
+<p>The page also starts jobs, opens a chat with a trained model and runs benchmarks: see <a href="../homepage/">ExaAI Dashboard</a>.</p>
 </div>
 <p>Run that command on your laptop, leave it open, and open <a href="http://localhost:8265">http://localhost:8265</a>. That page lists your running
 jobs, and for each one a link to its <strong>Ray Dashboard</strong> and its <strong>Grafana charts</strong>, and a link to <strong>MLflow</strong>.
@@ -2995,7 +2995,7 @@ computer without any setup.</p>
   or full stands out here.</li>
 <li><strong>Cluster utilization</strong> (on the Overview page) and <strong>Metrics</strong> draw GPU, CPU and memory over time for
   every node. They are Grafana charts, also reached from the page under <strong>Grafana charts</strong>. They are there when
-  Prometheus and Grafana are installed next to Bhaskera (the module sets <code>BHASKERA_OBSERVABILITY</code>); the
+  Prometheus and Grafana are installed next to ExaAI (the module sets <code>BHASKERA_OBSERVABILITY</code>); the
   job log says <code>charts: Prometheus and Grafana started</code> when they run. Without them the node list still
   works, only the charts are missing.</li>
 <li><strong>Jobs</strong> shows the training job and its workers; <strong>Logs</strong> has the output of each worker, which helps when

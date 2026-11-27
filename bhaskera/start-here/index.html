@@ -295,7 +295,7 @@
           
   
   
-  Bhaskera
+  ExaAI
 
         </a>
       </li>
@@ -822,7 +822,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera
+    ExaAI
   
 
     
@@ -838,7 +838,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Bhaskera
+    ExaAI
   
 
           </label>
@@ -890,7 +890,7 @@
   <span class="md-ellipsis">
     
   
-    Why Bhaskera
+    Why ExaAI
   
 
     
@@ -1165,7 +1165,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera Dashboard
+    ExaAI Dashboard
   
 
     
@@ -2954,7 +2954,7 @@
 <li><strong><a href="#case-2-i-bring-my-own-model-and-my-own-data">I bring my own model and my own data</a></strong>, tokenised or not.</li>
 <li><strong><a href="#case-3-benchmark-a-model-you-already-have">I only want to benchmark a model I already have</a></strong>: no training.</li>
 </ol>
-<p>What was run on PARAM Rudra for this page: option B of Case 1 (tokenise and train, end to end, with the small examples shown), the tokenising of CSV, TSV and JSON data, the checks of option A, and the benchmark of Case 3. The 14 B training of option A and the "already tokenised" route in Case 2 follow the same code but were not repeated here. A web page does the same things with buttons (<a href="../homepage/">Bhaskera Dashboard</a>); this page uses the terminal because it shows exactly what happens.</p>
+<p>What was run on PARAM Rudra for this page: option B of Case 1 (tokenise and train, end to end, with the small examples shown), the tokenising of CSV, TSV and JSON data, the checks of option A, and the benchmark of Case 3. The 14 B training of option A and the "already tokenised" route in Case 2 follow the same code but were not repeated here. A web page does the same things with buttons (<a href="../homepage/">ExaAI Dashboard</a>); this page uses the terminal because it shows exactly what happens.</p>
 <h2 id="the-words-you-will-meet">The words you will meet<a class="headerlink" href="#the-words-you-will-meet" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -3025,7 +3025,7 @@
 </code></pre></div>
 <p>You supply a <strong>model</strong> and <strong>data</strong>. Tokenising turns the data into numbers (a few minutes, on CPUs). A <strong>recipe</strong> names the model, the tokenised data and the settings. <code>./submit.sh</code> checks the recipe, asks Slurm for GPUs and starts training. When it ends you have an adapter (or checkpoints), and you can benchmark it, chat with it and save it under a name.</p>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
-<p>Log in, load Bhaskera and make your <strong>run folder</strong>: the one place where your recipes, logs and checkpoints go.</p>
+<p>Log in, load ExaAI and make your <strong>run folder</strong>: the one place where your recipes, logs and checkpoints go.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>ssh<span class="w"> </span>-p<span class="w"> </span><span class="m">4422</span><span class="w"> </span>&lt;user&gt;@paramrudra.cdacb.in
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>bhaskera/1.0.0
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>$<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$BHASKERA_KIT</span>/.<span class="w"> </span>/scratch/&lt;project&gt;/&lt;username&gt;/bhaskera-runs/
@@ -3069,7 +3069,7 @@
 </code></pre></div>
 <p>You will see one line per step with the loss (how wrong the model still is: it should fall), and the run ends with <code>=== training exit code: 0 ===</code>. See <a href="../monitoring/">Monitoring</a> for what each number means.</p>
 <h3 id="option-b-a-public-model-and-dataset-by-name">Option B: a public model and dataset, by name<a class="headerlink" href="#option-b-a-public-model-and-dataset-by-name" title="Permanent link">&para;</a></h3>
-<p>Here the model and the dataset live on Hugging Face. You do not download them yourself: name them, and Bhaskera fetches them first. This example uses a small model (Qwen3-0.6B) and the public Alpaca instruction dataset, so it is quick.</p>
+<p>Here the model and the dataset live on Hugging Face. You do not download them yourself: name them, and ExaAI fetches them first. This example uses a small model (Qwen3-0.6B) and the public Alpaca instruction dataset, so it is quick.</p>
 <p><strong>1. Tokenise.</strong> Copy the ready recipe, which already names the model and the dataset:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$<span class="w"> </span>cp<span class="w"> </span>recipes/tokenize-hf-name.yaml<span class="w"> </span>recipes/alpaca-tokenize.yaml
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>$<span class="w"> </span>nano<span class="w"> </span>recipes/alpaca-tokenize.yaml<span class="w">       </span><span class="c1"># only cache_dir: replace &lt;project&gt;/&lt;username&gt;</span>
@@ -3166,7 +3166,7 @@
 <p>The numbers depend on the model's tokenizer and on <code>seq_len</code>. A cache made for Qwen3-14B is right for Qwen3 models, not for Llama. Tokenise again for another family.</p>
 </div>
 <h3 id="your-data-already-tokenised">Your data, already tokenised<a class="headerlink" href="#your-data-already-tokenised" title="Permanent link">&para;</a></h3>
-<p>If your data is already tokenised, skip the step above. Bhaskera trains from a <strong>folder of Parquet files</strong> with these columns:</p>
+<p>If your data is already tokenised, skip the step above. ExaAI trains from a <strong>folder of Parquet files</strong> with these columns:</p>
 <table>
 <thead>
 <tr>
@@ -3196,7 +3196,7 @@
 <a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span><span class="nt">tokenized_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/scratch/&lt;project&gt;/&lt;username&gt;/mydata/train_tokenised</span>
 <a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">  </span><span class="nt">val_tokenized_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/scratch/&lt;project&gt;/&lt;username&gt;/mydata/val_tokenised</span><span class="w">     </span><span class="c1"># optional</span>
 </code></pre></div>
-<p>Write a small <code>metadata.json</code> next to the Parquet files if you can (<code>{"model_name": "&lt;model folder&gt;", "seq_len": 4096}</code>): without it Bhaskera cannot check the length and tokenizer against your model, and warns instead. Data you tokenised yourself works from the command line; the web page lists only caches that have a <code>metadata.json</code>.</p>
+<p>Write a small <code>metadata.json</code> next to the Parquet files if you can (<code>{"model_name": "&lt;model folder&gt;", "seq_len": 4096}</code>): without it ExaAI cannot check the length and tokenizer against your model, and warns instead. Data you tokenised yourself works from the command line; the web page lists only caches that have a <code>metadata.json</code>.</p>
 <h3 id="train">Train<a class="headerlink" href="#train" title="Permanent link">&para;</a></h3>
 <p>Copy a ready recipe for your model size (see <a href="../recipes/">Recipes</a>), and set the model, the data and the folder for checkpoints:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>$<span class="w"> </span>cp<span class="w"> </span>recipes/qwen3-14b-qlora.yaml<span class="w"> </span>recipes/my-run.yaml
@@ -3235,7 +3235,7 @@
 <a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>$<span class="w"> </span>./submit.sh<span class="w"> </span><span class="nb">eval</span><span class="w"> </span>--model<span class="w"> </span>&lt;model<span class="w"> </span>folder&gt;<span class="w"> </span>--tasks<span class="w"> </span>my_test<span class="w"> </span>--save-samples
 <a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>bhaskera.launcher.evaluate<span class="w"> </span>review<span class="w"> </span>&lt;samples<span class="w"> </span>folder&gt;<span class="w">      </span><span class="c1"># what is right, what is wrong, with the answers</span>
 </code></pre></div>
-<p>The result is saved in the <code>--out</code> file. Add <code>--mlflow</code> to keep it in MLflow too. Once you have trained a model, <code>--run &lt;run id&gt;</code> (or a registered name) benchmarks it <em>against its base model</em> in one go (<a href="../homepage/#test-the-model-on-your-own-questions-and-find-what-to-correct">Bhaskera Dashboard</a> and <a href="../registry/">Model Registry</a>).</p>
+<p>The result is saved in the <code>--out</code> file. Add <code>--mlflow</code> to keep it in MLflow too. Once you have trained a model, <code>--run &lt;run id&gt;</code> (or a registered name) benchmarks it <em>against its base model</em> in one go (<a href="../homepage/#test-the-model-on-your-own-questions-and-find-what-to-correct">ExaAI Dashboard</a> and <a href="../registry/">Model Registry</a>).</p>
 <h2 id="when-something-goes-wrong">When something goes wrong<a class="headerlink" href="#when-something-goes-wrong" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -3277,7 +3277,7 @@
 <li><a href="../data/">Data Format</a>: file types, column layouts and plain text.</li>
 <li><a href="../downloads/">Downloads and Dataset Versions</a>: downloading, and naming and versioning your data.</li>
 <li><a href="../monitoring/">Monitoring</a>: reading the step log, MLflow, and the GPU energy a run used.</li>
-<li><a href="../homepage/">Bhaskera Dashboard</a>: the same things with buttons, plus chat with the model you trained.</li>
+<li><a href="../homepage/">ExaAI Dashboard</a>: the same things with buttons, plus chat with the model you trained.</li>
 <li><a href="../registry/">Model Registry</a>: keep a trained model under a name, with a note.</li>
 </ul>
 
@@ -3321,7 +3321,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../why/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Why Bhaskera">
+          <a href="../why/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Why ExaAI">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3331,20 +3331,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Why Bhaskera
+                Why ExaAI
               </div>
             </div>
           </a>
         
         
           
-          <a href="../homepage/" class="md-footer__link md-footer__link--next" aria-label="Next: Bhaskera Dashboard">
+          <a href="../homepage/" class="md-footer__link md-footer__link--next" aria-label="Next: ExaAI Dashboard">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Bhaskera Dashboard
+                ExaAI Dashboard
               </div>
             </div>
             <div class="md-footer__button md-icon">

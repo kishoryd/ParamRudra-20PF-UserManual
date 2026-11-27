@@ -295,7 +295,7 @@
           
   
   
-  Bhaskera
+  ExaAI
 
         </a>
       </li>
@@ -822,7 +822,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera
+    ExaAI
   
 
     
@@ -838,7 +838,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Bhaskera
+    ExaAI
   
 
           </label>
@@ -890,7 +890,7 @@
   <span class="md-ellipsis">
     
   
-    Why Bhaskera
+    Why ExaAI
   
 
     
@@ -950,7 +950,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera Dashboard
+    ExaAI Dashboard
   
 
     
@@ -2830,7 +2830,7 @@
 </thead>
 <tbody>
 <tr>
-<td>Load Bhaskera</td>
+<td>Load ExaAI</td>
 <td><code>module load bhaskera/1.0.0</code> (own installation: <code>source $BHASKERA_DIR/.venv/bin/activate</code>)</td>
 </tr>
 <tr>
@@ -2862,8 +2862,8 @@
 <td><code>bhaskera-dashboard start --port 5055</code> / <code>status</code> / <code>tunnel</code> / <code>stop</code></td>
 </tr>
 <tr>
-<td>Bhaskera Dashboard: jobs, start, chat</td>
-<td><code>bhaskera-dashboard ray</code> (see <a href="../homepage/">Bhaskera Dashboard</a>)</td>
+<td>ExaAI Dashboard: jobs, start, chat</td>
+<td><code>bhaskera-dashboard ray</code> (see <a href="../homepage/">ExaAI Dashboard</a>)</td>
 </tr>
 <tr>
 <td>Chat with a trained run</td>
@@ -2897,8 +2897,8 @@
 <li>If the page opens but <code>mlflow.localhost</code> is refused, the browser may be trying the IPv6 address (<code>::1</code>) while your tunnel listens on IPv4 only. Add a second forward to the
   SSH command, <code>-L [::1]:8265:localhost:&lt;port&gt;</code>, or use Chrome or Firefox, which resolve <code>*.localhost</code> themselves.</li>
 <li>If MLflow itself is not running on the login node, start it with <code>bhaskera-dashboard start</code>.</li>
-<li>The Bhaskera dashboard's <strong>Models</strong> and <strong>Runs</strong> sections do not need MLflow's page: they read the same files directly.
-On PARAM Rudra the module is found on every login node except login04, whose <code>MODULEPATH</code> lacks <code>/home/apps/AIStack</code> (a setup difference on that node, not a Bhaskera fault). Use another login node, or add the path yourself: <code>module use /home/apps/AIStack</code>, then load it. If it is unknown elsewhere, the module cache may be out of date: <code>module --ignore_cache load bhaskera/1.0.0</code>.</li>
+<li>The ExaAI dashboard's <strong>Models</strong> and <strong>Runs</strong> sections do not need MLflow's page: they read the same files directly.
+On PARAM Rudra the module is found on every login node except login04, whose <code>MODULEPATH</code> lacks <code>/home/apps/AIStack</code> (a setup difference on that node, not an ExaAI fault). Use another login node, or add the path yourself: <code>module use /home/apps/AIStack</code>, then load it. If it is unknown elsewhere, the module cache may be out of date: <code>module --ignore_cache load bhaskera/1.0.0</code>.</li>
 </ul>
 
 

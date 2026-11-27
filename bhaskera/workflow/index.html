@@ -295,7 +295,7 @@
           
   
   
-  Bhaskera
+  ExaAI
 
         </a>
       </li>
@@ -822,7 +822,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera
+    ExaAI
   
 
     
@@ -838,7 +838,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Bhaskera
+    ExaAI
   
 
           </label>
@@ -890,7 +890,7 @@
   <span class="md-ellipsis">
     
   
-    Why Bhaskera
+    Why ExaAI
   
 
     
@@ -950,7 +950,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera Dashboard
+    ExaAI Dashboard
   
 
     
@@ -3115,7 +3115,7 @@ model you will train, then submit:</p>
 <a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
 <a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="nb">set</span><span class="w"> </span>-uo<span class="w"> </span>pipefail
 <a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="nv">CONFIG</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">1</span><span class="p">:?usage: sbatch tokenize.sbatch &lt;tokenize-config.yaml&gt;</span><span class="si">}</span><span class="s2">"</span>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>:<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">BHASKERA_DIR</span><span class="p">:?export BHASKERA_DIR=/scratch/&lt;project&gt;/&lt;username&gt;/Bhaskera before submitting</span><span class="si">}</span><span class="s2">"</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>:<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">BHASKERA_DIR</span><span class="p">:?export BHASKERA_DIR=/scratch/&lt;project&gt;/&lt;username&gt;/ExaAI before submitting</span><span class="si">}</span><span class="s2">"</span>
 <a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="nb">export</span><span class="w"> </span><span class="nv">HF_HUB_OFFLINE</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">HF_DATASETS_OFFLINE</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">TRANSFORMERS_OFFLINE</span><span class="o">=</span><span class="m">1</span>
 <a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="nb">source</span><span class="w"> </span><span class="s2">"</span><span class="nv">$BHASKERA_DIR</span><span class="s2">/bhaskera-activate.sh"</span>
 <a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="nb">export</span><span class="w"> </span><span class="nv">RAY_TMPDIR</span><span class="o">=</span><span class="s2">"/tmp/ray_</span><span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span><span class="s2">"</span>
@@ -3183,7 +3183,7 @@ per GPU:</p>
 <a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
 <a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="nb">set</span><span class="w"> </span>-uo<span class="w"> </span>pipefail
 <a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="nv">CONFIG</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">1</span><span class="p">:?usage: sbatch train.sbatch &lt;config.yaml&gt;</span><span class="si">}</span><span class="s2">"</span>
-<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>:<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">BHASKERA_DIR</span><span class="p">:?export BHASKERA_DIR=/scratch/&lt;project&gt;/&lt;username&gt;/Bhaskera before submitting</span><span class="si">}</span><span class="s2">"</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>:<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">BHASKERA_DIR</span><span class="p">:?export BHASKERA_DIR=/scratch/&lt;project&gt;/&lt;username&gt;/ExaAI before submitting</span><span class="si">}</span><span class="s2">"</span>
 <a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>
 <a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="nb">export</span><span class="w"> </span><span class="nv">HF_HUB_OFFLINE</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">HF_DATASETS_OFFLINE</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">TRANSFORMERS_OFFLINE</span><span class="o">=</span><span class="m">1</span>
 <a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="nb">export</span><span class="w"> </span><span class="nv">MLFLOW_ALLOW_FILE_STORE</span><span class="o">=</span><span class="nb">true</span>
@@ -3239,7 +3239,7 @@ run ends. Submitting the job again with the same <code>save_dir</code> and a lar
 <p class="admonition-title">Keep the adapter</p>
 <p>Steps 6 to 9 use the <strong>adapter</strong> the run stores, which needs <code>logging.mlflow_log_adapter: true</code>. The shipped recipes and the recipes the dashboard writes set it. A full fine-tune stores no adapter, so it has no Chat, Benchmark by run or Register.</p>
 </div>
-<p>Steps 5 to 9 need the <strong>run id</strong> of the finished training run: the 32-character id in the <strong>Runs</strong> table of the dashboard (and in MLflow's run page). Every command below can also be done with a button on the <a href="../homepage/">Bhaskera dashboard</a>; the commands are shown because they work from any terminal.</p>
+<p>Steps 5 to 9 need the <strong>run id</strong> of the finished training run: the 32-character id in the <strong>Runs</strong> table of the dashboard (and in MLflow's run page). Every command below can also be done with a button on the <a href="../homepage/">ExaAI dashboard</a>; the commands are shown because they work from any terminal.</p>
 <h2 id="step-5-watch-it-mlflow-ray-dashboard-grafana">Step 5: Watch It (MLflow, Ray Dashboard, Grafana)<a class="headerlink" href="#step-5-watch-it-mlflow-ray-dashboard-grafana" title="Permanent link">&para;</a></h2>
 <p>Open the dashboard on a login node. Run this on your laptop and leave it open (the command comes from <code>bhaskera-dashboard ray --info</code>; add <code>--node login01</code> to land on a login node of your choice, and see <a href="../monitoring/#ray-dashboard-charts-and-mlflow-in-one-place">Monitoring</a>):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>$<span class="w"> </span>ssh<span class="w"> </span>-p<span class="w"> </span><span class="m">4422</span><span class="w"> </span>-L<span class="w"> </span><span class="m">8265</span>:localhost:&lt;port&gt;<span class="w"> </span>&lt;user&gt;@paramrudra.cdacb.in<span class="w"> </span><span class="s2">"bash -lc 'module load bhaskera/1.0.0 &amp;&amp; bhaskera-dashboard ray'"</span>
@@ -3267,7 +3267,7 @@ run ends. Submitting the job again with the same <code>save_dir</code> and a lar
 <tr>
 <td><strong>Grafana</strong> <em>(optional)</em>, shown as <strong>GPU charts</strong></td>
 <td>GPU, CPU and memory over time for every node</td>
-<td>Prometheus and Grafana installed next to Bhaskera; without them the other two still work</td>
+<td>Prometheus and Grafana installed next to ExaAI; without them the other two still work</td>
 </tr>
 </tbody>
 </table>
@@ -3288,7 +3288,7 @@ run ends. Submitting the job again with the same <code>save_dir</code> and a lar
 <a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>$<span class="w"> </span>./submit.sh<span class="w"> </span><span class="nb">eval</span><span class="w"> </span>--run<span class="w"> </span>&lt;run<span class="w"> </span>id&gt;<span class="w"> </span>--tasks<span class="w"> </span>my_test<span class="w"> </span>--save-samples
 <a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>bhaskera.launcher.evaluate<span class="w"> </span>review<span class="w"> </span>&lt;folder&gt;<span class="w">        </span><span class="c1"># fixed by tuning, broken by tuning, still wrong</span>
 </code></pre></div>
-<p><code>review</code> sorts every example into <strong>fixed by tuning</strong>, <strong>broken by tuning</strong> (the base model had it right), <strong>still wrong</strong> and <strong>still right</strong>. Fix or add training examples for what is still wrong, tokenise again, train again and run the same test: the numbers show whether it helped. More in <a href="../homepage/#test-the-model-on-your-own-questions-and-find-what-to-correct">The Bhaskera Dashboard</a>.</p>
+<p><code>review</code> sorts every example into <strong>fixed by tuning</strong>, <strong>broken by tuning</strong> (the base model had it right), <strong>still wrong</strong> and <strong>still right</strong>. Fix or add training examples for what is still wrong, tokenise again, train again and run the same test: the numbers show whether it helped. More in <a href="../homepage/#test-the-model-on-your-own-questions-and-find-what-to-correct">The ExaAI Dashboard</a>.</p>
 <h2 id="step-8-benchmark-against-the-base-model">Step 8: Benchmark Against the Base Model<a class="headerlink" href="#step-8-benchmark-against-the-base-model" title="Permanent link">&para;</a></h2>
 <p>Training loss does not say what the model can still do. Download the test data once on a login node (compute nodes have no internet), then run the standard tests on the base and the tuned model:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>bhaskera.launcher.evaluate<span class="w"> </span>prepare<span class="w"> </span>--tasks<span class="w"> </span>arc_easy,hellaswag
@@ -3342,7 +3342,7 @@ run ends. Submitting the job again with the same <code>save_dir</code> and a lar
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../homepage/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Bhaskera Dashboard">
+          <a href="../homepage/" class="md-footer__link md-footer__link--prev" aria-label="Previous: ExaAI Dashboard">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3352,7 +3352,7 @@ run ends. Submitting the job again with the same <code>save_dir</code> and a lar
                 Previous
               </span>
               <div class="md-ellipsis">
-                Bhaskera Dashboard
+                ExaAI Dashboard
               </div>
             </div>
           </a>

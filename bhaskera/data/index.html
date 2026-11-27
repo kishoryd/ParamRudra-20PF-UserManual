@@ -295,7 +295,7 @@
           
   
   
-  Bhaskera
+  ExaAI
 
         </a>
       </li>
@@ -822,7 +822,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera
+    ExaAI
   
 
     
@@ -838,7 +838,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Bhaskera
+    ExaAI
   
 
           </label>
@@ -890,7 +890,7 @@
   <span class="md-ellipsis">
     
   
-    Why Bhaskera
+    Why ExaAI
   
 
     
@@ -950,7 +950,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera Dashboard
+    ExaAI Dashboard
   
 
     
@@ -2806,7 +2806,7 @@
 <div class="admonition warning">
 <p class="admonition-title">Good to know</p>
 <ul>
-<li><strong><code>scored_response</code></strong> keeps only rows with <code>score &gt;= min_score</code> (<code>format_options: {min_score: 0.7}</code>): fine-tuning on the good answers. It is <strong>not</strong> reward-model training or reinforcement learning; Bhaskera does neither.</li>
+<li><strong><code>scored_response</code></strong> keeps only rows with <code>score &gt;= min_score</code> (<code>format_options: {min_score: 0.7}</code>): fine-tuning on the good answers. It is <strong>not</strong> reward-model training or reinforcement learning; ExaAI does neither.</li>
 <li><strong><code>tool_calling</code></strong> needs a model whose chat template supports tools (Qwen3, Llama 3.1+, Mistral and others). If tool schemas differ between rows, store <code>tools</code> as JSON text.</li>
 <li><strong><code>reasoning</code></strong> writes <code>&lt;think&gt;…&lt;/think&gt;</code> before the answer (<code>think_open</code> / <code>think_close</code> change the markers). Reasoning is long: use a generous <code>seq_len</code>, since longer rows are cut.</li>
 <li><strong>No <code>val_path</code>:</strong> only the training data is tokenised and training runs without an evaluation set.</li>
@@ -2830,7 +2830,7 @@
 <li>One file is read by one worker, so split a very large file. Files are read as UTF-8. These two keys go in the recipe file; Create recipe does not ask for them.</li>
 </ul>
 <h2 id="data-you-tokenised-yourself">Data you tokenised yourself<a class="headerlink" href="#data-you-tokenised-yourself" title="Permanent link">&para;</a></h2>
-<p>A folder of Parquet files with <code>input_ids</code> and <code>labels</code> (and <code>attention_mask</code>, or set <code>data.pack_sequences: true</code>) works as <code>data.tokenized_path</code>, without Bhaskera's tokenise step. Rename columns with <code>data.column_map</code>. Write a <code>metadata.json</code> (<code>{"model_name": "&lt;model folder&gt;", "seq_len": 4096}</code>) next to the files: without it Bhaskera cannot check that the length and tokenizer match, and the dashboard does not list the folder. Rows are never re-padded, so <code>data.seq_len</code> must equal their length.</p>
+<p>A folder of Parquet files with <code>input_ids</code> and <code>labels</code> (and <code>attention_mask</code>, or set <code>data.pack_sequences: true</code>) works as <code>data.tokenized_path</code>, without ExaAI's tokenise step. Rename columns with <code>data.column_map</code>. Write a <code>metadata.json</code> (<code>{"model_name": "&lt;model folder&gt;", "seq_len": 4096}</code>) next to the files: without it ExaAI cannot check that the length and tokenizer match, and the dashboard does not list the folder. Rows are never re-padded, so <code>data.seq_len</code> must equal their length.</p>
 <p>Getting data in from Hugging Face, and naming and versioning it: <a href="../downloads/">Downloads and Dataset Versions</a>.</p>
 
 

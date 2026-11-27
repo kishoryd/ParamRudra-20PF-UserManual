@@ -29,7 +29,7 @@
     
     
       
-        <title>Why Bhaskera - C-DAC PARAM Rudra - 20 PetaFlop HPC System</title>
+        <title>Why ExaAI - C-DAC PARAM Rudra - 20 PetaFlop HPC System</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#why-bhaskera" class="md-skip">
+        <a href="#why-exaai" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Why Bhaskera
+              Why ExaAI
             
           </span>
         </div>
@@ -295,7 +295,7 @@
           
   
   
-  Bhaskera
+  ExaAI
 
         </a>
       </li>
@@ -822,7 +822,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera
+    ExaAI
   
 
     
@@ -838,7 +838,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Bhaskera
+    ExaAI
   
 
           </label>
@@ -899,7 +899,7 @@
   <span class="md-ellipsis">
     
   
-    Why Bhaskera
+    Why ExaAI
   
 
     
@@ -919,7 +919,7 @@
   <span class="md-ellipsis">
     
   
-    Why Bhaskera
+    Why ExaAI
   
 
     
@@ -1104,7 +1104,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera Dashboard
+    ExaAI Dashboard
   
 
     
@@ -2825,11 +2825,11 @@
   
 
 
-<h1 id="why-bhaskera">Why Bhaskera<a class="headerlink" href="#why-bhaskera" title="Permanent link">&para;</a></h1>
+<h1 id="why-exaai">Why ExaAI<a class="headerlink" href="#why-exaai" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>Fine-tuning a large language model on many GPU nodes usually means writing your own launch scripts,
 choosing a parallelism strategy by trial and error, and finding out about memory limits after the job
-has waited in the queue. Bhaskera packages all of that for PARAM Rudra: you pick a recipe, give it your
+has waited in the queue. ExaAI packages all of that for PARAM Rudra: you pick a recipe, give it your
 data and a node count, and it runs. Every recipe in this guide has been run on PARAM Rudra, and the
 numbers below come from those runs.</p>
 <h2 id="what-you-get">What You Get<a class="headerlink" href="#what-you-get" title="Permanent link">&para;</a></h2>
@@ -2967,7 +2967,7 @@ on 128 nodes) by the ratios above:</p>
 <table>
 <thead>
 <tr>
-<th>What Bhaskera does</th>
+<th>What ExaAI does</th>
 <th>Effect, measured</th>
 <th>Why</th>
 </tr>
@@ -2997,8 +2997,8 @@ as noise. The size of each effect depends on the model: the Triton-kernel memory
 example, grows with the vocabulary size and the batch.</p>
 </div>
 <h2 id="how-it-is-built">How It Is Built<a class="headerlink" href="#how-it-is-built" title="Permanent link">&para;</a></h2>
-<p><img alt="Bhaskera architecture on PARAM Rudra" src="../../assets/bhaskera-architecture.svg" /></p>
-<p>Bhaskera is a Python package built on PyTorch, Hugging Face Transformers and PEFT, with Ray for
+<p><img alt="ExaAI architecture on PARAM Rudra" src="../../assets/bhaskera-architecture.svg" /></p>
+<p>ExaAI is a Python package built on PyTorch, Hugging Face Transformers and PEFT, with Ray for
 starting and coordinating the processes across nodes.</p>
 <table>
 <thead>
@@ -3018,7 +3018,7 @@ starting and coordinating the processes across nodes.</p>
 </tr>
 <tr>
 <td><strong>Model</strong></td>
-<td>Any Hugging Face causal language model; Bhaskera inspects it to find its layers, experts, routers and LoRA targets, so no model-specific code is needed</td>
+<td>Any Hugging Face causal language model; ExaAI inspects it to find its layers, experts, routers and LoRA targets, so no model-specific code is needed</td>
 </tr>
 <tr>
 <td><strong>Parallelism</strong></td>

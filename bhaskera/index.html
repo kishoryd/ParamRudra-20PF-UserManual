@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#bhaskera" class="md-skip">
+        <a href="#exaai" class="md-skip">
           Skip to content
         </a>
       
@@ -295,7 +295,7 @@
           
   
   
-  Bhaskera
+  ExaAI
 
         </a>
       </li>
@@ -822,7 +822,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera
+    ExaAI
   
 
     
@@ -838,7 +838,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Bhaskera
+    ExaAI
   
 
           </label>
@@ -926,10 +926,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-bhaskera-brings-to-the-table" class="md-nav__link">
+  <a href="#what-exaai-brings-to-the-table" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Bhaskera brings to the table
+        What ExaAI brings to the table
       
     </span>
   </a>
@@ -1005,7 +1005,7 @@
   <span class="md-ellipsis">
     
   
-    Why Bhaskera
+    Why ExaAI
   
 
     
@@ -1065,7 +1065,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera Dashboard
+    ExaAI Dashboard
   
 
     
@@ -2651,10 +2651,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-bhaskera-brings-to-the-table" class="md-nav__link">
+  <a href="#what-exaai-brings-to-the-table" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What Bhaskera brings to the table
+        What ExaAI brings to the table
       
     </span>
   </a>
@@ -2747,19 +2747,20 @@
   
 
 
-<h1 id="bhaskera">Bhaskera<a class="headerlink" href="#bhaskera" title="Permanent link">&para;</a></h1>
+<h1 id="exaai">ExaAI<a class="headerlink" href="#exaai" title="Permanent link">&para;</a></h1>
+<p><img alt="ExaAI, powered by Bhaskera" src="assets/exaai-logo.svg" width="330" /></p>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Bhaskera teaches a pre-trained language model something new, on a cluster of GPUs, from the command line. You give it three things: a <strong>model</strong> to start from, <strong>data</strong> to learn from, and one small file (a <em>recipe</em>) that says how. It does the rest: it checks that everything is in place, asks Slurm for the GPUs, starts the training across all of them, saves progress as it goes, and keeps a record of every run. It handles text models, and models that also read images, video and audio.</p>
-<p>This is called <strong>fine-tuning</strong>. A model such as Qwen3 or Llama has learned general language from a huge amount of text. Fine-tuning continues its training on your own examples (your support tickets, your documents, your question and answer pairs) so that it answers the way you need. Bhaskera is for people who want to do that on a shared Slurm cluster without writing the distributed-training code themselves.</p>
+<p>ExaAI teaches a pre-trained language model something new, on a cluster of GPUs, from the command line. You give it three things: a <strong>model</strong> to start from, <strong>data</strong> to learn from, and one small file (a <em>recipe</em>) that says how. It does the rest: it checks that everything is in place, asks Slurm for the GPUs, starts the training across all of them, saves progress as it goes, and keeps a record of every run. It handles text models, and models that also read images, video and audio.</p>
+<p>This is called <strong>fine-tuning</strong>. A model such as Qwen3 or Llama has learned general language from a huge amount of text. Fine-tuning continues its training on your own examples (your support tickets, your documents, your question and answer pairs) so that it answers the way you need. ExaAI is for people who want to do that on a shared Slurm cluster without writing the distributed-training code themselves.</p>
 <p>On PARAM Rudra it is tested from 1 node up to 128 nodes (256 A100 GPUs). Most runs use <strong>LoRA</strong>: the pre-trained model stays as it is and only a small add-on (an <em>adapter</em>) is trained, which needs far less GPU memory and far less communication between nodes. <strong>Full fine-tuning</strong>, which trains every weight, is available too.</p>
 <p>Official site: <a href="https://github.com/kishoryd/Bhaskera">https://github.com/kishoryd/Bhaskera</a>. If you have never done this before, start with <a href="start-here/">Start Here: Your First Run</a>.</p>
-<h2 id="what-bhaskera-brings-to-the-table">What Bhaskera brings to the table<a class="headerlink" href="#what-bhaskera-brings-to-the-table" title="Permanent link">&para;</a></h2>
-<p>Fine-tuning a large model on a cluster is not one hard step but many small ones, and each can fail in its own way. Bhaskera is the work around the training, as well as the training itself.</p>
+<h2 id="what-exaai-brings-to-the-table">What ExaAI brings to the table<a class="headerlink" href="#what-exaai-brings-to-the-table" title="Permanent link">&para;</a></h2>
+<p>Fine-tuning a large model on a cluster is not one hard step but many small ones, and each can fail in its own way. ExaAI is the work around the training, as well as the training itself.</p>
 <table>
 <thead>
 <tr>
 <th>You need to ...</th>
-<th>What Bhaskera does</th>
+<th>What ExaAI does</th>
 </tr>
 </thead>
 <tbody>
@@ -2801,7 +2802,7 @@
 </tr>
 </tbody>
 </table>
-<p>Two ways to use it: the <strong>command line</strong> (this guide's focus: <code>./submit.sh</code>, a few small commands) and a <strong>web page</strong> that does the same things with buttons (<a href="homepage/">Bhaskera Dashboard</a>). Everything the page does can be done from a terminal.</p>
+<p>Two ways to use it: the <strong>command line</strong> (this guide's focus: <code>./submit.sh</code>, a few small commands) and a <strong>web page</strong> that does the same things with buttons (<a href="homepage/">ExaAI Dashboard</a>). Everything the page does can be done from a terminal.</p>
 <h2 id="pick-your-starting-point">Pick your starting point<a class="headerlink" href="#pick-your-starting-point" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2883,7 +2884,7 @@
 <td>The words, the idea, and three step-by-step cases: no model and no data, your own model and data, benchmarking a model you have</td>
 </tr>
 <tr>
-<td><a href="why/">Why Bhaskera</a></td>
+<td><a href="why/">Why ExaAI</a></td>
 <td>Features, measured benefits, and how it is built</td>
 </tr>
 <tr>
@@ -2935,7 +2936,7 @@
 <td>Measured speed, MFU, memory and accuracy for every model, strategy and node count</td>
 </tr>
 <tr>
-<td><a href="homepage/">Bhaskera Dashboard</a></td>
+<td><a href="homepage/">ExaAI Dashboard</a></td>
 <td>The web page: your jobs, runs, data and models, and the same actions with buttons</td>
 </tr>
 <tr>
@@ -2950,7 +2951,7 @@
 <tr>
 <th>Item</th>
 <th>Value</th>
-<th>Why it matters for Bhaskera</th>
+<th>Why it matters for ExaAI</th>
 </tr>
 </thead>
 <tbody>
@@ -3019,6 +3020,8 @@
 </table>
 <p><code>submit.sh</code> chooses the partition from the node count you ask for. Full policy:
 <a href="../resource-management/">Resource Management</a>.</p>
+<hr />
+<p>© 2026 C-DAC. All rights reserved.</p>
 
 
 
@@ -3077,13 +3080,13 @@
         
         
           
-          <a href="why/" class="md-footer__link md-footer__link--next" aria-label="Next: Why Bhaskera">
+          <a href="why/" class="md-footer__link md-footer__link--next" aria-label="Next: Why ExaAI">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Why Bhaskera
+                Why ExaAI
               </div>
             </div>
             <div class="md-footer__button md-icon">

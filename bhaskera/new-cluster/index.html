@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#setting-up-bhaskera-on-another-cluster" class="md-skip">
+        <a href="#setting-up-exaai-on-another-cluster" class="md-skip">
           Skip to content
         </a>
       
@@ -295,7 +295,7 @@
           
   
   
-  Bhaskera
+  ExaAI
 
         </a>
       </li>
@@ -822,7 +822,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera
+    ExaAI
   
 
     
@@ -838,7 +838,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Bhaskera
+    ExaAI
   
 
           </label>
@@ -890,7 +890,7 @@
   <span class="md-ellipsis">
     
   
-    Why Bhaskera
+    Why ExaAI
   
 
     
@@ -950,7 +950,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera Dashboard
+    ExaAI Dashboard
   
 
     
@@ -1409,10 +1409,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-make-bhaskera-easy-to-start" class="md-nav__link">
+  <a href="#step-3-make-exaai-easy-to-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: Make Bhaskera easy to start
+        Step 3: Make ExaAI easy to start
       
     </span>
   </a>
@@ -2728,10 +2728,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-make-bhaskera-easy-to-start" class="md-nav__link">
+  <a href="#step-3-make-exaai-easy-to-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: Make Bhaskera easy to start
+        Step 3: Make ExaAI easy to start
       
     </span>
   </a>
@@ -2835,12 +2835,12 @@
   
 
 
-<h1 id="setting-up-bhaskera-on-another-cluster">Setting Up Bhaskera on Another Cluster<a class="headerlink" href="#setting-up-bhaskera-on-another-cluster" title="Permanent link">&para;</a></h1>
-<p>This page is for the person who installs Bhaskera on a cluster for the first time: an administrator, or an engineer with a few Slurm GPU nodes. It takes about an hour, most of it waiting for downloads.
-The other pages of this guide describe PARAM Rudra, where Bhaskera has been built and tested. Everything that is specific to a cluster lives in two places you will edit (a cluster profile and a modulefile), so no code needs to change.</p>
+<h1 id="setting-up-exaai-on-another-cluster">Setting Up ExaAI on Another Cluster<a class="headerlink" href="#setting-up-exaai-on-another-cluster" title="Permanent link">&para;</a></h1>
+<p>This page is for the person who installs ExaAI on a cluster for the first time: an administrator, or an engineer with a few Slurm GPU nodes. It takes about an hour, most of it waiting for downloads.
+The other pages of this guide describe PARAM Rudra, where ExaAI has been built and tested. Everything that is specific to a cluster lives in two places you will edit (a cluster profile and a modulefile), so no code needs to change.</p>
 <div class="admonition warning">
 <p class="admonition-title">What has been tested</p>
-<p>Bhaskera has been run end to end only on PARAM Rudra: A100 80 GB GPUs, 2 GPUs per node, InfiniBand, Slurm, Lmod, and compute nodes without internet. On any other cluster, treat your first job as a test and follow the check at the end of this page before you tell users it works.
+<p>ExaAI has been run end to end only on PARAM Rudra: A100 80 GB GPUs, 2 GPUs per node, InfiniBand, Slurm, Lmod, and compute nodes without internet. On any other cluster, treat your first job as a test and follow the check at the end of this page before you tell users it works.
 GPUs other than the A100 80 GB, CPUs other than x86-64, and CUDA versions other than 12.x have not been tried.</p>
 </div>
 <h2 id="what-your-cluster-needs">What your cluster needs<a class="headerlink" href="#what-your-cluster-needs" title="Permanent link">&para;</a></h2>
@@ -2891,7 +2891,7 @@ GPUs other than the A100 80 GB, CPUs other than x86-64, and CUDA versions other 
 </tbody>
 </table>
 <p>Helpful but optional: Lmod or Environment Modules (users then run <code>module load bhaskera</code>), <code>sacctmgr</code> (so the page can show each user's job limits), and a place to keep shared models and data.
-Compute nodes without internet are fine, and are the usual case: Bhaskera switches Hugging Face to offline mode inside jobs.</p>
+Compute nodes without internet are fine, and are the usual case: ExaAI switches Hugging Face to offline mode inside jobs.</p>
 <h2 id="decide-these-first">Decide these first<a class="headerlink" href="#decide-these-first" title="Permanent link">&para;</a></h2>
 <p>You will write these down once, in the cluster profile.</p>
 <table>
@@ -2946,7 +2946,7 @@ Compute nodes without internet are fine, and are the usual case: Bhaskera switch
 <tbody>
 <tr>
 <td><code>src/</code></td>
-<td>The Bhaskera source, at <code>REF</code></td>
+<td>The ExaAI source, at <code>REF</code></td>
 </tr>
 <tr>
 <td><code>python/</code>, <code>venv/</code></td>
@@ -2971,7 +2971,7 @@ Compute nodes without internet are fine, and are the usual case: Bhaskera switch
 </code></pre></div>
 <p>If the login node cannot reach the internet, the installer cannot run as it is: it needs <code>pypi.org</code>, <code>download.pytorch.org</code> and <code>github.com</code>. Use a machine that can, or an internal mirror; offline installs have not been tried.</p>
 <h2 id="step-2-write-the-cluster-profile">Step 2: Write the cluster profile<a class="headerlink" href="#step-2-write-the-cluster-profile" title="Permanent link">&para;</a></h2>
-<p>The profile tells Bhaskera what your nodes and partitions are. Copy the example and edit it:</p>
+<p>The profile tells ExaAI what your nodes and partitions are. Copy the example and edit it:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>cp<span class="w"> </span><span class="nv">$PREFIX</span>/share/kit/clusters/example.yaml<span class="w"> </span><span class="nv">$PREFIX</span>/share/kit/clusters/mycluster.yaml
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">My Cluster</span><span class="w">          </span><span class="c1"># shown on the dashboard</span>
@@ -2986,12 +2986,12 @@ Compute nodes without internet are fine, and are the usual case: Bhaskera switch
 <a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">max_nodes</span><span class="p">:</span><span class="w"> </span><span class="nv">32</span><span class="p p-Indicator">,</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="nv">gpu</span><span class="p p-Indicator">,</span><span class="nt">   max_hours</span><span class="p">:</span><span class="w"> </span><span class="nv">48</span><span class="p p-Indicator">}</span>
 </code></pre></div>
 <p>Every line is optional. A job of up to <code>max_nodes</code> nodes goes to the first partition that fits it, with that partition's time limit. Delete <code>param-rudra.yaml</code> from the copy users get if you do not want it there.
-Check what Bhaskera reads from it:</p>
+Check what ExaAI reads from it:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span><span class="nv">BHASKERA_CLUSTER_PROFILE</span><span class="o">=</span><span class="nv">$PREFIX</span>/share/kit/clusters/mycluster.yaml<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="nv">$PREFIX</span>/venv/bin/python<span class="w"> </span>-m<span class="w"> </span>bhaskera.launcher.cluster_profile<span class="w"> </span>plan<span class="w"> </span><span class="m">2</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>debug<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="m">64</span><span class="w"> </span>ib0<span class="w"> </span>400G<span class="w">       </span><span class="c1"># partition, hours, GPUs per node, CPUs, interface, memory: here for a job of 2 nodes</span>
 </code></pre></div>
-<h2 id="step-3-make-bhaskera-easy-to-start">Step 3: Make Bhaskera easy to start<a class="headerlink" href="#step-3-make-bhaskera-easy-to-start" title="Permanent link">&para;</a></h2>
+<h2 id="step-3-make-exaai-easy-to-start">Step 3: Make ExaAI easy to start<a class="headerlink" href="#step-3-make-exaai-easy-to-start" title="Permanent link">&para;</a></h2>
 <p><strong>With Lmod.</strong> Copy the modulefile and edit its first lines:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>&lt;a<span class="w"> </span>MODULEPATH<span class="w"> </span>folder&gt;/bhaskera
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>$<span class="w"> </span>cp<span class="w"> </span>slurm/modulefiles/bhaskera/1.0.0.lua<span class="w"> </span>&lt;a<span class="w"> </span>MODULEPATH<span class="w"> </span>folder&gt;/bhaskera/1.0.0.lua
@@ -3009,7 +3009,7 @@ Check what Bhaskera reads from it:</p>
 <p>Compute nodes have no internet, so models and data must be on disk first. A shared place saves every user a download:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="k">$(</span>dirname<span class="w"> </span><span class="nv">$PREFIX</span><span class="k">)</span>/models<span class="w"> </span><span class="k">$(</span>dirname<span class="w"> </span><span class="nv">$PREFIX</span><span class="k">)</span>/data
 </code></pre></div>
-<p>The Bhaskera dashboard lists anything in <code>models/</code> and <code>data/</code> next to the install folder, or in the folders named by <code>BHASKERA_MODELS</code> and <code>BHASKERA_DATA</code>, under <em>Shared on this cluster</em>. Put Hugging Face model folders in <code>models/</code> (users can also fetch their own from the <strong>Downloads</strong> menu of the page). Put tokenised data in <code>data/</code> in folders named <code>&lt;dataset&gt;_&lt;model&gt;_seq&lt;length&gt;_train</code> and <code>…_val</code>: a tokenised folder only fits the model whose tokenizer made it. <code>chmod -R a+rX</code> both folders.</p>
+<p>The ExaAI dashboard lists anything in <code>models/</code> and <code>data/</code> next to the install folder, or in the folders named by <code>BHASKERA_MODELS</code> and <code>BHASKERA_DATA</code>, under <em>Shared on this cluster</em>. Put Hugging Face model folders in <code>models/</code> (users can also fetch their own from the <strong>Downloads</strong> menu of the page). Put tokenised data in <code>data/</code> in folders named <code>&lt;dataset&gt;_&lt;model&gt;_seq&lt;length&gt;_train</code> and <code>…_val</code>: a tokenised folder only fits the model whose tokenizer made it. <code>chmod -R a+rX</code> both folders.</p>
 <h2 id="step-5-tune-what-depends-on-your-gpus">Step 5: Tune what depends on your GPUs<a class="headerlink" href="#step-5-tune-what-depends-on-your-gpus" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -3053,7 +3053,7 @@ Check what Bhaskera reads from it:</p>
 <li>Open the page from your laptop with the SSH command the module prints (<code>bhaskera-dashboard ray --info</code>), and check that the run, its loss curve and its GPU energy are listed.</li>
 </ol>
 <p>Then try 2 nodes. A single node working does not prove the network settings: most multi-node problems show up only here.</p>
-<p>Users need to set nothing: jobs are charged to their login name, and the page makes <code>~/bhaskera-runs</code> for them on first start. If your Slurm accounts are not the login names, tell users to <code>export SLURM_ACCOUNT=&lt;account&gt;</code>. Bhaskera checks the free space of a disk before it writes anything large (checkpoints, prepared data, downloads) and refuses a job on a disk with under 1 GB free, and the page warns on Home below 20 GB; a per-user quota is not visible to it. If home folders have small quotas, tell users to keep their run folder on the large file system (<code>mkdir -p &lt;big &amp;&amp; cp -r $BHASKERA_KIT/. &lt;big/ folder&gt;/bhaskera-runs</code>, then start the page from it): checkpoints are large.</p>
+<p>Users need to set nothing: jobs are charged to their login name, and the page makes <code>~/bhaskera-runs</code> for them on first start. If your Slurm accounts are not the login names, tell users to <code>export SLURM_ACCOUNT=&lt;account&gt;</code>. ExaAI checks the free space of a disk before it writes anything large (checkpoints, prepared data, downloads) and refuses a job on a disk with under 1 GB free, and the page warns on Home below 20 GB; a per-user quota is not visible to it. If home folders have small quotas, tell users to keep their run folder on the large file system (<code>mkdir -p &lt;big &amp;&amp; cp -r $BHASKERA_KIT/. &lt;big/ folder&gt;/bhaskera-runs</code>, then start the page from it): checkpoints are large.</p>
 <h2 id="where-it-breaks-on-a-new-cluster">Where it breaks on a new cluster<a class="headerlink" href="#where-it-breaks-on-a-new-cluster" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

@@ -29,7 +29,7 @@
     
     
       
-        <title>Bhaskera Dashboard - C-DAC PARAM Rudra - 20 PetaFlop HPC System</title>
+        <title>ExaAI Dashboard - C-DAC PARAM Rudra - 20 PetaFlop HPC System</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#bhaskera-dashboard-train-serve-evaluate-monitor" class="md-skip">
+        <a href="#exaai-dashboard-train-serve-evaluate-monitor" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Bhaskera Dashboard
+              ExaAI Dashboard
             
           </span>
         </div>
@@ -295,7 +295,7 @@
           
   
   
-  Bhaskera
+  ExaAI
 
         </a>
       </li>
@@ -822,7 +822,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera
+    ExaAI
   
 
     
@@ -838,7 +838,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Bhaskera
+    ExaAI
   
 
           </label>
@@ -890,7 +890,7 @@
   <span class="md-ellipsis">
     
   
-    Why Bhaskera
+    Why ExaAI
   
 
     
@@ -959,7 +959,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera Dashboard
+    ExaAI Dashboard
   
 
     
@@ -979,7 +979,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera Dashboard
+    ExaAI Dashboard
   
 
     
@@ -2947,7 +2947,7 @@
   
 
 
-<h1 id="bhaskera-dashboard-train-serve-evaluate-monitor">Bhaskera Dashboard: Train, Serve, Evaluate, Monitor<a class="headerlink" href="#bhaskera-dashboard-train-serve-evaluate-monitor" title="Permanent link">&para;</a></h1>
+<h1 id="exaai-dashboard-train-serve-evaluate-monitor">ExaAI Dashboard: Train, Serve, Evaluate, Monitor<a class="headerlink" href="#exaai-dashboard-train-serve-evaluate-monitor" title="Permanent link">&para;</a></h1>
 <p><code>bhaskera-dashboard ray</code> serves one web page for everything you run. It lists your jobs and your recent runs, starts new
 jobs, and lets you talk to a model you have trained. It listens on the login node, is private to your user, and is opened
 from your laptop with the one SSH command described under <a href="../monitoring/#ray-dashboard-charts-and-mlflow-in-one-place">Monitoring</a>.</p>
@@ -2960,7 +2960,7 @@ from your laptop with the one SSH command described under <a href="../monitoring
 Jobs are charged to your login name. <code>module load</code> is needed because a login shell started by <code>ssh host "command"</code> does not load it for you.</p>
 <h2 id="the-pages">The pages<a class="headerlink" href="#the-pages" title="Permanent link">&para;</a></h2>
 <p>The page has five pages, each with its own set of cards. The names across the top are links; point at a name to see a menu of what it holds, or click it to open the page.
-Clicking the Bhaskera logo returns to Home.</p>
+Clicking the ExaAI logo returns to Home.</p>
 <table>
 <thead>
 <tr>
@@ -2998,14 +2998,14 @@ Your name at the top right opens the account menu, with the Guide and <strong>Lo
 <li><strong>Jobs</strong>: state, partition, nodes and GPUs, progress and time left, and the live numbers from the job log (loss,
   evaluation loss and accuracy, MFU, tokens per second, step time, and the GPU energy used so far). The GPU load of each node is one click away. Buttons
   open the Ray Dashboard, the GPU charts, the log, and the run in MLflow.</li>
-<li><strong>Runs</strong>: your recent MLflow runs that Bhaskera made, including finished and failed ones. The table shows the latest 10; <strong>Show 10 more</strong>, <strong>Show all</strong> and <strong>Show fewer</strong> change that.
-  <strong>Remove</strong> on a row takes a finished, failed or stalled run off the list, and <strong>Clear failed and stalled</strong> does that for all of them at once; both ask first. Removing only marks the run deleted in MLflow, so it can be brought back with <code>mlflow runs restore --run-id &lt;id&gt;</code>. Only your own Bhaskera runs can be removed, and never one that is still running. Runs that other tools wrote into the same MLflow store are not listed. A run that stopped writing is marked <em>stalled</em>.
+<li><strong>Runs</strong>: your recent MLflow runs that ExaAI made, including finished and failed ones. The table shows the latest 10; <strong>Show 10 more</strong>, <strong>Show all</strong> and <strong>Show fewer</strong> change that.
+  <strong>Remove</strong> on a row takes a finished, failed or stalled run off the list, and <strong>Clear failed and stalled</strong> does that for all of them at once; both ask first. Removing only marks the run deleted in MLflow, so it can be brought back with <code>mlflow runs restore --run-id &lt;id&gt;</code>. Only your own ExaAI runs can be removed, and never one that is still running. Runs that other tools wrote into the same MLflow store are not listed. A run that stopped writing is marked <em>stalled</em>.
   Runs that were benchmarked show the result, and runs that recorded GPU power show the GPU energy they used (see <a href="../monitoring/#gpu-energy-used">Monitoring</a>).</li>
 <li><strong>Cluster limits and node health</strong> (on Monitor): your job slots in each partition, and any node a job found faulty.
   New jobs keep away from those nodes for three days.</li>
 </ul>
 <h2 id="mlflow-the-ray-dashboard-and-grafana">MLflow, the Ray Dashboard and Grafana<a class="headerlink" href="#mlflow-the-ray-dashboard-and-grafana" title="Permanent link">&para;</a></h2>
-<p>The Bhaskera dashboard is the one address for three tools that each answer a different question. All three are reached through the same tunnel (see <a href="../monitoring/#ray-dashboard-charts-and-mlflow-in-one-place">Monitoring</a>); you never open a second one.</p>
+<p>The ExaAI dashboard is the one address for three tools that each answer a different question. All three are reached through the same tunnel (see <a href="../monitoring/#ray-dashboard-charts-and-mlflow-in-one-place">Monitoring</a>); you never open a second one.</p>
 <table>
 <thead>
 <tr>
@@ -3032,7 +3032,7 @@ Your name at the top right opens the account menu, with the Guide and <strong>Lo
 <td><strong>Grafana</strong></td>
 <td>How did the GPUs and nodes behave over time? GPU, CPU and memory charts for every node</td>
 <td><strong>GPU charts</strong> on Monitor and on each running job</td>
-<td>Prometheus and Grafana installed next to Bhaskera (the install step <code>WITH_CHARTS</code>); without them the node list still works and only the charts are missing</td>
+<td>Prometheus and Grafana installed next to ExaAI (the install step <code>WITH_CHARTS</code>); without them the node list still works and only the charts are missing</td>
 </tr>
 </tbody>
 </table>
@@ -3106,7 +3106,7 @@ With checkpoints off, a run that stops cannot be resumed; it has to start again.
 <strong>Check first</strong> shows how much room the checkpoints have. A recipe whose checkpoints would not fit is refused.</p>
 <p><strong>All settings</strong> lists every option a recipe has (about 160), grouped as in the config file, searchable, each with what it does. Anything you type there wins over the choices above. A name that is not a
 recipe option is refused with the closest real name.</p>
-<p><strong>Custom</strong> is for people who already know the settings: paste or write a whole recipe as YAML, or load one of the starters shipped with Bhaskera (the files in <code>configs/</code>) or one of your recipes and edit it.
+<p><strong>Custom</strong> is for people who already know the settings: paste or write a whole recipe as YAML, or load one of the starters shipped with ExaAI (the files in <code>configs/</code>) or one of your recipes and edit it.
 A copy is saved under your name with its own run name and checkpoint folder, so it never writes over the original run's checkpoints. The Ray Dashboard host stays on the local machine whatever the YAML says.</p>
 <h2 id="chat-with-a-trained-model">Chat with a trained model<a class="headerlink" href="#chat-with-a-trained-model" title="Permanent link">&para;</a></h2>
 <p>Train with <code>logging.mlflow_log_adapter: true</code> so the adapter is stored with the run. Then press <strong>Chat</strong> on a finished run.
@@ -3215,7 +3215,7 @@ you skip all of this: the chat window opens by itself when the model is loaded.<
 <p>The standard benchmarks say little about your own use. Test the model on examples from your own work:</p>
 <ol>
 <li>Put them in a JSONL file on <code>/scratch</code>, one per line: <code>{"question": "...", "answer": "..."}</code>.</li>
-<li>Turn the file into a test (it goes into a <code>tasks</code> folder next to <code>submit.sh</code>, which Bhaskera picks up by itself):
+<li>Turn the file into a test (it goes into a <code>tasks</code> folder next to <code>submit.sh</code>, which ExaAI picks up by itself):
    <code>python -m bhaskera.launcher.evaluate init-task --name my_test --data /scratch/&lt;project&gt;/&lt;username&gt;/my.jsonl</code></li>
 <li>Run it. On the page, open <strong>Benchmark</strong>, then <em>Add a test of your own</em> (the file, the names of the question and answer fields): it runs the command above for you and ticks the test. In the terminal:
    <code>./submit.sh eval --run &lt;run id&gt; --tasks my_test --save-samples</code></li>
@@ -3232,12 +3232,12 @@ that can be worded many ways, change <code>metric_list</code> in the generated f
 During training, <code>logging.mlflow_eval_samples: &lt;n&gt;</code> also stores example predictions on your validation split at every evaluation.</p>
 <h2 id="models">Models<a class="headerlink" href="#models" title="Permanent link">&para;</a></h2>
 <p>The <strong>Models</strong> section (on the Serve page) lists every registered model version: the model, its version, the run it came from, its aliases and its evaluation loss, with <strong>Chat</strong> and <strong>Benchmark</strong>
-buttons. Only versions that Bhaskera registered are listed. It is read from the registry directly, so it works with no job running and does not need MLflow's own page. A pencil next to the name means a hand-off note is kept with the
+buttons. Only versions that ExaAI registered are listed. It is read from the registry directly, so it works with no job running and does not need MLflow's own page. A pencil next to the name means a hand-off note is kept with the
 version; hover over the row to read it. See <a href="../registry/">Saving and Finding Your Models</a>.</p>
 <h2 id="what-job-slots-means">What "job slots" means<a class="headerlink" href="#what-job-slots-means" title="Permanent link">&para;</a></h2>
-<p>The page shows, for example, <em>0 of 4 job slots used in gpu-debug</em>. This is a cluster rule, not a Bhaskera setting: the batch system allows
+<p>The page shows, for example, <em>0 of 4 job slots used in gpu-debug</em>. This is a cluster rule, not an ExaAI setting: the batch system allows
 each user a fixed number of jobs submitted at once in a partition (on PARAM Rudra, <code>gpu-debug</code> allows 4 submitted and 2 running, at most
-1 hour each). Bhaskera reads the limit from Slurm, shows how much of it you use, and checks it before submitting, so a job that would be
+1 hour each). ExaAI reads the limit from Slurm, shows how much of it you use, and checks it before submitting, so a job that would be
 refused is stopped with a clear message. On an account that several people share, everyone's jobs count together.</p>
 <div class="admonition note">
 <p class="admonition-title">Shared accounts</p>

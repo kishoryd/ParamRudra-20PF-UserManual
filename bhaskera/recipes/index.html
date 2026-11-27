@@ -295,7 +295,7 @@
           
   
   
-  Bhaskera
+  ExaAI
 
         </a>
       </li>
@@ -822,7 +822,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera
+    ExaAI
   
 
     
@@ -838,7 +838,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Bhaskera
+    ExaAI
   
 
           </label>
@@ -890,7 +890,7 @@
   <span class="md-ellipsis">
     
   
-    Why Bhaskera
+    Why ExaAI
   
 
     
@@ -950,7 +950,7 @@
   <span class="md-ellipsis">
     
   
-    Bhaskera Dashboard
+    ExaAI Dashboard
   
 
     
@@ -2915,7 +2915,7 @@
 
 <h1 id="recipes">Recipes<a class="headerlink" href="#recipes" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>A recipe is a ready Bhaskera configuration for one model, using the fastest strategy measured on PARAM Rudra.</p>
+<p>A recipe is a ready ExaAI configuration for one model, using the fastest strategy measured on PARAM Rudra.</p>
 <table>
 <thead>
 <tr>
@@ -3045,7 +3045,7 @@ Node counts: any for DDP, QLoRA and FSDP2. Pipeline needs 2 GPUs per node to add
 <p class="admonition-title">How the recipes relate to the benchmark</p>
 <p>The speed and memory in each header are the measured benchmark numbers for that model and method. The recipes were written
 to the same settings (LoRA rank 16, sequence length 4096, the shard group sizes above) and every one loads cleanly in
-Bhaskera's configuration check, but a recipe is a starting point: run <code>DRY_RUN=1 ./submit.sh recipes/&lt;name&gt;.yaml &lt;nodes&gt; 1</code>
+ExaAI's configuration check, but a recipe is a starting point: run <code>DRY_RUN=1 ./submit.sh recipes/&lt;name&gt;.yaml &lt;nodes&gt; 1</code>
 first, which checks the model, data, GPU memory estimate and node count without submitting.</p>
 </div>
 <p>A pipeline recipe splits the model into <em>stages</em> on different GPUs, so the number of GPUs (2 per node) must be
@@ -3065,7 +3065,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 <h3 id="qwen3-14b">Qwen3-14B<a class="headerlink" href="#qwen3-14b" title="Permanent link">&para;</a></h3>
 <details class="example">
 <summary>qwen3-14b-qlora  (QLoRA + DDP)</summary>
-<div class="highlight"><span class="filename">recipes/qwen3-14b-qlora.yaml</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Bhaskera recipe: qwen3-14b-qlora</span>
+<div class="highlight"><span class="filename">recipes/qwen3-14b-qlora.yaml</span><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># ExaAI recipe: qwen3-14b-qlora</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># Model    : Qwen/Qwen3-14B   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-14B)</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># Strategy : ddp + QLoRA 4-bit</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -3173,7 +3173,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>qwen3-14b-ddp  (LoRA + DDP)</summary>
-<div class="highlight"><span class="filename">recipes/qwen3-14b-ddp.yaml</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Bhaskera recipe: qwen3-14b-ddp</span>
+<div class="highlight"><span class="filename">recipes/qwen3-14b-ddp.yaml</span><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># ExaAI recipe: qwen3-14b-ddp</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># Model    : Qwen/Qwen3-14B   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-14B)</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># Strategy : ddp</span>
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -3280,7 +3280,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>qwen3-14b-pipeline  (Pipeline)</summary>
-<div class="highlight"><span class="filename">recipes/qwen3-14b-pipeline.yaml</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Bhaskera recipe: qwen3-14b-pipeline</span>
+<div class="highlight"><span class="filename">recipes/qwen3-14b-pipeline.yaml</span><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># ExaAI recipe: qwen3-14b-pipeline</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># Model    : Qwen/Qwen3-14B   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-14B)</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># Strategy : Pipeline, 4 stages</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -3392,7 +3392,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>qwen3-14b-hsdp  (HSDP)</summary>
-<div class="highlight"><span class="filename">recipes/qwen3-14b-hsdp.yaml</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Bhaskera recipe: qwen3-14b-hsdp</span>
+<div class="highlight"><span class="filename">recipes/qwen3-14b-hsdp.yaml</span><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># ExaAI recipe: qwen3-14b-hsdp</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># Model    : Qwen/Qwen3-14B   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-14B)</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># Strategy : HSDP (shard group of 4 GPUs)</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -3500,7 +3500,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>qwen3-14b-fsdp  (FSDP2)</summary>
-<div class="highlight"><span class="filename">recipes/qwen3-14b-fsdp.yaml</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Bhaskera recipe: qwen3-14b-fsdp</span>
+<div class="highlight"><span class="filename">recipes/qwen3-14b-fsdp.yaml</span><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># ExaAI recipe: qwen3-14b-fsdp</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># Model    : Qwen/Qwen3-14B   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-14B)</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># Strategy : FSDP2 (full shard)</span>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -3608,7 +3608,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 <h3 id="qwen3-30b-a3b-moe">Qwen3-30B-A3B (MoE)<a class="headerlink" href="#qwen3-30b-a3b-moe" title="Permanent link">&para;</a></h3>
 <details class="example">
 <summary>qwen3-30b-a3b-qlora  (QLoRA + DDP)</summary>
-<div class="highlight"><span class="filename">recipes/qwen3-30b-a3b-qlora.yaml</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Bhaskera recipe: qwen3-30b-a3b-qlora</span>
+<div class="highlight"><span class="filename">recipes/qwen3-30b-a3b-qlora.yaml</span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># ExaAI recipe: qwen3-30b-a3b-qlora</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># Model    : Qwen/Qwen3-30B-A3B-Instruct-2507   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-30B-A3B-Instruct-2507)</span>
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># Strategy : DDP + QLoRA 4-bit</span>
 <a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -3722,7 +3722,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>qwen3-30b-a3b-ddp  (LoRA + DDP)</summary>
-<div class="highlight"><span class="filename">recipes/qwen3-30b-a3b-ddp.yaml</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Bhaskera recipe: qwen3-30b-a3b-ddp</span>
+<div class="highlight"><span class="filename">recipes/qwen3-30b-a3b-ddp.yaml</span><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># ExaAI recipe: qwen3-30b-a3b-ddp</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># Model    : Qwen/Qwen3-30B-A3B-Instruct-2507   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-30B-A3B-Instruct-2507)</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># Strategy : DDP</span>
 <a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -3835,7 +3835,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>qwen3-30b-a3b-pipeline  (Pipeline)</summary>
-<div class="highlight"><span class="filename">recipes/qwen3-30b-a3b-pipeline.yaml</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Bhaskera recipe: qwen3-30b-a3b-pipeline</span>
+<div class="highlight"><span class="filename">recipes/qwen3-30b-a3b-pipeline.yaml</span><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># ExaAI recipe: qwen3-30b-a3b-pipeline</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># Model    : Qwen/Qwen3-30B-A3B-Instruct-2507   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-30B-A3B-Instruct-2507)</span>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># Strategy : pipeline (pipeline, 4 stages)</span>
 <a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -3952,7 +3952,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>qwen3-30b-a3b-hsdp  (HSDP)</summary>
-<div class="highlight"><span class="filename">recipes/qwen3-30b-a3b-hsdp.yaml</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Bhaskera recipe: qwen3-30b-a3b-hsdp</span>
+<div class="highlight"><span class="filename">recipes/qwen3-30b-a3b-hsdp.yaml</span><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># ExaAI recipe: qwen3-30b-a3b-hsdp</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># Model    : Qwen/Qwen3-30B-A3B-Instruct-2507   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-30B-A3B-Instruct-2507)</span>
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1"># Strategy : HSDP (shard group of 4 GPUs)</span>
 <a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -4066,7 +4066,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>qwen3-30b-a3b-fsdp  (FSDP2)</summary>
-<div class="highlight"><span class="filename">recipes/qwen3-30b-a3b-fsdp.yaml</span><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Bhaskera recipe: qwen3-30b-a3b-fsdp</span>
+<div class="highlight"><span class="filename">recipes/qwen3-30b-a3b-fsdp.yaml</span><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># ExaAI recipe: qwen3-30b-a3b-fsdp</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="c1"># Model    : Qwen/Qwen3-30B-A3B-Instruct-2507   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-30B-A3B-Instruct-2507)</span>
 <a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># Strategy : FSDP2 (full shard)</span>
 <a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -4180,7 +4180,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 <h3 id="llama-33-70b">Llama-3.3-70B<a class="headerlink" href="#llama-33-70b" title="Permanent link">&para;</a></h3>
 <details class="example">
 <summary>llama-3.3-70b-qlora  (QLoRA + DDP)</summary>
-<div class="highlight"><span class="filename">recipes/llama-3.3-70b-qlora.yaml</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Bhaskera recipe: llama-3.3-70b-qlora</span>
+<div class="highlight"><span class="filename">recipes/llama-3.3-70b-qlora.yaml</span><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># ExaAI recipe: llama-3.3-70b-qlora</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1"># Model    : meta-llama/Llama-3.3-70B-Instruct   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Llama-3.3-70B-Instruct)</span>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># Strategy : ddp + QLoRA 4-bit</span>
 <a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -4288,7 +4288,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>llama-3.3-70b-pipeline  (Pipeline)</summary>
-<div class="highlight"><span class="filename">recipes/llama-3.3-70b-pipeline.yaml</span><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Bhaskera recipe: llama-3.3-70b-pipeline</span>
+<div class="highlight"><span class="filename">recipes/llama-3.3-70b-pipeline.yaml</span><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># ExaAI recipe: llama-3.3-70b-pipeline</span>
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1"># Model    : meta-llama/Llama-3.3-70B-Instruct   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Llama-3.3-70B-Instruct)</span>
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="c1"># Strategy : pipeline (pipeline, 4 stages)</span>
 <a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -4399,7 +4399,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>llama-3.3-70b-hsdp  (HSDP)</summary>
-<div class="highlight"><span class="filename">recipes/llama-3.3-70b-hsdp.yaml</span><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Bhaskera recipe: llama-3.3-70b-hsdp</span>
+<div class="highlight"><span class="filename">recipes/llama-3.3-70b-hsdp.yaml</span><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># ExaAI recipe: llama-3.3-70b-hsdp</span>
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1"># Model    : meta-llama/Llama-3.3-70B-Instruct   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Llama-3.3-70B-Instruct)</span>
 <a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1"># Strategy : HSDP (shard group of 16 GPUs)</span>
 <a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -4507,7 +4507,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>llama-3.3-70b-fsdp  (FSDP2)</summary>
-<div class="highlight"><span class="filename">recipes/llama-3.3-70b-fsdp.yaml</span><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># Bhaskera recipe: llama-3.3-70b-fsdp</span>
+<div class="highlight"><span class="filename">recipes/llama-3.3-70b-fsdp.yaml</span><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># ExaAI recipe: llama-3.3-70b-fsdp</span>
 <a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1"># Model    : meta-llama/Llama-3.3-70B-Instruct   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Llama-3.3-70B-Instruct)</span>
 <a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="c1"># Strategy : FSDP2 (full shard)</span>
 <a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -4615,7 +4615,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 <h3 id="mistral-large-123b">Mistral-Large-123B<a class="headerlink" href="#mistral-large-123b" title="Permanent link">&para;</a></h3>
 <details class="example">
 <summary>mistral-large-123b-qlora  (QLoRA + DDP)</summary>
-<div class="highlight"><span class="filename">recipes/mistral-large-123b-qlora.yaml</span><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Bhaskera recipe: mistral-large-123b-qlora</span>
+<div class="highlight"><span class="filename">recipes/mistral-large-123b-qlora.yaml</span><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># ExaAI recipe: mistral-large-123b-qlora</span>
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="c1"># Model    : mistralai/Mistral-Large-Instruct-2411   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Mistral-Large-Instruct-2411)</span>
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="c1"># Strategy : ddp + QLoRA 4-bit</span>
 <a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -4723,7 +4723,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>mistral-large-123b-pipeline  (Pipeline)</summary>
-<div class="highlight"><span class="filename">recipes/mistral-large-123b-pipeline.yaml</span><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Bhaskera recipe: mistral-large-123b-pipeline</span>
+<div class="highlight"><span class="filename">recipes/mistral-large-123b-pipeline.yaml</span><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># ExaAI recipe: mistral-large-123b-pipeline</span>
 <a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="c1"># Model    : mistralai/Mistral-Large-Instruct-2411   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Mistral-Large-Instruct-2411)</span>
 <a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="c1"># Strategy : pipeline (pipeline, 8 stages)</span>
 <a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -4834,7 +4834,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>mistral-large-123b-hsdp  (HSDP)</summary>
-<div class="highlight"><span class="filename">recipes/mistral-large-123b-hsdp.yaml</span><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Bhaskera recipe: mistral-large-123b-hsdp</span>
+<div class="highlight"><span class="filename">recipes/mistral-large-123b-hsdp.yaml</span><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># ExaAI recipe: mistral-large-123b-hsdp</span>
 <a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="c1"># Model    : mistralai/Mistral-Large-Instruct-2411   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Mistral-Large-Instruct-2411)</span>
 <a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="c1"># Strategy : HSDP (shard group of 16 GPUs)</span>
 <a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -4942,7 +4942,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>mistral-large-123b-fsdp  (FSDP2)</summary>
-<div class="highlight"><span class="filename">recipes/mistral-large-123b-fsdp.yaml</span><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># Bhaskera recipe: mistral-large-123b-fsdp</span>
+<div class="highlight"><span class="filename">recipes/mistral-large-123b-fsdp.yaml</span><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># ExaAI recipe: mistral-large-123b-fsdp</span>
 <a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="c1"># Model    : mistralai/Mistral-Large-Instruct-2411   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Mistral-Large-Instruct-2411)</span>
 <a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="c1"># Strategy : FSDP2 (full shard)</span>
 <a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -5050,7 +5050,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 <h3 id="qwen3-235b-a22b-moe">Qwen3-235B-A22B (MoE)<a class="headerlink" href="#qwen3-235b-a22b-moe" title="Permanent link">&para;</a></h3>
 <details class="example">
 <summary>qwen3-235b-a22b-pipeline  (Pipeline)</summary>
-<div class="highlight"><span class="filename">recipes/qwen3-235b-a22b-pipeline.yaml</span><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># Bhaskera recipe: qwen3-235b-a22b-pipeline</span>
+<div class="highlight"><span class="filename">recipes/qwen3-235b-a22b-pipeline.yaml</span><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># ExaAI recipe: qwen3-235b-a22b-pipeline</span>
 <a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="c1"># Model    : Qwen/Qwen3-235B-A22B-Instruct-2507   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-235B-A22B-Instruct-2507)</span>
 <a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="c1"># Strategy : pipeline (pipeline, 16 stages)</span>
 <a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -5167,7 +5167,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>qwen3-235b-a22b-hsdp  (HSDP)</summary>
-<div class="highlight"><span class="filename">recipes/qwen3-235b-a22b-hsdp.yaml</span><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># Bhaskera recipe: qwen3-235b-a22b-hsdp</span>
+<div class="highlight"><span class="filename">recipes/qwen3-235b-a22b-hsdp.yaml</span><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># ExaAI recipe: qwen3-235b-a22b-hsdp</span>
 <a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="c1"># Model    : Qwen/Qwen3-235B-A22B-Instruct-2507   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-235B-A22B-Instruct-2507)</span>
 <a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="c1"># Strategy : HSDP (shard group of 16 GPUs)</span>
 <a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -5281,7 +5281,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>qwen3-235b-a22b-fsdp  (FSDP2)</summary>
-<div class="highlight"><span class="filename">recipes/qwen3-235b-a22b-fsdp.yaml</span><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># Bhaskera recipe: qwen3-235b-a22b-fsdp</span>
+<div class="highlight"><span class="filename">recipes/qwen3-235b-a22b-fsdp.yaml</span><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># ExaAI recipe: qwen3-235b-a22b-fsdp</span>
 <a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="c1"># Model    : Qwen/Qwen3-235B-A22B-Instruct-2507   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Qwen3-235B-A22B-Instruct-2507)</span>
 <a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="c1"># Strategy : FSDP2 (full shard)</span>
 <a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># Benchmark on PARAM Rudra (seq_len 4096, 2 x A100 80 GB per node):</span>
@@ -5395,7 +5395,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 <h3 id="tokenise-recipes">Tokenise recipes<a class="headerlink" href="#tokenise-recipes" title="Permanent link">&para;</a></h3>
 <details class="example">
 <summary>tokenize-chatml  (Chat data)</summary>
-<div class="highlight"><span class="filename">recipes/tokenize-chatml.yaml</span><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Bhaskera recipe: tokenize-chatml</span>
+<div class="highlight"><span class="filename">recipes/tokenize-chatml.yaml</span><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># ExaAI recipe: tokenize-chatml</span>
 <a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="c1"># Tokenises your JSONL data once into a Parquet cache that every training run reuses.</span>
 <a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="c1"># Use the SAME model and seq_len as the training recipe. Run with:  ./submit.sh tokenize recipes/tokenize-chatml.yaml</span>
 <a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="nt">model</span><span class="p">:</span>
@@ -5418,7 +5418,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>tokenize-alpaca  (Alpaca data)</summary>
-<div class="highlight"><span class="filename">recipes/tokenize-alpaca.yaml</span><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Bhaskera recipe: tokenize-alpaca</span>
+<div class="highlight"><span class="filename">recipes/tokenize-alpaca.yaml</span><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># ExaAI recipe: tokenize-alpaca</span>
 <a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="c1"># Tokenises Alpaca-style data (instruction, optional input, output) once into a Parquet cache that every training run reuses.</span>
 <a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="c1"># Use the SAME model and seq_len as the training recipe. Run with:  ./submit.sh tokenize recipes/tokenize-alpaca.yaml</span>
 <a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="nt">model</span><span class="p">:</span>
@@ -5439,7 +5439,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>tokenize-prompt-completion  (Prompt and completion)</summary>
-<div class="highlight"><span class="filename">recipes/tokenize-prompt-completion.yaml</span><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Bhaskera recipe: tokenize-prompt-completion</span>
+<div class="highlight"><span class="filename">recipes/tokenize-prompt-completion.yaml</span><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># ExaAI recipe: tokenize-prompt-completion</span>
 <a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="c1"># Tokenises question-and-answer style data (a prompt column and a completion column) once into a Parquet cache.</span>
 <a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="c1"># Use the SAME model and seq_len as the training recipe. Run with:  ./submit.sh tokenize recipes/tokenize-prompt-completion.yaml</span>
 <a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="nt">model</span><span class="p">:</span>
@@ -5464,7 +5464,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>tokenize-plaintext  (Plain text)</summary>
-<div class="highlight"><span class="filename">recipes/tokenize-plaintext.yaml</span><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Bhaskera recipe: tokenize-plaintext</span>
+<div class="highlight"><span class="filename">recipes/tokenize-plaintext.yaml</span><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># ExaAI recipe: tokenize-plaintext</span>
 <a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="c1"># Tokenises plain text (books, code, articles) with no columns, once, into a Parquet cache.</span>
 <a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="c1"># Use the SAME model and seq_len as the training recipe. Run with:  ./submit.sh tokenize recipes/tokenize-plaintext.yaml</span>
 <a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="nt">model</span><span class="p">:</span>
@@ -5487,7 +5487,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>tokenize-hf-name  (Hugging Face names)</summary>
-<div class="highlight"><span class="filename">recipes/tokenize-hf-name.yaml</span><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1"># Bhaskera recipe: tokenize-hf-name</span>
+<div class="highlight"><span class="filename">recipes/tokenize-hf-name.yaml</span><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1"># ExaAI recipe: tokenize-hf-name</span>
 <a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="c1"># Names a Hugging Face model and dataset: ./submit.sh downloads them first (on a node with internet), then tokenises.</span>
 <a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="c1"># Use the SAME model and seq_len as the training recipe. Run with:  ./submit.sh tokenize recipes/tokenize-hf-name.yaml</span>
 <a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="nt">model</span><span class="p">:</span>
@@ -5949,7 +5949,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 <h3 id="other-models">Other models<a class="headerlink" href="#other-models" title="Permanent link">&para;</a></h3>
 <details class="example">
 <summary>param-1-2.9b-ddp  (Param-1-2.9B, DDP)</summary>
-<div class="highlight"><span class="filename">recipes/param-1-2.9b-ddp.yaml</span><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="c1"># Bhaskera recipe: param-1-2.9b-ddp</span>
+<div class="highlight"><span class="filename">recipes/param-1-2.9b-ddp.yaml</span><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="c1"># ExaAI recipe: param-1-2.9b-ddp</span>
 <a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="c1"># Model    : bharatgenai/Param-1-2.9B-Instruct   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Param-1-2.9B-Instruct)</span>
 <a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="c1"># Strategy : DDP, dense 2.9 B, eager attention, no packing</span>
 <a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="c1"># Speed on PARAM Rudra (seq_len 4096, 5 nodes = 10 x A100 80 GB):</span>
@@ -6058,7 +6058,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>param-1-7b-moe-fsdp  (Param-1-7B, FSDP)</summary>
-<div class="highlight"><span class="filename">recipes/param-1-7b-moe-fsdp.yaml</span><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="c1"># Bhaskera recipe: param-1-7b-moe-fsdp</span>
+<div class="highlight"><span class="filename">recipes/param-1-7b-moe-fsdp.yaml</span><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="c1"># ExaAI recipe: param-1-7b-moe-fsdp</span>
 <a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="c1"># Model    : bharatgenai/Param-1-7B   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Param-1-7B)</span>
 <a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="c1"># Strategy : FSDP, MoE 6.7 B (64 experts, top-8)</span>
 <a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="c1"># Speed on PARAM Rudra (seq_len 4096, 5 nodes = 10 x A100 80 GB):</span>
@@ -6173,7 +6173,7 @@ a multiple of the number of stages. <code>submit.sh</code> checks this before it
 </details>
 <details class="example">
 <summary>param2-17b-moe-fsdp  (Param2-17B, FSDP)</summary>
-<div class="highlight"><span class="filename">recipes/param2-17b-moe-fsdp.yaml</span><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="c1"># Bhaskera recipe: param2-17b-moe-fsdp</span>
+<div class="highlight"><span class="filename">recipes/param2-17b-moe-fsdp.yaml</span><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="c1"># ExaAI recipe: param2-17b-moe-fsdp</span>
 <a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="c1"># Model    : bharatgenai/Param2-17B-A2.4B-Thinking   (download to /scratch/&lt;project&gt;/&lt;username&gt;/models/Param2-17B-A2.4B-Thinking)</span>
 <a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="c1"># Strategy : FSDP, MoE 17 B (64 experts, top-6)</span>
 <a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="c1"># Speed on PARAM Rudra (seq_len 4096, 5 nodes = 10 x A100 80 GB):</span>
@@ -6380,7 +6380,7 @@ checkpoint, and the learning-rate schedule continues with it.</p>
 </table>
 <h2 id="starter-configs-for-other-models">Starter Configs for Other Models<a class="headerlink" href="#starter-configs-for-other-models" title="Permanent link">&para;</a></h2>
 <p>The recipes above are tested for the models in the table. For another model, copy a starter from <code>configs/</code> in the
-Bhaskera repository, replace the <code>&lt;project&gt;/&lt;username&gt;</code> paths, and run it like a recipe. There is one starter per parallelism
+ExaAI repository, replace the <code>&lt;project&gt;/&lt;username&gt;</code> paths, and run it like a recipe. There is one starter per parallelism
 for text and for multimodal models, and a tokenizer config for each model type:</p>
 <table>
 <thead>
